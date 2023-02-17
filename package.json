@@ -5,7 +5,7 @@
   "private": true,
   "main": "index.html",
   "scripts": {
-    "development": "nodemon",
+    "dev": "nodemon",
     "build": "webpack --config webpack.config.frontend.js && webpack --config webpack.config.backend.js",
     "start": "node ./dev/backend.generated.js"
   },
