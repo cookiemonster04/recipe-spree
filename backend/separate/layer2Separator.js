@@ -12,7 +12,7 @@ fs.readFile('./layer2.json', 'utf8', function read(err,data)
 function processFile(content)
 {
     const recipe = JSON.parse(content); 
-    //Loops through each individual JSON
+    //Loops through each individual recipe
     //Recipes in layer1 and layer2 aren't in the same order, so all of the layer1 JSONS have to be
     //made before the images can be appended. If the recipe cannot be found for a particular image,
     //the program just returns

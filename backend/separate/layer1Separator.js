@@ -13,7 +13,7 @@ fs.readFile('./layer1.json', 'utf8', function read(err,data)
 function processFile(content)
 {
     const recipe = JSON.parse(content);
-    //Loops through each individual JSON, removes unnecessary attributes
+    //Loops through each individual recipe, removes unnecessary attributes
     //Then creates JSON with recipe ID as name
     for (let i = 0; i < 10; i++)
     {
