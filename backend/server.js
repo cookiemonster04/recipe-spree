@@ -1,6 +1,9 @@
 import path from "path";
 import express from "express";
 import recipeHandler from "./handlers/recipeHandler.js";
+import connectDB from "./connectDb.js";
+
+connectDB();
 
 const app = express();
 const CWD = process.cwd();
