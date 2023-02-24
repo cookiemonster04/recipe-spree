@@ -1,9 +1,21 @@
 .nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    height: 120px;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
     gap: 2rem;
     padding: 0.25rem 1rem;
+}
+
+.nav.minimized {
+    height: 40px;
+}
+
+.nav.minimized .search__button svg {
+    display: none;
 }
 
 .navlight {
@@ -20,15 +32,23 @@ li .active {
     background-color: #555;
 }
 
-.site-title {
+nav .site-title {
     font-size: 2rem;
     display: flex;
     align-self: center;
 }
 
+nav.minimized .site-title {
+    font-size: 1rem;
+}
+
 .nav li {
     display: flex;
     align-items: center;
+}
+
+.nav.minimized li {
+    font-size: 80%;
 }
 
 .nav ul {

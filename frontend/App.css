@@ -94,6 +94,10 @@
       width: 40%;
     }
 
+    .minimized .search {
+      width: 15%;
+    }
+
     .search__button {
       padding-right: 0.5em;
       font-size: 2.5rem;
