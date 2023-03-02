@@ -9,6 +9,8 @@ import Home from "./routes/Home";
 import About from "./routes/About";
 import Explore from "./routes/Explore";
 import Recipe from "./routes/RecipePage";
+import Signup from "./routes/Signup";
+import Profile from "./routes/ProfilePage"
 import "./App.css";
 
 function App() {
@@ -54,6 +56,8 @@ function App() {
           <Route path="/explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
           <Route path="/recipe/:recipeId" element={<Recipe />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/profile/:userId" element={<Profile />} />
         </Routes>
       </div>
       <ListPage searchResults={searchResults} />
