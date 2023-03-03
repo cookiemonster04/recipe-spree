@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { getPosts } from "./api/axios";
 import ListPage from "./components/ListPage";
-import HelloWorld from "./routes/HelloWorld"; /* eventually remove */
-import ByeWorld from "./routes/ByeWorld"; /* eventually remove */
 import Navbar from "./components/Navbar";
 import Home from "./routes/Home";
 import About from "./routes/About";
@@ -55,9 +53,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
-          <Route path="/recipe/:recipeId" element={<Recipe />} />
+          <Route path="/recipe/:recipeId" element={<Recipe />} /> {/* shouldn't it be RecipePage? */}
           <Route path="/signup" element={<Signup />} />
-          <Route path="/profile/:userId" element={<Profile />} />
+          <Route path="/profile/:userId" element={<Profile />} /> {/* shouldn't it be ProfilePage? */}
         </Routes>
       </div>
       <ListPage searchResults={searchResults} />
