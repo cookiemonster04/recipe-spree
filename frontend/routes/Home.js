@@ -1,8 +1,150 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import "./Home.css"
 
 const Home = () => {
+  const [include, setInclude] = useState([]);
+  const [exclude, setExclude] = useState([]);
+
+  const initialList = {
+    olive_oil: false,
+    flour: false,
+    butter: false,
+    chicken: false,
+    sugar: false,
+    salt: false,
+    egg: false,
+    rice: false,
+    vegetable_oil: false,
+    pork: false,
+    beef: false,
+    cheese: false,
+    garlic: false,
+    orange: false,
+    turkey: false,
+    onion: false,
+    corn: false,
+    whole_milk: false,
+    mayonnaise: false,
+    chile: false,
+    almond: false,
+    bacon: false,
+    mushroom: false,
+    coconut: false,
+    beet: false,
+    strawberry: false,
+  }
+
+  const [formData, setFormData] = useState(initialList);
+  const [formData2, setFormData2 ] = useState(initialList);
+
+    function updateInclude(name, isChecked){
+      const isFound = include.includes(name);
+      if(isChecked && !isFound){
+        setInclude([
+          ...include,
+          name
+        ])
+      }
+      else if (!isChecked && isFound){
+        setInclude(include.filter(ingredient => name !== ingredient))
+      }
+    }
+
+    function updateExclude(name, isChecked){
+      const isFound = exclude.includes(name);
+      console.log(isChecked);
+      if(isChecked && !isFound){
+        setExclude([
+          ...exclude,
+          name
+        ])
+      }
+      else if (!isChecked && isFound){
+        setInclude(exclude.filter(ingredient => name !== ingredient))
+      }
+    }
+
+  function handleChange(event) {
+    const { name, value, type, checked } = event.target;
+    const isChecked = checked;
+    setFormData (prevData => {
+      return {
+        ...prevData,
+        [name]: type === "checkbox" ? checked: value
+      }
+    })
+    updateInclude(name, isChecked);
+  }
+
+  function handleChange2(event) {
+    const { name, value, type, checked } = event.target;
+    const isChecked = checked;
+    setFormData2 (prevData => {
+      return {
+        ...prevData,
+        [name]: type === "checkbox" ? checked: value
+      }
+    })
+    updateExclude(name, isChecked);
+  }
+
+  function handleSubmit(e) {
+
+    e.preventDefault();
+    console.log(include);
+    console.log(exclude);
+  }
+
   return (
-    <h1>Home</h1>
+    <div className="ingredient-form-container">
+      <form onSubmit={ handleSubmit } className="ingredient-form">
+        <h1 className="title">Craft your Favorite Recipe Ingredients!</h1>
+        <h2>Include:</h2>
+        <div className="ingredient-grid">
+
+          {
+                Object.entries(formData).map(([key, value]) => (
+                  <Checkbox
+                    label={key}
+                    value={value}
+                    onChange={ handleChange }
+                    key={key}
+                  />
+              ))
+            }
+        </div>
+        <h2>Exclude:</h2>
+        <div className="ingredient-grid">
+          {
+              Object.entries(formData2).map(([key, value]) => (
+                <Checkbox
+                  label={key}
+                  value={value}
+                  onChange={ handleChange2 }
+                  key={key}
+                />
+            ))
+          }
+        </div>
+        <button>
+          Submit
+        </button>
+      </form>
+    </div>
+  )
+}
+
+const Checkbox = ({ label, value, onChange }) => {
+  return (
+    <label>
+      <input
+        type="checkbox"
+        checked={value}
+        onChange={onChange}
+        name={label}
+      />
+      {label}
+    </label>
   )
 }
 

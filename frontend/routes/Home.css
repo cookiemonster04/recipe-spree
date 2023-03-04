@@ -1,0 +1,22 @@
+.ingredient-form-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ingredient-form {
+    background-color: white;
+    width: 60%;
+    border-radius: 8px;
+    padding: 20px 40px;
+    box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
+}
+
+.ingredient-grid {
+    display: grid;
+    grid-template: auto auto / repeat(4,1fr);
+}
+
+.title {
+    text-align: center;
+}
