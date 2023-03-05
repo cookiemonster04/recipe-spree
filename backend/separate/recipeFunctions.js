@@ -6,7 +6,7 @@ const {Recipe, Recommended} = require('./recipeSchema.js');
 //Then call addStar or removeStar accordingly
 async function addStar(itemID) 
 {
-    Recommended.findOneAndUpdate(
+    Recipe.findOneAndUpdate(
         { id: itemID },
         { $inc: { favorites: 1 } },
         { new: true }, 
@@ -17,7 +17,7 @@ async function addStar(itemID)
 
 async function removeStar(itemID) 
 {
-    Recommended.findOneAndUpdate(
+    Recipe.findOneAndUpdate(
         { id: itemID },
         { $inc: { favorites: -1 } },
         { new: true }, 
@@ -28,7 +28,7 @@ async function removeStar(itemID)
 
 async function addComment(itemID, comment) 
 {
-    Recommended.findOneAndUpdate(
+    Recipe.findOneAndUpdate(
         { id: itemID },
         { $push: { comments: {text: comment} } },
         { new: true }, 
@@ -39,12 +39,9 @@ async function addComment(itemID, comment)
 
 async function addRating(itemID, newRating) 
 {
-    const recipe = await Recommended.findOne({ id: itemID });
+    const recipe = await Recipe.findOne({ id: itemID });
     const updatedRating = (recipe.rating.stars * recipe.rating.numRatings + newRating) / (recipe.rating.numRatings + 1);
-    console.log(recipe.rating.stars);
-    console.log(recipe.rating.numRatings);
-    console.log(newRating);
-    Recommended.findOneAndUpdate(
+    Recipe.findOneAndUpdate(
         { id: itemID },
         { $set: { rating: {stars: updatedRating, numRatings: recipe.rating.numRatings + 1} } },
         { new: true }, 
