@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
 const subtextSchema = new mongoose.Schema({
     text: 
@@ -7,6 +6,18 @@ const subtextSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+});
+const ratingSchema = new mongoose.Schema({
+    stars:
+    {
+        type: Number,
+        required: false
+    },
+    numRatings:
+    {
+        type: Number,
+        required: false
+    },
 });
   
 const recipeSchema = new mongoose.Schema({
@@ -32,11 +43,7 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    rating:
-    {
-        type: Number,
-        required: false
-    },
+    rating: ratingSchema,
     comments: [subtextSchema],
     favorites:
     {
@@ -49,19 +56,6 @@ const recipeSchema = new mongoose.Schema({
         required: false
     }
 });  
-/*
-const recommendedSchema = new mongoose.Schema({
-    id: 
-    {
-        type: String,
-        required: true
-    },
-    score:
-    {
-        type: Number,
-        required: true
-    }
-});*/
 const Recipe = mongoose.model('Recipe', recipeSchema);
 const Recommended = mongoose.model('Recommended', recipeSchema);
 module.exports = {Recipe, Recommended};
