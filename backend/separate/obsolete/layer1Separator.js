@@ -1,7 +1,8 @@
+//Script used to generate sample JSONs of recipes
 const fs = require('fs');
 
 //Reads layer1.json which contains ingredients, instructions, etc.
-fs.readFile('./layer1.json', 'utf8', function read(err,data)
+fs.readFile('../layer1.json', 'utf8', function read(err,data)
 {
     if (err)
         throw(err);
@@ -21,7 +22,7 @@ function processFile(content)
         delete recipe[i].id;
         delete recipe[i].partition;
         recipe[i].image = "";
-        fs.writeFile('./individual/' + itemID + '.json', JSON.stringify(recipe[i], null, 2), err =>
+        fs.writeFile('../individual/' + itemID + '.json', JSON.stringify(recipe[i], null, 2), err =>
         {
             if (err)
                 throw err;

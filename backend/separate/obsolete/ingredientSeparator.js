@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 //Reads layer1.json which contains ingredients
-fs.readFile('./layer1.json', 'utf8', function read(err,data)
+fs.readFile('../layer1.json', 'utf8', function read(err,data)
 {
     if (err)
         throw(err);
@@ -33,7 +33,7 @@ function processFile(content)
             });
     }
     //Prints an array of recipe IDs that contain the desired ingredient to a txt file
-    fs.writeFile('./ingredients/' + keywords[0] + '.txt', JSON.stringify(containsIngredient), err =>
+    fs.writeFile('../ingredients/' + keywords[0] + '.txt', JSON.stringify(containsIngredient), err =>
     {
         if (err)
             return;

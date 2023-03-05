@@ -42,10 +42,16 @@ export default function Navbar({
           <ReactSwitch onChange={handleTheme} checked={getTheme === "dark"} />
         </li>
         <li>
+          <NavLink to="/profile/:userId">Profile?</NavLink>
+        </li>
+        <li>
           <NavLink to="/explore">Explore</NavLink>
         </li>
         <li>
           <NavLink to="/about">About</NavLink>
+        </li>
+        <li>
+          <NavLink to="/signup">Signup</NavLink>
         </li>
       </ul>
     </nav>

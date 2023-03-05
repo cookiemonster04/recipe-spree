@@ -21,7 +21,7 @@ function addScore(desired)
     let ingredients = [];
     desired.forEach(element =>
         {
-            const data = JSON.parse(fs.readFileSync('./ingredients/' + element + '.txt', 'utf8', function read(err,data){}));
+            const data = JSON.parse(fs.readFileSync('../ingredients/' + element + '.txt', 'utf8', function read(err,data){}));
             ingredients.push(data);
             data.forEach(ID =>
                 {
@@ -44,7 +44,7 @@ function removeUndesired(undesired)
     let ingredients = [];
     undesired.forEach(element =>
         {
-            const data = JSON.parse(fs.readFileSync('./ingredients/' + element + '.txt', 'utf8', function read(err,data){}));
+            const data = JSON.parse(fs.readFileSync('../ingredients/' + element + '.txt', 'utf8', function read(err,data){}));
             ingredients.push(data);
             data.forEach(ID =>
                 {

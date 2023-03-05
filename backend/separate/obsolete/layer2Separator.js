@@ -1,7 +1,8 @@
+//Script used to add image urls to the sample JSONs
 const fs = require('fs');
 
 //Reads layer1.json which contains ingredients, instructions, etc.
-fs.readFile('./layer2.json', 'utf8', function read(err,data)
+fs.readFile('../layer2.json', 'utf8', function read(err,data)
 {
     if (err)
         throw(err);
@@ -19,13 +20,13 @@ function processFile(content)
     for (let i = 0; i < 10; i++)
     {
         const itemID = recipe[i].id;
-        fs.readFile('./individual/' + itemID + '.json', 'utf8', function read(err,data)
+        fs.readFile('../individual/' + itemID + '.json', 'utf8', function read(err,data)
         {
             if (err)
                 return;
             const originalRecipe = JSON.parse(data);
             originalRecipe.image = recipe[i].images[0].url;
-            fs.writeFile('./individual/' + itemID + '.json', JSON.stringify(originalRecipe, null, 2), err =>
+            fs.writeFile('../individual/' + itemID + '.json', JSON.stringify(originalRecipe, null, 2), err =>
             {
                 if (err)
                     return;
