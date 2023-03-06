@@ -37,18 +37,18 @@ async function addDesired(desired, callback)
         {
             const regex = new RegExp(element, 'i');
             //Finds all matching recipes for one ingredient
-            Recipe.find({"ingredients.text": regex}, function (err, matches) 
+            Recipe.find({"ingredients.text": regex}, function (err, matches)
             {
                 if (err) throw err;
                 //Looping through each matched recipe
-                matches.forEach(function(match) 
+                matches.forEach(function(match)
                 {
                     updateOrCreate(match);
                 });
             });
         });
 }
-async function updateOrCreate(match) 
+async function updateOrCreate(match)
 {
     //Checks if the recipe already has already been added
     const filter = {id: match.id};

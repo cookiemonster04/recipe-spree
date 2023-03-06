@@ -12,11 +12,26 @@
     box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
 }
 
+.include-exclude {
+    margin-left: -30px;
+}
+
 .ingredient-grid {
     display: grid;
-    grid-template: auto auto / repeat(4,1fr);
+    grid-template: auto auto / repeat(2, 1fr);
+    justify-items: center;
+    margin-bottom: 30px;
+}
+
+.ingredient-options {
+    display: grid;
 }
 
 .title {
     text-align: center;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: center;
 }
