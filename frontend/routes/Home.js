@@ -5,33 +5,38 @@ const Home = () => {
   const [include, setInclude] = useState([]);
   const [exclude, setExclude] = useState([]);
 
+  /* 1 */
   const initialList = {
-    olive_oil: false,
-    flour: false,
+    brocolli: false,
     butter: false,
     chicken: false,
-    sugar: false,
-    salt: false,
+    spinach: false,
     egg: false,
     rice: false,
-    vegetable_oil: false,
     pork: false,
     beef: false,
     cheese: false,
     garlic: false,
     orange: false,
     turkey: false,
+    tomato: false,
+    potato: false,
+    milk: false,
+    pasta: false,
     onion: false,
     corn: false,
-    whole_milk: false,
-    mayonnaise: false,
+    olive: false,
+    tuna: false,
+    lentils: false,
     chile: false,
-    almond: false,
+    broth: false,
     bacon: false,
     mushroom: false,
     coconut: false,
     beet: false,
     strawberry: false,
+    peanut: false,
+    yogurt: false,
   }
 
   const [formData, setFormData] = useState(initialList);
