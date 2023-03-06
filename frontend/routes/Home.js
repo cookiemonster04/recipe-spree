@@ -93,42 +93,48 @@ const Home = () => {
     e.preventDefault();
     console.log(include);
     console.log(exclude);
+    //search(include, exclude);
   }
 
   return (
     <div className="ingredient-form-container">
       <form onSubmit={ handleSubmit } className="ingredient-form">
         <h1 className="title">Craft your Favorite Recipe Ingredients!</h1>
-        <h2>Include:</h2>
         <div className="ingredient-grid">
+          <h2 className="include-exclude">Include:</h2>
+          <h2 className="include-exclude">Exclude:</h2>
+          <div className="ingredient-options">
 
-          {
-                Object.entries(formData).map(([key, value]) => (
+            {
+                  Object.entries(formData).map(([key, value]) => (
+                    <Checkbox
+                      label={key}
+                      value={value}
+                      onChange={ handleChange }
+                      key={key}
+                    />
+                ))
+              }
+          </div>
+
+          <div className="ingredient-options">
+            {
+                Object.entries(formData2).map(([key, value]) => (
                   <Checkbox
                     label={key}
                     value={value}
-                    onChange={ handleChange }
+                    onChange={ handleChange2 }
                     key={key}
                   />
               ))
             }
+          </div>
         </div>
-        <h2>Exclude:</h2>
-        <div className="ingredient-grid">
-          {
-              Object.entries(formData2).map(([key, value]) => (
-                <Checkbox
-                  label={key}
-                  value={value}
-                  onChange={ handleChange2 }
-                  key={key}
-                />
-            ))
-          }
+        <div className="submit-container">
+          <button>
+            Submit
+          </button>
         </div>
-        <button>
-          Submit
-        </button>
       </form>
     </div>
   )
