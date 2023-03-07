@@ -1,0 +1,36 @@
+.recipe .head {
+    width: 100vw;
+    height: 30vw;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+}
+
+.recipe .head .left-head {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.recipe-title {
+    text-align: center;
+    height: auto;
+}
+
+.recipe .head .right-head {
+    width: 50%;
+}
+
+.recipe .head .right-head img {
+    max-height: 25vw;
+}
+
+.rating {
+    width: 150;
+    margin: 0 auto 0 auto;
+}
+
+.star {
+    display: inline-block;
+}
