@@ -48,9 +48,6 @@ export default function Navbar({
           <NavLink to="/explore">Explore</NavLink>
         </li>
         <li>
-          <NavLink to="/about">About</NavLink>
-        </li>
-        <li>
           <NavLink to="/signup">Signup</NavLink>
         </li>
       </ul>

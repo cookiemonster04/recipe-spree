@@ -4,7 +4,6 @@ import { getPosts } from "./api/axios";
 import ListPage from "./components/ListPage";
 import Navbar from "./components/Navbar";
 import Home from "./routes/Home";
-import About from "./routes/About";
 import Explore from "./routes/Explore";
 import Recipe from "./routes/RecipePage";
 import Signup from "./routes/Signup";
@@ -52,7 +51,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/about" element={<About />} />
           <Route path="/recipe/:recipeId" element={<Recipe />} /> {/* shouldn't it be RecipePage? */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile/:userId" element={<Profile />} /> {/* shouldn't it be ProfilePage? */}
