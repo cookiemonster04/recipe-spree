@@ -1,0 +1,15 @@
+.recipe .head {
+    width: 100vw;
+    height: 50vw;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+}
+
+.recipe .head .recipe-title {
+    width: 50%;
+}
+
+.recipe .head .recipe-image {
+    width: 50%;
+}
