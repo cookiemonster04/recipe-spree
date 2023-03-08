@@ -3,7 +3,7 @@ const User = require('../models/userModel.js');
 const connectDB = require('../connectDb.js');
 
 connectDB();
-User.find({username: "addfasdfsa"}, function (err, count) 
+User.find({username: "aaa"}, function (err, count) 
 {
     if (err) throw err;
     console.log(JSON.stringify(count, "", 2));

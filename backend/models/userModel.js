@@ -85,7 +85,8 @@ const userSchema = new Schema({
   postIds: [String],
   favorites: [String],
   ingredients: [ingredientSchema],
-  blacklistedIngredients: [ingredientSchema]
+  blacklistedIngredients: [ingredientSchema],
+  numRecipes: Number
 });
 
 

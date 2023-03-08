@@ -1,7 +1,7 @@
+//Function meant to be called only once when after the user completes the initial survey
 const mongoose = require("mongoose");
 const User = require('../models/userModel.js');
 const connectDB = require('../connectDb.js');
-const { setServers } = require("dns/promises");
 
 const love = ["brocolli", "butter", "chicken", "spinach", "egg", "rice", "pork", "beef"];
 const like = ["cheese", "garlic", "orange", "turkey", "tomato", "potato", "milk", "pasta"];
@@ -11,7 +11,7 @@ const blacklisted = ["mushroom", "coconut", "beet", "strawberry", "peanut", "yog
 const sets = [love, like, dislike, blacklisted];
 
 connectDB();
-surveyAdjuster("addfasdfsa", sets);
+surveyAdjuster("aaa", sets);
 
 async function surveyAdjuster(selectedUsername, sets) 
 {

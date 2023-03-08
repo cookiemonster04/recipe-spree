@@ -3,7 +3,7 @@ const User = require('../models/userModel.js');
 const connectDB = require('../connectDb.js');
 
 connectDB();
-initializeUser("zjhdioz");
+initializeUser("aaa");
 
 async function initializeUser(newUsername) 
 {
@@ -23,6 +23,13 @@ async function initializeUser(newUsername)
                 { if (err) throw err; }
             );
         });
+    User.findOneAndUpdate(
+        { username: newUsername },
+        { $set: { numRecipes: 0 } },
+        { new: true }, 
+        function (err, count) 
+        { if (err) throw err; }
+    );
 }
 
 module.exports = initializeUser;
