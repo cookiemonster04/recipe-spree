@@ -4,7 +4,7 @@ const User = require('../models/userModel.js');
 const connectDB = require('../connectDb.js');
 const { userInfo } = require("os");
 
-const ingredientsList = ["water3"];
+const ingredientsList = ["water", "water2", "water3"];
 
 connectDB();
 recipeAdjuster("aaa", ingredientsList, 5);

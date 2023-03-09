@@ -17,7 +17,7 @@ const ratingSchema = new mongoose.Schema({
     {
         type: Number,
         required: false
-    },
+    }
 });
   
 const recipeSchema = new mongoose.Schema({

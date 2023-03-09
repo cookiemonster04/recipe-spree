@@ -5,7 +5,7 @@ const {Recipe, Recommended} = require('./recipeSchema.js');
 const connectDB = require('../connectDb.js');
 
 connectDB();
-Recommended.find({}, function (err, count) 
+Recipe.find({}, function (err, count) 
 {
     if (err) throw err;
     console.log(count);
