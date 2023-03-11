@@ -3,14 +3,14 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import "./Signup.css"
+import "./Login.css";
 
 const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
   return (
     <div className="inputContainer">
       <input
         className="input"
-        id={`signup_${name}`}
+        id={`login_${name}`}
         type={type}
         value={formValue}
         onChange={(e) => {
@@ -18,14 +18,14 @@ const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
         }}
         placeholder={placeholder}
       ></input>
-      <label htmlFor={`signup_${name}`} className="label">
+      <label htmlFor={`login_${name}`} className="label">
         {name.charAt(0).toUpperCase() + name.slice(1) + ":"}
       </label>
     </div>
   );
 };
 
-const Signup = () => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
@@ -34,7 +34,7 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     axios
-      .post("/api/user", {
+      .post("/api/login", {
         username: username,
         password: password,
       })
@@ -62,11 +62,11 @@ const Signup = () => {
   return (
     <>
       {submitted && <Navigate to={`/profile/${username}`} />}
-      <div className="signupFrm">
+      <div className="loginFrm">
         <form className="form" onSubmit={handleSubmit}>
           <div className="title-container">
-            <h1 className="title">Sign up</h1>
-            <FontAwesomeIcon icon={faUserPlus} size="lg"/>
+            <h1 className="title">Log in</h1>
+            <FontAwesomeIcon icon={faUserPlus} size="lg" />
           </div>
           <Item
             name="username"
@@ -83,18 +83,23 @@ const Signup = () => {
             placeholder="a"
           />
           <label
-            htmlFor="signup_submit"
+            htmlFor="login_submit"
             className={isError ? "no-msg" : "yes-msg"}
           >
             {messages.split("\n").map((msg, idx) => {
-              return <div key={`signup_msg_${idx}`}>{msg}</div>;
+              return <div key={`login_msg_${idx}`}>{msg}</div>;
             })}
           </label>
-          <input id="signup_submit" type="submit" className="submitBtn" value="Sign up"></input>
+          <input
+            id="login_submit"
+            type="submit"
+            className="submitBtn"
+            value="Login"
+          ></input>
         </form>
       </div>
     </>
   );
 };
 
-export default Signup;
+export default Login;

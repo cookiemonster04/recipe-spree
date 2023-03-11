@@ -5,17 +5,16 @@ import ListPage from "./components/ListPage";
 import Navbar from "./components/Navbar";
 import Home from "./routes/Home";
 import Explore from "./routes/Explore";
-import Recipe from "./routes/RecipePage";
+import RecipePage from "./routes/RecipePage";
 import Signup from "./routes/Signup";
-import Profile from "./routes/ProfilePage"
+import ProfilePage from "./routes/ProfilePage";
+import Login from "./routes/Login";
 import "./App.css";
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
   const [posts, setPosts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-
   useEffect(() => {
     getPosts()
       .then((json) => {
@@ -51,9 +50,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/recipe/:recipeId" element={<Recipe />} /> {/* shouldn't it be RecipePage? */}
+          <Route path="/recipe/:recipeId" element={<RecipePage />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/profile/:userId" element={<Profile />} /> {/* shouldn't it be ProfilePage? */}
+          <Route path="/profile/:userId" element={<ProfilePage />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
       <ListPage searchResults={searchResults} />

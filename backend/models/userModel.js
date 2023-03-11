@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import jwt from "jsonwebtoken";
 
 const model_name = "User";
 
@@ -71,6 +72,10 @@ const userSchema = new Schema({
   postIds: [String],
   favorites: [String],
 });
+
+userSchema.methods.generateJWT = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET);
+};
 
 const User = mongoose.model(model_name, userSchema);
 export default User;
