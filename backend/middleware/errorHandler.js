@@ -1,5 +1,4 @@
 const setError = (status, message, res, next) => {
-  console.log(message);
   if (res.locals && res.locals.error) {
     res.locals.error.status = status;
     res.locals.error.errors.push(message);
@@ -13,7 +12,6 @@ const setError = (status, message, res, next) => {
 };
 const errorConvert = (err, req, res, next) => {
   if (err) {
-    console.log(err);
     res.locals.error = err;
   }
   next();
@@ -38,8 +36,7 @@ const handleError = (req, res, next) => {
 };
 
 const catchWrap = (func) => (req, res, next) => {
-  console.log("catchWrap reached");
-  Promise.resolve(func(req, res, next)).then(next, next);
+  Promise.resolve(func(req, res, next)).catch(next);
 };
 
 export default handleError;
