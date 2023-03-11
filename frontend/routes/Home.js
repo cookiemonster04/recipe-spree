@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { ChakraProvider, theme } from '@chakra-ui/react'
+import KanbanBoard from "../components/KanbanBoard"
 import "./Home.css"
 
+const Home = () => {
+  return (
+    <ChakraProvider theme={theme}>
+      <KanbanBoard/>
+    </ChakraProvider>
+  )
+}
+
+export default Home;
+
+/*
 const Home = () => {
   const [include, setInclude] = useState([]);
   const [exclude, setExclude] = useState([]);
 
-  /* 1 */
   const initialList = {
     brocolli: false,
     butter: false,
@@ -158,5 +170,4 @@ const Checkbox = ({ label, value, onChange }) => {
     </label>
   )
 }
-
-export default Home;
+*/
