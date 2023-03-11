@@ -56,9 +56,9 @@ function App() {
           <Route path="/profile/:userId" element={<Profile />} /> {/* shouldn't it be ProfilePage? */}
         </Routes>
       </div>
-      <ListPage searchResults={searchResults} />
     </div>
   );
 }
 
 export default App;
+/*      <ListPage searchResults={searchResults} /> Re-add this into above div */

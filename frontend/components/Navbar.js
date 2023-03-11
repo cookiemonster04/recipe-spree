@@ -15,7 +15,7 @@ export default function Navbar({
       <NavLink to="/" className="site-title">
         Site Name
       </NavLink>
-      <SearchBar posts={posts} setSearchResults={setSearchResults} />
+
       <ul>
         <li>
           <ReactSwitch onChange={handleTheme} checked={getTheme === "dark"} />
@@ -33,3 +33,6 @@ export default function Navbar({
     </nav>
   );
 }
+/*
+  <SearchBar posts={posts} setSearchResults={setSearchResults} />
+*/

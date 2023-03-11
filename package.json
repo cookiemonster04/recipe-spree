@@ -22,6 +22,10 @@
   "dependencies": {
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
+    "@chakra-ui/react": "^2.5.1",
+    "@dnd-kit/core": "^6.0.8",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -29,6 +33,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^9.1.2",
     "express": "^4.18.2",
+    "framer-motion": "^10.2.4",
     "mongoose": "^6.10.0",
     "node": "^19.6.0",
     "path": "^0.12.7",

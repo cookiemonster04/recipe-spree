@@ -16,18 +16,9 @@
     font: inherit;
   }
 
-  html {
-    font-size: 1.5rem;
-  }
-
   body {
     background-color: #000;
     font-family: 'Nunito', sans-serif;
-  }
-
-  p {
-    color: whitesmoke;
-    margin-top: 0.5em;
   }
 
   article {
