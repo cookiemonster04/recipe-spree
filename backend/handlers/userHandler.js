@@ -32,7 +32,7 @@ const setUser = async (req, res, next) => {
 const auth = async (req, res, next) => {
   const { token } = req.cookies;
   if (!token) {
-    setError(res, 401, "Log in to access this page");
+    setError(401, "Log in to access this page", res, next);
     return;
   }
   const jwtid = jwt.verify(token, process.env.JWT_SECRET);
@@ -52,12 +52,12 @@ const login = async (req, res, next) => {
   const fail_msg = "Incorrect username or password";
   const user = await User.findOne({ username: username })
     .exec()
-    .catch(setError(res, 401, fail_msg));
+    .catch(setError(401, fail_msg, res, next));
   if (user.password === password) {
     sendToken(user, 200, res);
     res.send("Login successful");
   } else {
-    setError(res, 401, fail_msg);
+    setError(401, fail_msg, res, next);
   }
 };
 const logout = async (req, res, next) => {

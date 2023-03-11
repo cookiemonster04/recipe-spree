@@ -30,7 +30,7 @@ app.get("/api/recipe/:recipeId", recipeHandler);
 app.post("/api/user", setUser);
 app.get("/api/user/:userId", getUser);
 app.get("/api/user/info", auth, getUser);
-app.use("/api/user", catchWrap, errorConvert, handleError);
+app.use("/api/user", errorConvert, handleError);
 app.post("/api/login", login);
 app.get("/api/logout", logout);
 app.get("*", (req, res, next) => {
