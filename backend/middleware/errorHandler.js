@@ -1,4 +1,4 @@
-const setError = (res, status, message) => {
+const setError = (status, message, res, next) => {
   if (res.locals && res.locals.error) {
     res.locals.error.status = status;
     res.locals.error.errors.push(message);
@@ -8,6 +8,7 @@ const setError = (res, status, message) => {
       errors: [message],
     };
   }
+  next();
 };
 const errorConvert = (err, req, res, next) => {
   if (err) {
@@ -18,13 +19,19 @@ const errorConvert = (err, req, res, next) => {
 
 const handleError = (req, res, next) => {
   if (res.locals && res.locals.error) {
-    res.status(req.locals.error.status || 400).send(
-      Object.values(res.locals.error.errors)
-        .map((error) => {
-          return error.properties.message;
-        })
-        .join("\n")
-    );
+    const err = res.locals.error;
+    const err_arr = Object.values(err.errors);
+    if (err_arr[0].hasOwnProperty("properties")) {
+      res.status(err.status || 400).send(
+        err_arr
+          .map((error) => {
+            return error.properties.message;
+          })
+          .join("\n")
+      );
+    } else {
+      res.status(err.status || 400).send(err_arr.join("\n"));
+    }
   }
 };
 
