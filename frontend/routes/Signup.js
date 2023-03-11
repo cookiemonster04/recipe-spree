@@ -3,7 +3,7 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import "./Signup.css"
+import "./Signup.css";
 
 const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
   return (
@@ -25,13 +25,13 @@ const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
   );
 };
 
-const Signup = () => {
+const Signup = ({ callback }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const [messages, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     axios
       .post("/api/user", {
@@ -45,6 +45,7 @@ const Signup = () => {
           setIsError(false);
           setMessage(response.data);
           setSubmitted(true);
+          callback();
         },
         (error) => {
           console.log(error);
@@ -66,7 +67,7 @@ const Signup = () => {
         <form className="form" onSubmit={handleSubmit}>
           <div className="title-container">
             <h1 className="title">Sign up</h1>
-            <FontAwesomeIcon icon={faUserPlus} size="lg"/>
+            <FontAwesomeIcon icon={faUserPlus} size="lg" />
           </div>
           <Item
             name="username"
@@ -90,7 +91,12 @@ const Signup = () => {
               return <div key={`signup_msg_${idx}`}>{msg}</div>;
             })}
           </label>
-          <input id="signup_submit" type="submit" className="submitBtn" value="Sign up"></input>
+          <input
+            id="signup_submit"
+            type="submit"
+            className="submitBtn"
+            value="Sign up"
+          ></input>
         </form>
       </div>
     </>

@@ -25,13 +25,13 @@ const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
   );
 };
 
-const Login = () => {
+const Login = ({ callback }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const [messages, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     axios
       .post("/api/login", {
@@ -45,6 +45,7 @@ const Login = () => {
           setIsError(false);
           setMessage(response.data);
           setSubmitted(true);
+          callback();
         },
         (error) => {
           console.log(error);
