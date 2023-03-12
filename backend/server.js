@@ -11,11 +11,7 @@ import {
   login,
   logout,
 } from "./handlers/userHandler.js";
-import {
-  handleError,
-  catchWrap,
-  errorConvert,
-} from "./middleware/errorHandler.js";
+import { handleError, errorConvert } from "./middleware/errorHandler.js";
 
 connectDB();
 dotenv.config({ path: "backend/config.env" });
@@ -29,7 +25,7 @@ app.use("/frontend", express.static(path.join(CWD, "frontend")));
 app.get("/api/recipe/:recipeId", recipeHandler);
 app.post("/api/user", setUser);
 app.get("/api/user/:userId", getUser);
-app.get("/api/user/info", auth, getUser);
+app.get("/api/user", auth, getUser);
 app.use("/api/user", errorConvert, handleError);
 app.post("/api/login", login);
 app.get("/api/logout", logout);

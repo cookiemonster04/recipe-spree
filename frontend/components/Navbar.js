@@ -9,6 +9,7 @@ export default function Navbar({
   getTheme,
   posts,
   setSearchResults,
+  user,
 }) {
   return (
     <nav className={getTheme === "light" ? "nav navlight" : "nav navdark"}>
@@ -21,14 +22,28 @@ export default function Navbar({
           <ReactSwitch onChange={handleTheme} checked={getTheme === "dark"} />
         </li>
         <li>
-          <NavLink to="/profile/:userId">Profile?</NavLink>
-        </li>
-        <li>
           <NavLink to="/explore">Explore</NavLink>
         </li>
-        <li>
-          <NavLink to="/signup">Signup</NavLink>
-        </li>
+        {user && (
+          <>
+            <li>
+              <NavLink to="/profile">Profile</NavLink>
+            </li>
+            <li>
+              <NavLink to="/logout">Logout</NavLink>
+            </li>
+          </>
+        )}
+        {!user && (
+          <>
+            <li>
+              <NavLink to="/login">Login</NavLink>
+            </li>
+            <li>
+              <NavLink to="/signup">Signup</NavLink>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

@@ -20,24 +20,33 @@ const errorConvert = (err, req, res, next) => {
 const handleError = (req, res, next) => {
   if (res.locals && res.locals.error) {
     const err = res.locals.error;
-    const err_arr = Object.values(err.errors);
-    if (err_arr[0].hasOwnProperty("properties")) {
-      res.status(err.status || 400).send(
-        err_arr
-          .map((error) => {
-            return error.properties.message;
-          })
-          .join("\n")
-      );
+    if (err.errors) {
+      const err_arr = Object.values(err.errors);
+      if (err_arr[0].hasOwnProperty("properties")) {
+        res.status(err.status || 400).send(
+          err_arr
+            .map((error) => {
+              return error.properties.message;
+            })
+            .join("\n")
+        );
+      } else {
+        res.status(err.status || 400).send(err_arr.join("\n"));
+      }
     } else {
-      res.status(err.status || 400).send(err_arr.join("\n"));
+      console.log(err);
+      res.status(500).send("Internal server error");
     }
   }
 };
 
-const catchWrap = (func) => (req, res, next) => {
-  Promise.resolve(func(req, res, next)).catch(next);
-};
+const catchWrap =
+  (func, status = null, message = null) =>
+  (req, res, next) => {
+    Promise.resolve(func(req, res, next)).catch(
+      message ? () => setError(status, message, res, next) : next
+    );
+  };
 
 export default handleError;
 export { handleError, setError, catchWrap, errorConvert };

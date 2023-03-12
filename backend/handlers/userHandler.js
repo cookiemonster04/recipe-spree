@@ -2,12 +2,23 @@ import User from "../models/userModel";
 import jwt from "jsonwebtoken";
 import { catchWrap, setError } from "../middleware/errorHandler";
 
-const CWD = process.cwd();
-const getUser = catchWrap(async (req, res, next) => {
-  const reqUsername = req.params.userId;
-  const foundUser = await User.findOne({ username: reqUsername }).exec();
-  res.status(200).json(foundUser);
-});
+const getUser = catchWrap(
+  async (req, res, next) => {
+    if (req.user) {
+      res.status(200).json(req.user);
+      return;
+    }
+    const reqUsername = req.params.userId;
+    if (reqUsername) {
+      const foundUser = await User.findOne({ username: reqUsername }).exec();
+      res.status(200).json(foundUser);
+    } else {
+      throw new Error();
+    }
+  },
+  401,
+  "Login to access profile"
+);
 const setUser = catchWrap(async (req, res, next) => {
   const { username, password } = req.body;
   const newUser = new User({
@@ -15,7 +26,10 @@ const setUser = catchWrap(async (req, res, next) => {
     password: password,
   });
   await newUser.save();
-  res.status(200).send("Success");
+  res.status(200).json({
+    message: "Success",
+    user: newUser,
+  });
 });
 const auth = catchWrap(async (req, res, next) => {
   const { token } = req.cookies;
@@ -23,8 +37,8 @@ const auth = catchWrap(async (req, res, next) => {
     setError(401, "Log in to access this page", res, next);
     return;
   }
-  const jwtid = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = await User.findById(jwtid);
+  const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+  req.user = await User.findById(decodedToken.id);
   next();
 });
 const sendToken = (user, status, res) => {
@@ -35,21 +49,25 @@ const sendToken = (user, status, res) => {
     httpOnly: true,
   });
 };
-const login = catchWrap(async (req, res, next) => {
-  const { username, password } = req.body;
-  const fail_msg = "Incorrect username or password";
-  const user = await User.findOne({ username: username })
-    .exec()
-    .catch(setError(401, fail_msg, res, next));
-  if (user.password === password) {
-    sendToken(user, 200, res);
-    res.send("Login successful");
-  } else {
-    setError(401, fail_msg, res, next);
-  }
-});
+const login = catchWrap(
+  async (req, res, next) => {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username: username }).exec();
+    if (user.password === password) {
+      sendToken(user, 200, res);
+      res.json({
+        message: "Login successful",
+        user: user,
+      });
+    } else {
+      throw new Error();
+    }
+  },
+  401,
+  "Incorrect username or password"
+);
 const logout = async (req, res, next) => {
-  res.status(200).cookie("token", null);
+  res.status(200).clearCookie("token").end();
 };
 
 export { getUser, setUser, auth, login, logout };

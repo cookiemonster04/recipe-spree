@@ -25,7 +25,10 @@ const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
   );
 };
 
-const Login = ({ callback }) => {
+const Login = ({ user, setUser }) => {
+  if (user) {
+    return <Navigate to="/profile" />;
+  }
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
@@ -41,20 +44,16 @@ const Login = ({ callback }) => {
       .then(
         (response) => {
           // add a redirect to a success page instead of just showing confirmation message above submit
-          console.log(response);
           setIsError(false);
-          setMessage(response.data);
           setSubmitted(true);
-          callback();
+          setUser(response.data.user);
         },
         (error) => {
-          console.log(error);
           if (error.response.message == "Network Error") {
             setIsError(true);
             setMessage("Something went wrong, please try again in a moment");
             return;
           }
-          console.log(error);
           setIsError(true);
           setMessage(error.response.data);
         }
@@ -62,7 +61,7 @@ const Login = ({ callback }) => {
   };
   return (
     <>
-      {submitted && <Navigate to={`/profile/${username}`} />}
+      {submitted && <Navigate to="/profile" />}
       <div className="loginFrm">
         <form className="form" onSubmit={handleSubmit}>
           <div className="title-container">

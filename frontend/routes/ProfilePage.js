@@ -9,10 +9,9 @@ const ProfilePage = () => {
 
 const ProfileHome = ({ user }) => {
   if (!user) {
-    return <Navigate to="/" />;
-  } else {
-    return <Profile userId={user.username} />;
+    return <Navigate to="/login" />;
   }
+  return <Profile user={user} />;
 };
 
 export { ProfilePage, ProfileHome };

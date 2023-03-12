@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Profile = ({ userId }) => {
+const Profile = ({ userId, user }) => {
   const [username, setUsername] = useState("");
   useEffect(() => {
     async function getUsername() {
+      if (!userId) return;
       console.log(`query id: ${userId}`);
       const userInfo = await axios.get(`/api/user/${userId}`);
       console.log("retrieved userinfo");
@@ -23,9 +24,9 @@ const Profile = ({ userId }) => {
     getUsername();
   }, [userId]);
   return (
-    username !== "" && (
+    ((userId && username !== "") || (!userId && user.username)) && (
       <div>
-        <h1>Welcome back, {username}</h1>
+        <h1>Welcome back, {userId ? username : user.username}</h1>
       </div>
     )
   );
