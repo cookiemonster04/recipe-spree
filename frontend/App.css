@@ -1,3 +1,7 @@
+* {
+  border-width: 0;
+}
+
 .dark {
     background-color: #333;
     color: #fff;

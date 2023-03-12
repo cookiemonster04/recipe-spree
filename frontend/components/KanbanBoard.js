@@ -2,7 +2,8 @@ import React, { useState }from "react"
 import { DndContext, rectIntersection } from "@dnd-kit/core";
 import KanbanLane from "./KanbanLane";
 import AddCard from "./AddCard";
-import { Flex } from "@chakra-ui/react"
+import './KanbanBoard.css'
+
 export default function KanbanBoard() {
     const [loveItems, setLoveItems] = useState([
         {title:"brocolli"},
@@ -51,13 +52,13 @@ export default function KanbanBoard() {
         var loveIngredients = loveItems.map(function(item){
             return item['title'];
         });
-        var likeIngredients = loveItems.map(function(item){
+        var likeIngredients = likeItems.map(function(item){
             return item['title'];
         });
-        var dislikeIngredients = loveItems.map(function(item){
+        var dislikeIngredients = dislikeItems.map(function(item){
             return item['title'];
         });
-        var allergicIngredients = loveItems.map(function(item){
+        var allergicIngredients = allergicItems.map(function(item){
             return item['title'];
         });
         console.log(loveIngredients)
@@ -68,6 +69,8 @@ export default function KanbanBoard() {
 
     return (
         <>
+        <h2 className="survey-title">Initial Survey</h2>
+        <p className="survey-description">Welcome! Please move ingredients in the proper section based on your preference. Feel free to add ingredients, too!</p>
         <DndContext
           collisionDetection={rectIntersection}
           onDragEnd={(e) => {
@@ -108,6 +111,35 @@ export default function KanbanBoard() {
             }
           }}
         >
+          <div className="full-board-container">
+            <AddCard addCard={addNewCard} />
+            <div className="four-col-container">
+              <KanbanLane title="Love" items={loveItems} />
+              <KanbanLane title="Like" items={likeItems} />
+              <KanbanLane title="Dislike" items={dislikeItems} />
+              <KanbanLane title="Allergic" items={allergicItems} />
+            </div>
+          </div>
+        </DndContext>
+        <button className="survey-submit" onClick={ submitArrays }>Submit</button>
+        </>
+      );
+}
+
+/*
+          <div className="full-board-container">
+            <AddCard addCard={addNewCard} />
+            <div className="board-top-container">
+              <KanbanLane title="Love" items={loveItems} />
+              <KanbanLane title="Like" items={likeItems} />
+              <KanbanLane title="Dislike" items={dislikeItems} />
+              <KanbanLane title="Allergic" items={allergicItems} />
+            </div>
+          </div>
+        </DndContext>
+        <button onClick={ submitArrays }>Submit</button>
+
+
           <Flex flexDirection="column">
             <AddCard addCard={addNewCard} />
             <Flex flex="3">
@@ -119,6 +151,4 @@ export default function KanbanBoard() {
           </Flex>
         </DndContext>
         <button onClick={ submitArrays }>Submit</button>
-        </>
-      );
-}
+*/

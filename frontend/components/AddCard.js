@@ -1,19 +1,36 @@
-import { Flex, Text, Button, Input } from "@chakra-ui/react"
 import React, { useState } from "react"
+import "./KanbanBoard.css"
+
 export default function AddCard({addCard}){
     const [title,setTitle] = useState("");
 
     return (
-        <Flex w="60%" p="5" alignItems="center">
-            <Text flex="1" textAlign="center">
-                Ingredient:
-            </Text>
-            <Input
-                type="text"
-                flex="4"
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
-            />
+        <div className="center-input">
+            <div className="input-container">
+                <p className="input-title">
+                    Ingredient:
+                </p>
+                <input
+                    type="text"
+                    className="ingredient-input"
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
+                />
+                <button
+                    className="add-button"
+                    onClick={() => {
+                        setTitle("")
+                        addCard(title)
+                    }}
+                >
+                    Add
+                </button>
+            </div>
+        </div>
+    )
+}
+
+/*
             <Button
                 flex="1"
                 marginX="3"
@@ -26,6 +43,4 @@ export default function AddCard({addCard}){
             >
                 Add
             </Button>
-        </Flex>
-    )
-}
+*/
