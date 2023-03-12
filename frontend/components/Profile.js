@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Profile = ({ userId, user }) => {
   const [username, setUsername] = useState("");
@@ -28,7 +29,7 @@ const Profile = ({ userId, user }) => {
         <h1>Welcome back, {username}</h1>
         <ul>
           {favlist.map((id, idx) => (
-            <li key={`user_prof_fav_id_${idx}`}>{id}</li>
+            <li key={`user_prof_fav_id_${idx}`}><Link to={`/recipe/${id}`}>{id}</Link></li>
           ))}
         </ul>
       </div>
