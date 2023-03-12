@@ -7,8 +7,8 @@ const Schema = mongoose.Schema;
 const {Recipe, Recommended} = require('./recipeSchema.js');
 const connectDB = require('../connectDb.js');
 
-testDesired = ["chicken", "potato", "pepper"];
-testUndesired = ["onion"];
+testDesired = ["chicken", "potato", "pepper", "garlic", "egg", "rice", "mushroom", "tea"];
+testUndesired = ["onion", "beef", "pork", "peanut", "broccoli"];
 
 search(testDesired, testUndesired);
 
@@ -19,35 +19,37 @@ async function search(desired, undesired)
         .then(() => console.log('Existing recipes cleared'))
         .catch(error => console.error(error));
     await addDesired(desired);
-    function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms));}
-    //Don't search for more than 1 second, just get whatever recipes can be found in 1 second
-    wait(1000).then(() => {
-        removeUndesired(undesired);
-    });
-    await Recipe.find().sort({ score: -1 });
-    //Add extra delay to prevent DB from closing before search is done
-    wait(5000).then(() => {
-        mongoose.connection.close();
-        console.log("Connection closed");
-    });
+    console.log('Finished adding');
+    await removeUndesired(undesired);
+    const sortedResults = await Recommended.find().sort({ score: -1 });
+    console.log('Finished sorting');
+    console.log(sortedResults.map(result => result.score));
+    return sortedResults.map(result => result.id);
 }
-async function addDesired(desired, callback)
+
+async function addDesired(desired) 
 {
-    desired.forEach(element =>
-        {
-            const regex = new RegExp(element, 'i');
-            //Finds all matching recipes for one ingredient
-            Recipe.find({"ingredients.text": regex}, function (err, matches)
-            {
-                if (err) throw err;
-                //Looping through each matched recipe
-                matches.forEach(function(match)
-                {
-                    updateOrCreate(match);
-                });
+    let finished = false;
+    setTimeout(() => {
+        console.log("Finished adding");
+        finished = true;
+    }, 100000);
+    for (const element of desired) {
+        const regex = new RegExp(element, 'i');
+        const matches = await new Promise((resolve, reject) => {
+            Recipe.find({"ingredients.text": regex}, function (err, matches) {
+                if (err) return reject(err);
+                resolve(matches);
             });
         });
+        for (const match of matches) {
+            await updateOrCreate(match);
+            if (finished) break;
+        }
+        if (finished) break;
+    }
 }
+
 async function updateOrCreate(match)
 {
     //Checks if the recipe already has already been added
@@ -57,12 +59,12 @@ async function updateOrCreate(match)
     const result = await Recommended.findOneAndUpdate(filter, update, options);
     return result;
 }
+
 async function removeUndesired(undesired)
 {
     await undesired.forEach(element =>
         {
             const regex = new RegExp(element, 'i');
-            console.log(regex);
             Recommended.deleteMany({"ingredients.text": regex}, function(err, result) {
                 if (err) throw err;
                 console.log(result.deletedCount + " documents deleted");
