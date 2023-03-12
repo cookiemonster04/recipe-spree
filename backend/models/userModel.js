@@ -1,6 +1,6 @@
-import mongoose, { Schema } from "mongoose";
-import jwt from "jsonwebtoken";
-
+//import mongoose, { Schema } from "mongoose";
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const model_name = "User";
 
 const passwordCheck = (password) => {
@@ -38,6 +38,19 @@ const messageGenerator = (errors) => {
   }
 };
 
+const ingredientSchema = new Schema({
+  name:
+  {
+      type: String,
+      required: true
+  },
+  rating:
+  {
+      type: Number,
+      required: false
+  } 
+});
+
 const userSchema = new Schema({
   username: {
     type: String,
@@ -71,11 +84,12 @@ const userSchema = new Schema({
   last: String,
   postIds: [String],
   favorites: [String],
+  ingredients: [ingredientSchema],
+  blacklistedIngredients: [ingredientSchema],
+  numRecipes: Number
 });
 
-userSchema.methods.generateJWT = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET);
-};
 
 const User = mongoose.model(model_name, userSchema);
-export default User;
+//export default User;
+module.exports = User;

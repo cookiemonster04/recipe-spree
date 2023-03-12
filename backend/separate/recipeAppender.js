@@ -19,7 +19,7 @@ async function appendURLs(content)
 {
     await connectDB();
     const recipe = JSON.parse(content);
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 1000; i++) {
         const itemID = recipe[i].id;
         const updatedRecipe = await Recipe.findOneAndUpdate(
             { id: itemID },
