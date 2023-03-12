@@ -64,7 +64,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/recipe/:recipeId" element={<RecipePage />} />
+          <Route
+            path="/recipe/:recipeId"
+            element={<RecipePage user={user} />}
+          />
           <Route
             path="/signup"
             element={<Signup user={user} setUser={setUser} />}

@@ -3,30 +3,34 @@ import axios from "axios";
 
 const Profile = ({ userId, user }) => {
   const [username, setUsername] = useState("");
+  const [favlist, setFavlist] = useState([]);
   useEffect(() => {
-    async function getUsername() {
-      if (!userId) return;
-      console.log(`query id: ${userId}`);
-      const userInfo = await axios.get(`/api/user/${userId}`);
-      console.log("retrieved userinfo");
-      console.log(userInfo);
-      if (userInfo.hasOwnProperty("data")) {
-        setUsername(userInfo.data.username);
+    async function getInfo() {
+      if (!userId) {
+        setUsername(user.username);
+        // just to demonstrate it works
+        const favInfo = await axios.get(`/api/fav`);
+        setFavlist(favInfo.data.favorites);
+      } else {
+        const userInfo = await axios.get(`/api/user/${userId}`);
+        if (userInfo.hasOwnProperty("data")) {
+          setUsername(userInfo.data.username);
+        }
+        const favInfo = await axios.get(`/api/fav/user/${userId}`);
+        setFavlist(favInfo.data.favorites);
       }
-      return (
-        userInfo.hasOwnProperty("data") && (
-          <div>
-            <h1>Welcome back, {userInfo.data.username}</h1>
-          </div>
-        )
-      );
     }
-    getUsername();
+    getInfo();
   }, [userId]);
   return (
-    ((userId && username !== "") || (!userId && user.username)) && (
+    username && (
       <div>
-        <h1>Welcome back, {userId ? username : user.username}</h1>
+        <h1>Welcome back, {username}</h1>
+        <ul>
+          {favlist.map((id, idx) => (
+            <li key={`user_prof_fav_id_${idx}`}>{id}</li>
+          ))}
+        </ul>
       </div>
     )
   );

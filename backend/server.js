@@ -4,14 +4,10 @@ import dotenv from "dotenv";
 import cp from "cookie-parser";
 import connectDB from "./connectDb.js";
 import recipeHandler from "./handlers/recipeHandler.js";
-import {
-  getUser,
-  setUser,
-  auth,
-  login,
-  logout,
-} from "./handlers/userHandler.js";
+import { getUser, setUser } from "./handlers/userHandler.js";
+import { auth, login, logout } from "./handlers/authHandler.js";
 import { handleError, errorConvert } from "./middleware/errorHandler.js";
+import { getFav, testFav, modifyFav } from "./handlers/favHandler.js";
 
 connectDB();
 dotenv.config({ path: "backend/config.env" });
@@ -23,12 +19,20 @@ app.use(cp());
 app.use("/dev", express.static(path.join(CWD, "dev")));
 app.use("/frontend", express.static(path.join(CWD, "frontend")));
 app.get("/api/recipe/:recipeId", recipeHandler);
+
 app.post("/api/user", setUser);
 app.get("/api/user/:userId", getUser);
 app.get("/api/user", auth, getUser);
 app.use("/api/user", errorConvert, handleError);
+
+app.get("/api/fav", auth, getFav);
+app.get("/api/fav/user/:userId", auth, getFav);
+app.get("/api/fav/recipe/:recipeId", auth, testFav);
+app.post("/api/fav", auth, modifyFav);
+
 app.post("/api/login", login);
 app.get("/api/logout", logout);
+
 app.get("*", (req, res, next) => {
   console.log("Request received");
   res.sendFile(path.join(CWD, "index.html"));

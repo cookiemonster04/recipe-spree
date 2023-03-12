@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const Recipe = ({ recipeId }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar as SStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as RStar } from "@fortawesome/free-regular-svg-icons";
+import "./Recipe.css";
+
+const Recipe = ({ user, recipeId }) => {
   const [recipeInfo, setRecipeInfo] = useState();
+  const [star, setStar] = useState(null);
   // load recipe json
   useEffect(() => {
     async function getInfo() {
@@ -10,10 +16,33 @@ const Recipe = ({ recipeId }) => {
     }
     getInfo();
   }, []);
+  useEffect(() => {
+    if (!user) return;
+    axios.get(`/api/fav/recipe/${recipeId}`).then((res) => {
+      setStar(res.data.found);
+    });
+  }, [user]);
+  useEffect(() => {
+    if (!user || star === null) return;
+    axios.post(`/api/fav`, {
+      recipeId: recipeId,
+      insert: star,
+    });
+  }, [star]);
   return (
     recipeInfo && (
       <div className="recipe">
-        <h1>{recipeInfo.title}</h1>
+        <h1>
+          {recipeInfo.title}{" "}
+          {star !== null && (
+            <FontAwesomeIcon
+              className={star ? "filled" : "empty"}
+              icon={star ? SStar : RStar}
+              size="lg"
+              onClick={() => setStar((cstar) => !cstar)}
+            />
+          )}
+        </h1>
         <img src={recipeInfo.image} />
         <div className="recipe-ingredients">
           <h2>Ingredients:</h2>

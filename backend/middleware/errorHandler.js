@@ -1,4 +1,7 @@
 const setError = (status, message, res, next) => {
+  if (status >= 500) {
+    console.log(message);
+  }
   if (res.locals && res.locals.error) {
     res.locals.error.status = status;
     res.locals.error.errors.push(message);
