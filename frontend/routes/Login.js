@@ -3,14 +3,14 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import "./Signup.css";
+import "./Login.css";
 
 const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
   return (
     <div className="inputContainer">
       <input
         className="input"
-        id={`signup_${name}`}
+        id={`login_${name}`}
         type={type}
         value={formValue}
         onChange={(e) => {
@@ -18,14 +18,14 @@ const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
         }}
         placeholder={placeholder}
       ></input>
-      <label htmlFor={`signup_${name}`} className="label">
+      <label htmlFor={`login_${name}`} className="label">
         {name.charAt(0).toUpperCase() + name.slice(1) + ":"}
       </label>
     </div>
   );
 };
 
-const Signup = ({ user, setUser }) => {
+const Login = ({ user, setUser }) => {
   if (user) {
     return <Navigate to="/profile" />;
   }
@@ -37,15 +37,16 @@ const Signup = ({ user, setUser }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("/api/user", {
+      .post("/api/login", {
         username: username,
         password: password,
       })
       .then(
         (response) => {
+          // add a redirect to a success page instead of just showing confirmation message above submit
           setIsError(false);
-          setUser(response.data.user);
           setSubmitted(true);
+          setUser(response.data.user);
         },
         (error) => {
           if (error.response.message == "Network Error") {
@@ -61,10 +62,10 @@ const Signup = ({ user, setUser }) => {
   return (
     <>
       {submitted && <Navigate to="/profile" />}
-      <div className="signupFrm">
+      <div className="loginFrm">
         <form className="form" onSubmit={handleSubmit}>
           <div className="title-container">
-            <h1 className="title">Sign up</h1>
+            <h1 className="title">Log in</h1>
             <FontAwesomeIcon icon={faUserPlus} size="lg" />
           </div>
           <Item
@@ -72,28 +73,28 @@ const Signup = ({ user, setUser }) => {
             type="text"
             formValue={username}
             setFormValue={setUsername}
-            placeholder=""
+            placeholder="a"
           />
           <Item
             name="password"
             type="password"
             formValue={password}
             setFormValue={setPassword}
-            placeholder=""
+            placeholder="a"
           />
           <label
-            htmlFor="signup_submit"
+            htmlFor="login_submit"
             className={isError ? "no-msg" : "yes-msg"}
           >
             {messages.split("\n").map((msg, idx) => {
-              return <div key={`signup_msg_${idx}`}>{msg}</div>;
+              return <div key={`login_msg_${idx}`}>{msg}</div>;
             })}
           </label>
           <input
-            id="signup_submit"
+            id="login_submit"
             type="submit"
             className="submitBtn"
-            value="Sign up"
+            value="Login"
           ></input>
         </form>
       </div>
@@ -101,4 +102,4 @@ const Signup = ({ user, setUser }) => {
   );
 };
 
-export default Signup;
+export default Login;

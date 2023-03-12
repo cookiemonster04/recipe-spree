@@ -1,0 +1,130 @@
+.survey-title {
+    text-align: center;
+}
+
+.survey-description {
+    text-align:center;
+}
+
+.full-board-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-container {
+    display: flex;
+    width: 50%;
+    padding: 1.25rem;
+    align-items: center;
+}
+
+.input-title {
+    flex: 1;
+    text-align: center;
+    margin:0;
+}
+
+.ingredient-input {
+    width: 100%;
+    min-width: 0px;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    position: relative;
+    appearance: none;
+    font-size: 1rem;
+    height: 2.5rem;
+    border-radius: 0.375rem;
+    border: 1px solid;
+    border-color: lightgrey;
+    background: inherit;
+    flex: 4;
+
+}
+
+.ingredient-input:focus-visible {
+    z-index: 1;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 1px #3182ce;
+}
+
+.add-button {
+    display: inline-flex;
+    appearance: none;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    outline: 2px solid transparent;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    height: 2.5rem;
+    min-width: 2rem;
+    font-size: 1rem;
+    margin-inline-start: 0.75rem;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: #48BB78;
+    color: white;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background-color: #e2e8f0;
+}
+
+.four-col-container {
+    display: flex;
+    flex: 3;
+}
+
+.one-lane-container {
+    display: flex;
+    flex: 3;
+    padding: 1.25rem;
+    flex-direction: column;
+    min-height: 10rem;
+}
+
+.lane-title {
+    font-weight: 700;
+    margin: 0;
+}
+
+.lane-container-inner {
+    display: flex;
+    flex-direction: column;
+    background-color: #e2e8f0;
+    border-radius: 8px;
+    flex: 1;
+    padding: 0.5rem;
+}
+
+.ingredient-container {
+    display: flex;
+    padding: 0.75rem;
+    background-color: white;
+    margin: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px 2px #2121213b;
+    cursor: pointer;
+}
+
+.survey-submit {
+    margin-left: 1.25rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    min-width: 2rem;
+    font-size: 1rem;
+    padding: 10px;
+    background-color: #48BB78;
+    color: white;
+    cursor: pointer;
+}
+
+.survey-submit:hover {
+    background-color: #e2e8f0;
+}
+
+.center-input {
+    display: flex;
+    justify-content: center;
+}

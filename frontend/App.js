@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { getPosts } from "./api/axios";
+import axios from "axios";
 import ListPage from "./components/ListPage";
 import Navbar from "./components/Navbar";
 import Home from "./routes/Home";
 import Explore from "./routes/Explore";
-import Recipe from "./routes/RecipePage";
+import RecipePage from "./routes/RecipePage";
 import Signup from "./routes/Signup";
-import Profile from "./routes/ProfilePage"
+import { ProfilePage, ProfileHome } from "./routes/ProfilePage";
+import Login from "./routes/Login";
+import Logout from "./routes/Logout";
 import "./App.css";
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
   const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
-
   useEffect(() => {
     getPosts()
       .then((json) => {
@@ -26,7 +28,17 @@ function App() {
         setSearchResults(json);
       });
   }, []);
-
+  const solveCookie = () => {
+    axios.get("/api/user").then(
+      (ret) => {
+        setUser(ret.data);
+      },
+      (err) => console.log(err)
+    );
+  };
+  useEffect(() => {
+    solveCookie();
+  }, []);
   const toggleTheme = () => {
     if (theme === "light") {
       setTheme("dark");
@@ -46,19 +58,29 @@ function App() {
         handleTheme={toggleTheme}
         posts={posts}
         setSearchResults={setSearchResults}
+        user={user}
       />
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/recipe/:recipeId" element={<Recipe />} /> {/* shouldn't it be RecipePage? */}
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/profile/:userId" element={<Profile />} /> {/* shouldn't it be ProfilePage? */}
+          <Route path="/recipe/:recipeId" element={<RecipePage />} />
+          <Route
+            path="/signup"
+            element={<Signup user={user} setUser={setUser} />}
+          />
+          <Route path="/profile" element={<ProfileHome user={user} />} />
+          <Route path="/profile/:userId" element={<ProfilePage />} />
+          <Route
+            path="/login"
+            element={<Login user={user} setUser={setUser} />}
+          />
+          <Route path="/logout" element={<Logout setUser={setUser} />} />
         </Routes>
       </div>
-      <ListPage searchResults={searchResults} />
     </div>
   );
 }
 
 export default App;
+/*      <ListPage searchResults={searchResults} /> Re-add this into above div */
