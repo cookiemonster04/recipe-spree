@@ -78,9 +78,9 @@ function App() {
           <Route path="/logout" element={<Logout setUser={setUser} />} />
         </Routes>
       </div>
-      <ListPage searchResults={searchResults} />
     </div>
   );
 }
 
 export default App;
+/*      <ListPage searchResults={searchResults} /> Re-add this into above div */
