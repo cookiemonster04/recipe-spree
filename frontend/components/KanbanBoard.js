@@ -12,18 +12,14 @@ export default function KanbanBoard() {
         {title:"spinach"},
         {title:"egg"},
         {title:"rice"},
-        {title:"mushroom"},
-        {title:"peanut"},
     ])
     const [likeItems, setLikeItems] = useState([
         {title:"pork"},
         {title:"beef"},
         {title:"cheese"},
         {title:"garlic"},
-        {title:"orange"},
         {title:"turkey"},
-        {title:"coconut"},
-        {title:"yogurt"},
+        {title:"peanut"},
     ])
     const [dislikeItems, setDislikeItems] = useState([
         {title:"tomato"},
@@ -32,16 +28,14 @@ export default function KanbanBoard() {
         {title:"pasta"},
         {title:"onion"},
         {title:"corn"},
-        {title:"beet"},
     ])
     const [allergicItems, setAllergicItems] = useState([
         {title:"olive"},
         {title:"tuna"},
-        {title:"lentils"},
         {title:"chile"},
         {title:"broth"},
         {title:"bacon"},
-        {title:"strawberry"}
+        {title:"mushroom"},
     ])
 
     const addNewCard = (title) => {

@@ -1,9 +1,8 @@
 import React from 'react';
-import KanbanBoard from "../components/KanbanBoard"
 import "./Home.css"
 
 const Home = () => {
-  return <KanbanBoard/>
+  return <h1 className="home-title">Home Page</h1>
 }
 
 export default Home;

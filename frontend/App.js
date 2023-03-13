@@ -5,6 +5,7 @@ import axios from "axios";
 import ListPage from "./components/ListPage";
 import Navbar from "./components/Navbar";
 import Home from "./routes/Home";
+import Survey from "./routes/Survey"
 import Explore from "./routes/Explore";
 import RecipePage from "./routes/RecipePage";
 import Signup from "./routes/Signup";
@@ -63,6 +64,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/survey" element={<Survey/>}/>
           <Route path="/explore" element={<Explore />} />
           <Route
             path="/recipe/:recipeId"

@@ -15,7 +15,6 @@ const Explore = () => {
     beef: false,
     cheese: false,
     garlic: false,
-    orange: false,
     turkey: false,
     tomato: false,
     potato: false,
@@ -25,16 +24,11 @@ const Explore = () => {
     corn: false,
     olive: false,
     tuna: false,
-    lentils: false,
     chile: false,
     broth: false,
     bacon: false,
     mushroom: false,
-    coconut: false,
-    beet: false,
-    strawberry: false,
     peanut: false,
-    yogurt: false,
   }
 
   const [formData, setFormData] = useState(initialList);
@@ -91,12 +85,25 @@ const Explore = () => {
     updateExclude(name, isChecked);
   }
 
-  function handleSubmit(e) {
-
+  async function handleSubmit(e) {
     e.preventDefault();
+
     console.log(include);
     console.log(exclude);
-    //search(include, exclude);
+
+    try {
+      const response = await axios.post('/api/search',
+      {
+        include: include,
+        exclude: exclude,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error.response)
+    }
+
+    //setRecipes(responseData.recipes);
+    //console.log(arrayOfIds);
   }
 
   return (
