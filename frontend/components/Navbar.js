@@ -14,7 +14,7 @@ export default function Navbar({
   return (
     <nav className={getTheme === "light" ? "nav navlight" : "nav navdark"}>
       <NavLink to="/" className="site-title">
-        Site Name
+        RecipeSpree
       </NavLink>
 
       <ul>

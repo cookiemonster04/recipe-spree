@@ -68,7 +68,7 @@ function App() {
           <Route path="/explore" element={<Explore />} />
           <Route
             path="/recipe/:recipeId"
-            element={<RecipePage user={user} />}
+            element={<RecipePage user={user} themeMode={theme} />}
           />
           <Route
             path="/signup"

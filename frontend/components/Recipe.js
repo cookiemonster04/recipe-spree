@@ -1,19 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as SStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as RStar } from "@fortawesome/free-regular-svg-icons";
 import "./Recipe.css";
+import { makeStyles, createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { blue, grey } from "@material-ui/core/colors";
 
-const Recipe = ({ user, recipeId }) => {
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  Avatar,
+  Grid,
+  Paper,
+  Button,
+} from "@material-ui/core";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: "auto",
+    padding: theme.spacing(2),
+    maxWidth: 800,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+  title: {
+    display: "flex",
+    alignItems: "center",
+  },
+  ingredients: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
+  instructions: {
+    marginBottom: theme.spacing(3),
+  },
+  comments: {
+    marginBottom: theme.spacing(3),
+  },
+}));
+
+function Recipe({ user, recipeId, themeMode }) {
+  
+  const classes = useStyles();
+
+  const handleStarClick = () => {
+    setStar((prev) => !prev);
+  };
+
   const [recipeInfo, setRecipeInfo] = useState();
   const [star, setStar] = useState(null);
+  const [commentText, setCommentText] = useState("");
   // load recipe json
   useEffect(() => {
     async function getInfo() {
       const response = await axios.get(`/api/recipe/${recipeId}`);
       setRecipeInfo(response.data.recipe);
-      console.log(response.data);
     }
     getInfo();
   }, []);
@@ -30,6 +78,20 @@ const Recipe = ({ user, recipeId }) => {
       insert: star,
     });
   }, [star]);
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios.post(`/api/comment/${recipeId}`, {
+      text: commentText,
+    });
+    const newComment = response.data.comment;
+    setRecipeInfo((prev) => ({
+      ...prev,
+      comments: [...prev.comments, newComment],
+    }));
+    setCommentText("");
+  };
+  
 
   const rating = 4.5; //change to API call
 
@@ -59,61 +121,96 @@ const Recipe = ({ user, recipeId }) => {
 
   return (
     recipeInfo && (
-      <div className="recipe">
-        <div className="head">
-          <div className="left-head">
-            <div className="recipe-title">
-              <h1>
-                {recipeInfo.title}{" "}
-                {star !== null && (
-                  <FontAwesomeIcon
-                    className={star ? "filled" : "empty"}
-                    icon={star ? SStar : RStar}
-                    size="lg"
-                    onClick={() => setStar((cstar) => !cstar)}
-                  />
-                )}
-              </h1>
-            </div>
-            <div className="rating">{stars}</div>
-          </div>
-          <div className="right-head">
-            <center>
-              <img src={recipeInfo.image} />
-            </center>
-          </div>
-        </div>
-        <div className="recipe-ingredients">
-          <h2>Ingredients:</h2>
-          <ul>
-            {recipeInfo.ingredients.map((item, index) => (
-              <li key={`ingredients-${index}`}>{item.text}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="recipe-instructions">
-          <h2>Instructions:</h2>
-          <ol>
-            {recipeInfo.instructions.map((item, index) => (
-              <li key={`instructions-${index}`}>{item.text}</li>
-            ))}
-          </ol>
-        </div>
-        <div className="recipe-comments">
-          <h2>Comments from users:</h2>
-          {recipeInfo.comments.length > 0 ? (
-            <ol>
-            {recipeInfo.comments.map((item, index) => (
-              <li key={`comments-${index}`}>{item.text}</li>
-            ))}
-          </ol>
-          ):
-          <p>no comment yet.</p>
-          }
-          
-        </div>
-      </div>
-    )
-  );
-};
+      <Paper className={`root ${themeMode === 'light' ? '' : 'dark'}`}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Box display="flex" alignItems="center" justifyContent="space-between">
+              <Typography variant="h4" className={classes.title}>
+                {recipeInfo.title}
+                <FontAwesomeIcon
+                  className={star ? "filled" : "empty"}
+                  icon={star ? SStar : RStar}
+                  size="lg"
+                  onClick={handleStarClick}
+                />
+              </Typography>
+              <Box display="flex" alignItems="center">
+                {stars}
+              </Box>
+            </Box>
+            <Box marginTop={2}>
+              <Typography variant="subtitle1" color="textSecondary" className="subtitle">
+                Ingredients:
+              </Typography>
+              <List className={classes.ingredients}>
+                {recipeInfo.ingredients.map((item, index) => (
+                  <ListItem key={`ingredients-${index}`} dense disableGutters>
+                    <ListItemText primary={item.text} />
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+            <Box>
+              <Typography variant="subtitle1" color="textSecondary" className="subtitle">
+                Instructions:
+              </Typography>
+              <List className={classes.instructions}>
+                {recipeInfo.instructions.map((item, index) => (
+                  <ListItem key={`instructions-${index}`} dense disableGutters>
+                    <ListItemText primary={item.text} />
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box height={300} width={1} position="relative">
+              <img className={classes.image} src={recipeInfo.image} alt={recipeInfo.title} />
+            </Box>
+            <Box className={classes.comments}>
+              <Typography variant="subtitle1" color="textSecondary" className="subtitle">
+                Comments from users:
+              </Typography>
+              {recipeInfo.comments.length > 0 ? (
+                <List>
+                  {recipeInfo.comments.map((comment, index) => (
+                    <React.Fragment key={`comments-${index}`}>
+                      <Divider variant="middle" />
+                      <ListItem dense>
+                        <ListItemText
+                          primary={<Typography variant="body2">{comment.text}</Typography>}
+                        />
+                      </ListItem>
+                    </React.Fragment>
+                  ))}
+                </List>
+              ) : (
+                <Typography variant="body2" color="textSecondary" className="body2">
+                  No comments yet.
+                </Typography>
+              )}
+              {user && (
+                <form onSubmit={handleCommentSubmit}>
+                  <Box marginTop={2}>
+                    <Typography variant="subtitle1" color="textSecondary" className="subtitle">
+                      Leave a comment:
+                    </Typography>
+                    <textarea
+                      value={commentText}
+                      onChange={(e) => setCommentText(e.target.value)}
+                    />
+                    <Box marginTop={1}>
+                      <Button type="submit" variant="contained" color="primary">
+                        Submit
+                      </Button>
+                    </Box>
+                  </Box>
+                </form>)}
+              </Box>
+          </Grid>
+        </Grid>
+      </Paper>
+    ))
+}        
+
 export default Recipe;
