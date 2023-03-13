@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as SStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as RStar } from "@fortawesome/free-regular-svg-icons";
 import "./Recipe.css";
-import { makeStyles, createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { blue, grey } from "@material-ui/core/colors";
 
 import {
   Box,
@@ -18,37 +16,35 @@ import {
   Grid,
   Paper,
   Button,
-} from "@material-ui/core";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: "auto",
-    padding: theme.spacing(2),
-    maxWidth: 800,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  },
-  title: {
-    display: "flex",
-    alignItems: "center",
-  },
-  ingredients: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
-  instructions: {
-    marginBottom: theme.spacing(3),
-  },
-  comments: {
-    marginBottom: theme.spacing(3),
-  },
-}));
+} from "@mui/material";
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     margin: "auto",
+//     padding: theme.spacing(2),
+//     maxWidth: 800,
+//   },
+//   image: {
+//     width: "100%",
+//     height: "100%",
+//     objectFit: "cover",
+//   },
+//   title: {
+//     display: "flex",
+//     alignItems: "center",
+//   },
+//   ingredients: {
+//     marginTop: theme.spacing(3),
+//     marginBottom: theme.spacing(3),
+//   },
+//   instructions: {
+//     marginBottom: theme.spacing(3),
+//   },
+//   comments: {
+//     marginBottom: theme.spacing(3),
+//   },
+// }));
 
 function Recipe({ user, recipeId, themeMode }) {
-  
-  const classes = useStyles();
 
   const handleStarClick = () => {
     setStar((prev) => !prev);
@@ -125,7 +121,7 @@ function Recipe({ user, recipeId, themeMode }) {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Box display="flex" alignItems="center" justifyContent="space-between">
-              <Typography variant="h4" className={classes.title}>
+              <Typography variant="h4" className="title" textAlign="left">
                 {recipeInfo.title}
                 <FontAwesomeIcon
                   className={star ? "filled" : "empty"}
@@ -134,15 +130,15 @@ function Recipe({ user, recipeId, themeMode }) {
                   onClick={handleStarClick}
                 />
               </Typography>
-              <Box display="flex" alignItems="center">
+            </Box>
+            <Box display="flex" alignItems="center" paddingLeft={1}>
                 {stars}
-              </Box>
             </Box>
             <Box marginTop={2}>
               <Typography variant="subtitle1" color="textSecondary" className="subtitle">
                 Ingredients:
               </Typography>
-              <List className={classes.ingredients}>
+              <List className="ingredients">
                 {recipeInfo.ingredients.map((item, index) => (
                   <ListItem key={`ingredients-${index}`} dense disableGutters>
                     <ListItemText primary={item.text} />
@@ -154,7 +150,7 @@ function Recipe({ user, recipeId, themeMode }) {
               <Typography variant="subtitle1" color="textSecondary" className="subtitle">
                 Instructions:
               </Typography>
-              <List className={classes.instructions}>
+              <List className="instructions">
                 {recipeInfo.instructions.map((item, index) => (
                   <ListItem key={`instructions-${index}`} dense disableGutters>
                     <ListItemText primary={item.text} />
@@ -165,9 +161,9 @@ function Recipe({ user, recipeId, themeMode }) {
           </Grid>
           <Grid item xs={12} md={6}>
             <Box height={300} width={1} position="relative">
-              <img className={classes.image} src={recipeInfo.image} alt={recipeInfo.title} />
+              <img className="image" src={recipeInfo.image} alt={recipeInfo.title}/>
             </Box>
-            <Box className={classes.comments}>
+            <Box className="comments">
               <Typography variant="subtitle1" color="textSecondary" className="subtitle">
                 Comments from users:
               </Typography>
