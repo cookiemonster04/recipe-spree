@@ -99,6 +99,19 @@ const Recipe = ({ user, recipeId }) => {
             ))}
           </ol>
         </div>
+        <div className="recipe-comments">
+          <h2>Comments from users:</h2>
+          {recipeInfo.comments.length > 0 ? (
+            <ol>
+            {recipeInfo.comments.map((item, index) => (
+              <li key={`comments-${index}`}>{item.text}</li>
+            ))}
+          </ol>
+          ):
+          <p>no comment yet.</p>
+          }
+          
+        </div>
       </div>
     )
   );
