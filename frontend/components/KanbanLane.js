@@ -2,6 +2,8 @@ import React from "react"
 import { useDroppable } from "@dnd-kit/core"
 import { useDraggable } from "@dnd-kit/core"
 import { CSS } from "@dnd-kit/utilities"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faThumbsUp, faThumbsDown, faHandDots } from "@fortawesome/free-solid-svg-icons";
 
 const KanbanItem = ({title, index, parent}) => {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -30,14 +32,19 @@ const KanbanItem = ({title, index, parent}) => {
     );
 };
 
-export default function KanbanLane({ title, items }){
+export default function KanbanLane({ title, items, ind }){
     const { setNodeRef } = useDroppable({
         id: title
     });
 
+    const icons = [<FontAwesomeIcon icon={faHeart} />, <FontAwesomeIcon icon={faThumbsUp}/>, <FontAwesomeIcon icon={faThumbsDown} />, <FontAwesomeIcon icon={faHandDots} />]
+
     return (
         <div className="one-lane-container">
-            <p className="lane-title">{title}</p>
+            <div className="title-container">
+                {icons[ind]}
+                <p className="lane-title">{title}</p>
+            </div>
             <div
                 ref={setNodeRef}
                 className="lane-container-inner"

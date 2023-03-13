@@ -84,9 +84,14 @@
     min-height: 10rem;
 }
 
+.title-container {
+    display: flex;
+    flex-direction: row;
+}
+
 .lane-title {
     font-weight: 700;
-    margin: 0;
+    margin: 0 0 0 5px;
 }
 
 .lane-container-inner {
@@ -106,6 +111,10 @@
     border-radius: 8px;
     box-shadow: 0px 0px 5px 2px #2121213b;
     cursor: pointer;
+}
+
+.ingredient-container:hover {
+    box-shadow: 0px 0px 5px 2px #41B3A3;
 }
 
 .survey-submit {

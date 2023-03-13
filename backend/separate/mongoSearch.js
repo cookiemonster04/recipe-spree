@@ -27,7 +27,7 @@ async function search(desired, undesired)
     return sortedResults.map(result => result.id);
 }
 
-async function addDesired(desired) 
+async function addDesired(desired)
 {
     let finished = false;
     setTimeout(() => {

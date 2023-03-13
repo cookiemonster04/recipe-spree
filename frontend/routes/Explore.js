@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Explore.css'
 
 const Explore = () => {
   const [include, setInclude] = useState([]);
@@ -109,7 +110,7 @@ const Explore = () => {
   return (
     <div className="ingredient-form-container">
       <form onSubmit={ handleSubmit } className="ingredient-form">
-        <h1 className="title">Craft your Favorite Recipe Ingredients!</h1>
+        <h1 className="title">Discover your next favorite recipe!</h1>
         <div className="ingredient-grid">
           <h2 className="include-exclude">Include:</h2>
           <h2 className="include-exclude">Exclude:</h2>
@@ -141,7 +142,7 @@ const Explore = () => {
           </div>
         </div>
         <div className="submit-container">
-          <button>
+          <button className="checklist-submit">
             Submit
           </button>
         </div>

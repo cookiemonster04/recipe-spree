@@ -108,10 +108,10 @@ export default function KanbanBoard() {
           <div className="full-board-container">
             <AddCard addCard={addNewCard} />
             <div className="four-col-container">
-              <KanbanLane title="Love" items={loveItems} />
-              <KanbanLane title="Like" items={likeItems} />
-              <KanbanLane title="Dislike" items={dislikeItems} />
-              <KanbanLane title="Allergic" items={allergicItems} />
+              <KanbanLane title="Love" items={loveItems} ind={0}/>
+              <KanbanLane title="Like" items={likeItems} ind={1}/>
+              <KanbanLane title="Dislike" items={dislikeItems} ind={2}/>
+              <KanbanLane title="Allergic" items={allergicItems} ind={3}/>
             </div>
           </div>
         </DndContext>
@@ -119,30 +119,3 @@ export default function KanbanBoard() {
         </>
       );
 }
-
-/*
-          <div className="full-board-container">
-            <AddCard addCard={addNewCard} />
-            <div className="board-top-container">
-              <KanbanLane title="Love" items={loveItems} />
-              <KanbanLane title="Like" items={likeItems} />
-              <KanbanLane title="Dislike" items={dislikeItems} />
-              <KanbanLane title="Allergic" items={allergicItems} />
-            </div>
-          </div>
-        </DndContext>
-        <button onClick={ submitArrays }>Submit</button>
-
-
-          <Flex flexDirection="column">
-            <AddCard addCard={addNewCard} />
-            <Flex flex="3">
-              <KanbanLane title="Love" items={loveItems} />
-              <KanbanLane title="Like" items={likeItems} />
-              <KanbanLane title="Dislike" items={dislikeItems} />
-              <KanbanLane title="Allergic" items={allergicItems} />
-            </Flex>
-          </Flex>
-        </DndContext>
-        <button onClick={ submitArrays }>Submit</button>
-*/
