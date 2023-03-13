@@ -12,7 +12,8 @@ const Recipe = ({ user, recipeId }) => {
   useEffect(() => {
     async function getInfo() {
       const response = await axios.get(`/api/recipe/${recipeId}`);
-      setRecipeInfo(response.data);
+      setRecipeInfo(response.data.recipe);
+      console.log(response.data);
     }
     getInfo();
   }, []);
