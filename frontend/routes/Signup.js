@@ -72,14 +72,14 @@ const Signup = ({ user, setUser }) => {
             type="text"
             formValue={username}
             setFormValue={setUsername}
-            placeholder=""
+            placeholder="a"
           />
           <Item
             name="password"
             type="password"
             formValue={password}
             setFormValue={setPassword}
-            placeholder=""
+            placeholder="a"
           />
           <label
             htmlFor="signup_submit"
