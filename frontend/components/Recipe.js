@@ -53,6 +53,8 @@ function Recipe({ user, recipeId, themeMode }) {
   const [recipeInfo, setRecipeInfo] = useState();
   const [star, setStar] = useState(null);
   const [commentText, setCommentText] = useState("");
+  const [userRating, setUserRating] = useState(-1); //need to update with APi call
+
   // load recipe json
   useEffect(() => {
     async function getInfo() {
@@ -88,15 +90,20 @@ function Recipe({ user, recipeId, themeMode }) {
     setCommentText("");
   };
   
+  let rating;
+  if (userRating < 0) {
+    rating = 4.5; //change to API call for average rating
+  }
+  else {
+    rating = userRating;
+  }
 
-  const rating = 4.5; //change to API call
 
   let stars = [];
   for (let i = 1; i <= 5; i++) {
     let id = i;
-    let fill;
+    let fill = "none";
     if (i < rating) fill = "#737178";
-    else fill = "none";
     stars.push(
       <svg
         key={id}
@@ -115,6 +122,16 @@ function Recipe({ user, recipeId, themeMode }) {
     );
   }
 
+  let ratingDisplay = (userRating >= 0) ?
+  ('') : (
+  <Box display="flex" alignItems="center" paddingLeft={1} paddingTop={2}>
+    <Typography variant="p" className="avgRating" textAlign="left" paddingRight={2}>
+      Average users' rating:
+    </Typography>
+    {stars}
+  </Box>
+  );
+
   return (
     recipeInfo && (
       <Paper className={`root ${themeMode === 'light' ? '' : 'dark'}`}>
@@ -131,9 +148,7 @@ function Recipe({ user, recipeId, themeMode }) {
                 />
               </Typography>
             </Box>
-            <Box display="flex" alignItems="center" paddingLeft={1}>
-                {stars}
-            </Box>
+            {ratingDisplay}
             <Box marginTop={2}>
               <Typography variant="subtitle1" color="textSecondary" className="subtitle">
                 Ingredients:
