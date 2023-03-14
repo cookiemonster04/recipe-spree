@@ -38,7 +38,7 @@ app.get("/api/logout", logout);
 
 app.post("/api/search", searchHandler);
 
-app.post("/api/recentRecipe", recentHandler);
+app.post("/api/recentRecipe", auth, recentHandler);
 
 app.post("/api/addStar", addStarHandler);
 app.post("/api/removeStar", removeStarHandler);
