@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 const {Recipe, Recommended} = require('./recipeSchema.js');
 const connectDB = require('../connectDb.js');
 
-
-
+connectDB();
 Recipe.find({}, function (err, count) 
 {
     if (err) throw err;

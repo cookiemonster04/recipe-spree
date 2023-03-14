@@ -1,6 +1,7 @@
 //Functions where the user interacts with recipes
 //const mongoose = require("mongoose");
 const {Recipe, Recommended} = require('./recipeSchema.js');
+import { catchWrap } from "../middleware/errorHandler.js";
 
 //Frontend should probably check if star is already clicked or not
 //Then call addStar or removeStar accordingly
@@ -15,6 +16,12 @@ async function addStar(itemID)
     );
 }
 
+const addStarHandler = catchWrap(async (req, res, next) => {
+    const { itemID } = req.body;
+    await addStar(itemID);
+    res.status(200).send("Star added successfully");
+  });
+
 async function removeStar(itemID) 
 {
     Recipe.findOneAndUpdate(
@@ -26,6 +33,12 @@ async function removeStar(itemID)
     );
 }
 
+const removeStarHandler = catchWrap(async (req, res, next) => {
+    const { itemID } = req.body;
+    await removeStar(itemID);
+    res.status(200).send("Star removed successfully");
+  });
+
 async function addComment(itemID, comment) 
 {
     Recipe.findOneAndUpdate(
@@ -36,6 +49,12 @@ async function addComment(itemID, comment)
         { if (err) throw err; }
     );
 }
+
+const addCommentHandler = catchWrap(async (req, res, next) => {
+    const { itemID, comment } = req.body;
+    await addComment(itemID, comment);
+    res.status(200).send("Comment added successfully");
+  });
 
 async function addRating(itemID, newRating) 
 {
@@ -49,4 +68,12 @@ async function addRating(itemID, newRating)
         { if (err) throw err; }
     );
 }
-module.exports = {addStar, removeStar, addComment, addRating};
+
+const addRatingHandler = catchWrap(async (req, res, next) => {
+    const { itemID, newRating } = req.body;
+    addRating(itemID, newRating);
+    res.status(200).send("Rating added successfully");
+  });
+
+export {addStar, removeStar, addComment, addRating, 
+        addStarHandler, removeStarHandler, addCommentHandler, addRatingHandler};
