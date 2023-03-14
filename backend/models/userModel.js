@@ -1,10 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
-
 const model_name = "User";
 
 const passwordCheck = (password) => {
-  const errors = [];
+  const errors = []
   if (password === "") {
     errors.push("Please specify a password");
     return errors;
@@ -71,6 +70,7 @@ const userSchema = new Schema({
   last: String,
   postIds: [String],
   favorites: [String],
+  recentlyViewed: [String]
 });
 
 userSchema.methods.generateJWT = function () {
