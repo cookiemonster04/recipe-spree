@@ -17,49 +17,36 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     margin: "auto",
-//     padding: theme.spacing(2),
-//     maxWidth: 800,
-//   },
-//   image: {
-//     width: "100%",
-//     height: "100%",
-//     objectFit: "cover",
-//   },
-//   title: {
-//     display: "flex",
-//     alignItems: "center",
-//   },
-//   ingredients: {
-//     marginTop: theme.spacing(3),
-//     marginBottom: theme.spacing(3),
-//   },
-//   instructions: {
-//     marginBottom: theme.spacing(3),
-//   },
-//   comments: {
-//     marginBottom: theme.spacing(3),
-//   },
-// }));
 
 function Recipe({ user, recipeId, themeMode }) {
-
-  const handleStarClick = () => {
-    setStar((prev) => !prev);
-  };
 
   const [recipeInfo, setRecipeInfo] = useState();
   const [star, setStar] = useState(null);
   const [commentText, setCommentText] = useState("");
   const [userRating, setUserRating] = useState(-1); //need to update with APi call
+  const [numFav, setNumFav] = useState(0)
+
+  const handleStarClick = async () => {
+    try {
+      if (star === true) {
+        await axios.post(`/api/removeStar`, {itemID: recipeId});
+        setNumFav(numFav - 1);
+      } else {
+        await axios.post(`/api/addStar`, {itemID: recipeId});
+        setNumFav(numFav + 1);
+      }
+      setStar((prev) => !prev);
+    } catch (error) {
+      console.error(error)
+    }
+  };
 
   // load recipe json
   useEffect(() => {
     async function getInfo() {
       const response = await axios.get(`/api/recipe/${recipeId}`);
       setRecipeInfo(response.data.recipe);
+      setNumFav(response.data.recipe.favorites)
     }
     getInfo();
   }, []);
@@ -79,15 +66,19 @@ function Recipe({ user, recipeId, themeMode }) {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(`/api/comment/${recipeId}`, {
-      text: commentText,
-    });
-    const newComment = response.data.comment;
-    setRecipeInfo((prev) => ({
-      ...prev,
-      comments: [...prev.comments, newComment],
-    }));
-    setCommentText("");
+    try {
+      await axios.post(`/api/addComment`, {
+        itemID: recipeId,
+        comment: commentText,
+      });
+      setRecipeInfo({
+        ...recipeInfo,
+        comments: [...recipeInfo.comments, {text: commentText}]
+      })
+      setCommentText("");
+    } catch (error) {
+      console.error(error);
+    }
   };
   
   let rating;
@@ -122,16 +113,6 @@ function Recipe({ user, recipeId, themeMode }) {
     );
   }
 
-  let ratingDisplay = (userRating >= 0) ?
-  ('') : (
-  <Box display="flex" alignItems="center" paddingLeft={1} paddingTop={2}>
-    <Typography variant="p" className="avgRating" textAlign="left" paddingRight={2}>
-      Average users' rating:
-    </Typography>
-    {stars}
-  </Box>
-  );
-
   return (
     recipeInfo && (
       <Paper className={`root ${themeMode === 'light' ? '' : 'dark'}`}>
@@ -148,7 +129,19 @@ function Recipe({ user, recipeId, themeMode }) {
                 />
               </Typography>
             </Box>
-            {ratingDisplay}
+            {rating >= 0 && (
+            <Box display="flex" alignItems="center" paddingLeft={1} paddingTop={2}>
+              <Typography variant="p" className="avgRating" textAlign="left" paddingRight={2}>
+                Average users' rating:
+              </Typography>
+              {stars}
+            </Box>
+            )}
+            <Box display="flex" alignItems="center" paddingLeft={1} paddingTop={2}>
+              <Typography variant="p" className="avgRating" textAlign="left" paddingRight={2}>
+                {`${numFav} users favorite this recipe.`}
+              </Typography>
+            </Box>
             <Box marginTop={2}>
               <Typography variant="subtitle1" color="textSecondary" className="subtitle">
                 Ingredients:
