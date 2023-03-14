@@ -115,18 +115,20 @@ function Recipe({ user, recipeId, themeMode }) {
 
   return (
     recipeInfo && (
-      <Paper className={`root ${themeMode === 'light' ? '' : 'dark'}`}>
+      <Paper className={`root ${themeMode === 'light' ? '' : 'dark'}`} elevation={3}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Box display="flex" alignItems="center" justifyContent="space-between">
               <Typography variant="h4" className="title" textAlign="left">
                 {recipeInfo.title}
-                <FontAwesomeIcon
+                {user && (
+                  <FontAwesomeIcon
                   className={star ? "filled" : "empty"}
                   icon={star ? SStar : RStar}
                   size="lg"
                   onClick={handleStarClick}
                 />
+                )}
               </Typography>
             </Box>
             {rating >= 0 && (
