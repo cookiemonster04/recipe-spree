@@ -71,7 +71,7 @@ async function addRating(itemID, newRating)
 
 const addRatingHandler = catchWrap(async (req, res, next) => {
     const { itemID, newRating } = req.body;
-    addRating(itemID, newRating);
+    await addRating(itemID, newRating);
     res.status(200).send("Rating added successfully");
   });
 

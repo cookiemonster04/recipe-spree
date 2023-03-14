@@ -1,17 +1,9 @@
 //Function meant to be called only once when after the user completes the initial survey
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const User = require('../models/userModel.js');
-const connectDB = require('../connectDb.js');
+//const connectDB = require('../connectDb.js');
+import { catchWrap } from "../middleware/errorHandler.js";
 
-const love = ["brocolli", "butter", "chicken", "spinach", "egg", "rice", "pork", "beef"];
-const like = ["cheese", "garlic", "orange", "turkey", "tomato", "potato", "milk", "pasta"];
-const dislike = ["onion", "corn", "olive", "tuna", "lentils", "chile", "broth", "bacon"];
-const blacklisted = ["mushroom", "coconut", "beet", "strawberry", "peanut", "yogurt"];
-
-const sets = [love, like, dislike, blacklisted];
-
-connectDB();
-surveyAdjuster("aaa", sets);
 
 async function surveyAdjuster(selectedUsername, sets) 
 {
@@ -49,4 +41,12 @@ async function surveyAdjuster(selectedUsername, sets)
         });
 }
 
-module.exports = surveyAdjuster;
+
+const surveyHandler = catchWrap(async (req, res, next) => {
+    const { selectedUsername, sets } = req.body;
+    await surveyAdjuster(selectedUsername, sets);
+    res.status(200).send("Received survey data");
+});
+
+
+export { surveyAdjuster, surveyHandler };

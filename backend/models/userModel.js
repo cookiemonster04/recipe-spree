@@ -37,6 +37,17 @@ const messageGenerator = (errors) => {
   }
 };
 
+const ingredientSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  rating: {
+    type: Number,
+    required: false
+  }
+});
+
 const userSchema = new Schema({
   username: {
     type: String,
@@ -70,7 +81,10 @@ const userSchema = new Schema({
   last: String,
   postIds: [String],
   favorites: [String],
-  recentlyViewed: [String]
+  recentlyViewed: [String],
+  numRecipes: [Number],
+  ingredients: [ingredientSchema],
+  blacklistedIngredients: [ingredientSchema]
 });
 
 userSchema.methods.generateJWT = function () {

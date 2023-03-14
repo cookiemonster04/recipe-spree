@@ -1,10 +1,10 @@
 //Meant to be called after a user is finished with a recipe and leaves a review
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const User = require('../models/userModel.js');
 const {Recipe, Recommended} = require('../separate/recipeSchema.js');
-const connectDB = require('../connectDb.js');
+//const connectDB = require('../connectDb.js');
+import { catchWrap } from "../middleware/errorHandler.js";
 
-recipeRecommender("aaa");
 
 async function recipeRecommender(selectedUsername)
 {
@@ -64,3 +64,10 @@ async function addScore(ingredient)
         );
     });
 }
+
+const recommendHandler = catchWrap(async (req, res, next) => {
+    const { selectedUsername } = req.body;
+    res.status(200).json(await recipeRecommender(selectedUsername));
+});
+
+export { recipeRecommender, recommendHandler };

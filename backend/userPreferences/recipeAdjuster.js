@@ -1,17 +1,32 @@
 //Meant to be called after a user is finished with a recipe and leaves a review
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const User = require('../models/userModel.js');
-const connectDB = require('../connectDb.js');
-const { userInfo } = require("os");
+const {Recipe, Recommended} = require('../separate/recipeSchema.js');
+import { catchWrap } from "../middleware/errorHandler.js";
+//const connectDB = require('../connectDb.js');
+//const { userInfo } = require("os");
 
-const ingredientsList = ["water", "water2", "water3"];
-
-connectDB();
-recipeAdjuster("aaa", ingredientsList, 5);
 
 //Score should be on a scale from 0 to 10
-async function recipeAdjuster(selectedUsername, ingredientsList, score) 
+async function recipeAdjuster(selectedUsername, recipeId, score) 
 {
+    const user = await User.findOne({ username: selectedUsername });
+    let ingredientsList = [];
+    console.log(user.ingredients.length);
+    for (const element of user.ingredients) {
+        const regex = new RegExp(element.name, "i");
+        const matches = await new Promise((resolve, reject) => {
+            Recipe.findOne({ "ingredients.text": regex, id: recipeId }, function (err, matches) {
+                if (err) return reject(err);
+                if (matches)
+                {
+                    ingredientsList.push(element.name);
+                }
+                resolve(matches);
+                })
+            });
+        };
+    console.log(ingredientsList);
     ingredientsList.forEach(element =>
         {
             updateOrCreate(selectedUsername, element, score);
@@ -22,8 +37,15 @@ async function recipeAdjuster(selectedUsername, ingredientsList, score)
         { $inc: { numRecipes: 1 } },
         { new: true }, 
         function (err, count) 
-        { if (err) throw err; }
+        { if (err) throw err;}
     );
+    User.findOne({ username: "aaa" }, function (err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(user);
+        }
+    });
 }
 
 async function updateOrCreate(selectedUsername, ingredient, score)
@@ -90,4 +112,11 @@ async function lerp(oldRating, newRating, selectedUsername)
     return rating;
 }
 
-module.exports = recipeAdjuster;
+
+const adjusterHandler = catchWrap(async (req, res, next) => {
+    const { selectedUsername, ingredientsList, score } = req.body;
+    await recipeAdjuster(selectedUsername, ingredientsList, score);
+    res.status(200).send("Ratings adjusted successfully");
+});
+
+export { recipeAdjuster, adjusterHandler };

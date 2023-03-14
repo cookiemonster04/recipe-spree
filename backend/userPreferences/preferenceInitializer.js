@@ -1,9 +1,7 @@
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const User = require('../models/userModel.js');
-const connectDB = require('../connectDb.js');
-
-connectDB();
-initializeUser("aaa");
+import { catchWrap } from "../middleware/errorHandler.js";
+//const connectDB = require('../connectDb.js');
 
 async function initializeUser(newUsername) 
 {
@@ -32,4 +30,11 @@ async function initializeUser(newUsername)
     );
 }
 
-module.exports = initializeUser;
+const intializeHandler = catchWrap(async (req, res, next) => {
+    const { newUsername } = req.body;
+    await initializeUser(newUsername);
+    res.status(200).send("User initialized successfully");
+});
+
+
+export { initializeUser, intializeHandler };
