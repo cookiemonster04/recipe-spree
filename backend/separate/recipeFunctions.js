@@ -1,5 +1,5 @@
 //Functions where the user interacts with recipes
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const {Recipe, Recommended} = require('./recipeSchema.js');
 
 //Frontend should probably check if star is already clicked or not
