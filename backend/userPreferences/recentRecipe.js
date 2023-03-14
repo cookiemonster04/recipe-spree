@@ -1,9 +1,9 @@
 const User = require('../models/userModel.js');
-const connectDB = require('../connectDb.js');
+// const connectDB = require('../connectDb.js');
 import { catchWrap } from "../middleware/errorHandler.js";
 
-connectDB();
-recentRecipe("aaa", "l");
+// connectDB();
+// recentRecipe("aaa", "l");
 
 async function recentRecipe(selectedUsername, recipeId)
 {
