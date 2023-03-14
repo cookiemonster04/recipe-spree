@@ -63,12 +63,12 @@ function App() {
       />
       <div className="container">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home user={user}/>} />
           <Route path="/survey" element={<Survey/>}/>
           <Route path="/explore" element={<Explore />} />
           <Route
             path="/recipe/:recipeId"
-            element={<RecipePage user={user} />}
+            element={<RecipePage user={user} themeMode={theme} />}
           />
           <Route
             path="/signup"
