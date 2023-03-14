@@ -1,0 +1,24 @@
+.checklist-modal {
+}
+
+.recipelist-container {
+    width: 100%;
+    height: 91vh;
+}
+
+.two-recipes-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.recommended-recipes-container {
+    width: 500px;
+    height: 500px;
+    background-color: red;
+}
+
+.searched-recipes-container {
+    width: 500px;
+    height: 500px;
+    background-color: blue;
+}

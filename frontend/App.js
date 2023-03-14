@@ -12,12 +12,14 @@ import Signup from "./routes/Signup";
 import { ProfilePage, ProfileHome } from "./routes/ProfilePage";
 import Login from "./routes/Login";
 import Logout from "./routes/Logout";
+import RecipeList from './routes/RecipeList'
 import "./App.css";
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
+
   const [searchResults, setSearchResults] = useState([]);
   useEffect(() => {
     getPosts()
@@ -64,8 +66,8 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/survey" element={<Survey/>}/>
-          <Route path="/explore" element={<Explore />} />
+          <Route path="/survey" element={<Survey />}/>
+          <Route path="/recipes" element={<RecipeList user={user} themeMode={theme}/>}/>
           <Route
             path="/recipe/:recipeId"
             element={<RecipePage user={user} themeMode={theme} />}
@@ -89,3 +91,7 @@ function App() {
 
 export default App;
 /*      <ListPage searchResults={searchResults} /> Re-add this into above div */
+
+/* Removed Explore as a Route --> being used as a component
+          <Route path="/explore" element={<Explore setRecipeIds={setSearchRecipeIds}/>} />
+*/
