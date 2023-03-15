@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './Explore.css'
+import './Search.css'
 
-const Explore = () => {
+const Search = () => {
   const [include, setInclude] = useState([]);
   const [exclude, setExclude] = useState([]);
 
@@ -165,4 +165,4 @@ const Checkbox = ({ label, value, onChange }) => {
   )
 }
 
-export default Explore;
+export default Search;

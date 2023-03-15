@@ -6,7 +6,8 @@ import ListPage from "./components/ListPage";
 import Navbar from "./components/Navbar";
 import Home from "./routes/Home";
 import Survey from "./routes/Survey"
-import Explore from "./routes/Explore";
+import Search from "./routes/Search";
+import Recommend from "./routes/Recommend";
 import RecipePage from "./routes/RecipePage";
 import Signup from "./routes/Signup";
 import { ProfilePage, ProfileHome } from "./routes/ProfilePage";
@@ -65,7 +66,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home user={user}/>} />
           <Route path="/survey" element={<Survey/>}/>
-          <Route path="/explore" element={<Explore />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/recommend" element={<Recommend />} />
           <Route
             path="/recipe/:recipeId"
             element={<RecipePage user={user} themeMode={theme} />}

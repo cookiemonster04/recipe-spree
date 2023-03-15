@@ -22,10 +22,13 @@ export default function Navbar({
           <ReactSwitch onChange={handleTheme} checked={getTheme === "dark"} />
         </li>
         <li>
-          <NavLink to="/explore">Explore</NavLink>
+          <NavLink to="/search">Search</NavLink>
         </li>
         {user && (
           <>
+            <li>
+              <NavLink to="/recommend">Recommend</NavLink>
+            </li>
             <li>
               <NavLink to="/profile">Profile</NavLink>
             </li>
