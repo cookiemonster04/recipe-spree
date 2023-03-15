@@ -1,5 +1,5 @@
 //const mongoose = require("mongoose");
-import { User} from '../models/userModel.js';
+import  User from '../models/userModel';
 import { catchWrap } from "../middleware/errorHandler.js";
 //const connectDB = require('../connectDb.js');
 

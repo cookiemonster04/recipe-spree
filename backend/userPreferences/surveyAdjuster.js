@@ -1,6 +1,6 @@
 //Function meant to be called only once when after the user completes the initial survey
 //const mongoose = require("mongoose");
-import { User} from '../models/userModel.js';
+import User from '../models/userModel.js';
 //const connectDB = require('../connectDb.js');
 import { catchWrap } from "../middleware/errorHandler.js";
 

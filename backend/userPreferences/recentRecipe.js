@@ -1,4 +1,4 @@
-import { User} from '../models/userModel.js';
+import User from '../models/userModel.js';
 // const connectDB = require('../connectDb.js');
 import { catchWrap } from "../middleware/errorHandler.js";
 

@@ -82,7 +82,10 @@ const userSchema = new Schema({
   postIds: [String],
   favorites: [String],
   recentlyViewed: [String],
-  numRecipes: [Number],
+  numRecipes: {
+    type: Number,
+    default: 0
+  },
   ingredients: [ingredientSchema],
   blacklistedIngredients: [ingredientSchema]
 });

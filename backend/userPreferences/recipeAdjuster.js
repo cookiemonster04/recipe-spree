@@ -1,6 +1,6 @@
 //Meant to be called after a user is finished with a recipe and leaves a review
 //const mongoose = require("mongoose");
-import { User} from '../models/userModel.js';
+import User from '../models/userModel.js';
 const {Recipe, Recommended} = require('../separate/recipeSchema.js');
 import { catchWrap } from "../middleware/errorHandler.js";
 //const connectDB = require('../connectDb.js');
