@@ -46,6 +46,9 @@ import {
 
 function Recipe({ user, recipeId, themeMode }) {
 
+  console.log("a");
+  console.log(user);
+
   const handleStarClick = () => {
     setStar((prev) => !prev);
   };
@@ -62,14 +65,15 @@ function Recipe({ user, recipeId, themeMode }) {
       setRecipeInfo(response.data.recipe);
     }
     getInfo();
-
-    axios.post(`/api/recentRecipe`, { recipeId: recipeId })
   }, []);
   useEffect(() => {
     if (!user) return;
     axios.get(`/api/fav/recipe/${recipeId}`).then((res) => {
       setStar(res.data.found);
     });
+    console.log("b");
+    console.log(user);
+    axios.post(`/api/recentRecipe`, { userId: user.username, recipeId: recipeId });
   }, [user]);
   useEffect(() => {
     if (!user || star === null) return;
@@ -111,7 +115,7 @@ function Recipe({ user, recipeId, themeMode }) {
         key={id}
         className="star"
         stroke="#737178"
-        stroke-width="12px"
+        strokeWidth="12px"
         fill={fill}
         viewBox="0 0 576 512"
         size="100"

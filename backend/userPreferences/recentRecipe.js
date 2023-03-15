@@ -8,7 +8,7 @@ import { catchWrap } from "../middleware/errorHandler.js";
 async function recentRecipe(selectedUsername, recipeId)
 {
     console.log("adding " + recipeId + " for user " + selectedUsername);
-    const user = await User.findOne({ _id: selectedUsername });
+    const user = await User.findOne({ username: selectedUsername });
     const recentlyViewed = user.recentlyViewed;
     if (recentlyViewed.includes(recipeId)) {
         console.log("Recipe is already in list");
@@ -28,7 +28,7 @@ async function recentRecipe(selectedUsername, recipeId)
 
 const recentHandler = catchWrap(async (req, res, next) => {
     // const { selectedUsername, recipeId } = { ,  };
-    res.status(200).json(await recentRecipe(req.user._id, req.body.recipeId));
+    res.status(200).json(await recentRecipe(req.body.userId, req.body.recipeId));
 });
 
 export { recentRecipe, recentHandler };
