@@ -27,16 +27,16 @@ const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
 
 const Signup = ({ user, setUser }) => {
   if (user) {
-    return <Navigate to="/profile" />;
+    return <Navigate to="/survey" />;
   }
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const [messages, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    axios
+    await axios
       .post("/api/user", {
         username: username,
         password: password,
@@ -44,15 +44,9 @@ const Signup = ({ user, setUser }) => {
       .then(
         (response) => {
           setIsError(false);
+          console.log(response.data.user)
           setUser(response.data.user);
           setSubmitted(true);
-          // try {
-          //   axios.post("/api/initializeUser", {
-          //     newUsername: username
-          //   });
-          // } catch (error) {
-          //   console.error(error);
-          // }
         },
         (error) => {
           if (error.response.message == "Network Error") {
@@ -64,6 +58,18 @@ const Signup = ({ user, setUser }) => {
           setMessage(error.response.data);
         }
       );
+      try {
+        await axios.post("/api/initializeUser", {
+          newUsername: username
+        });
+        axios.post("api/login", {
+          username: username,
+          password: password,
+        })
+      } catch (error) {
+        console.error(error);
+      }
+
   };
   return (
     <>
