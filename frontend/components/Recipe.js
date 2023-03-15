@@ -46,9 +46,6 @@ import {
 
 function Recipe({ user, recipeId, themeMode }) {
 
-  console.log("a");
-  console.log(user);
-
   const handleStarClick = () => {
     setStar((prev) => !prev);
   };
