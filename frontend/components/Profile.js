@@ -11,27 +11,19 @@ const Profile = ({ userId, user }) => {
   const [recentRecipes, setRecentRecipes] = useState([]);
 
   useEffect(() => {
-    //console.log("a");
+    console.log("a");
     async function getInfo() {
       if (!userId) {
-        //console.log("b");
+        console.log("b");
         setUsername(user.username);
         // just to demonstrate it works
         const favInfo = await axios.get(`/api/fav`);
-        console.log("Fav info: ");
-        console.log(favInfo.data);
         setFavlist(favInfo.data.favorites);
-        //setRecentlyViewedList([]);
         //setRecentlyViewedList(['0003d5b120']);
-        //const userInfo = await axios.get(`/api/user`);
         const userInfo = await axios.get(`/api/user`);
-        //const userInfo = await axios.get(`/api/user/${userId}`);
-        console.log("User info: ");
-        console.log(userInfo.data);
+        console.log("recentlyviewed: ");
+        console.log(userInfo.data.recentlyViewed);
         setRecentlyViewedList(userInfo.data.recentlyViewed);
-        //console.log(userInfo.data);
-        //console.log("recentlyviewed: ");
-        //console.log(userInfo.data.recentlyViewed);
       } else {
         console.log("c");
         const userInfo = await axios.get(`/api/user/${userId}`);
@@ -40,15 +32,8 @@ const Profile = ({ userId, user }) => {
         }
         const favInfo = await axios.get(`/api/fav/user/${userId}`);
         setFavlist(favInfo.data.favorites);
-        /*const rvInfo = await axios.get(`/api/recentRecipe`,
-        {
-          selectedUsername: user.username,
-          recipeId: '0003d5b120'
-        });*/
-        //setRecentlyViewedList(['0003d5b120']); //replace
-        console.log("New info: ");
-        console.log(userInfo.data);
-        console.log(userInfo.data.recentlyViewed);
+        //const rvInfo = await axios.get(`/api/`);
+        // setRecentlyViewedList(['0003d5b120']); //replace
         setRecentlyViewedList(userInfo.data.recentlyViewed);
       }
     }
