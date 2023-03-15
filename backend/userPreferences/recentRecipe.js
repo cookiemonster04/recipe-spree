@@ -1,13 +1,14 @@
-const User = require('../models/userModel.js');
-const connectDB = require('../connectDb.js');
+import User from '../models/userModel.js';
+// const connectDB = require('../connectDb.js');
 import { catchWrap } from "../middleware/errorHandler.js";
 
-connectDB();
-recentRecipe("aaa", "l");
+// connectDB();
+// recentRecipe("aaa", "l");
 
 async function recentRecipe(selectedUsername, recipeId)
 {
-    const user = await User.findOne({ username: selectedUsername });
+    console.log("adding " + recipeId + " for user " + selectedUsername);
+    const user = await User.findOne({ _id: selectedUsername });
     const recentlyViewed = user.recentlyViewed;
     if (recentlyViewed.includes(recipeId)) {
         console.log("Recipe is already in list");

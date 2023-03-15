@@ -55,13 +55,15 @@ function Recipe({ user, recipeId, themeMode }) {
   const [commentText, setCommentText] = useState("");
   const [userRating, setUserRating] = useState(-1); //need to update with APi call
 
-  // load recipe json
+  // load recipe json & push to recentlyViewed
   useEffect(() => {
     async function getInfo() {
       const response = await axios.get(`/api/recipe/${recipeId}`);
       setRecipeInfo(response.data.recipe);
     }
     getInfo();
+
+    axios.post(`/api/recentRecipe`, { recipeId: recipeId })
   }, []);
   useEffect(() => {
     if (!user) return;

@@ -10,6 +10,7 @@ import { handleError, errorConvert } from "./middleware/errorHandler.js";
 import { getFav, testFav, modifyFav } from "./handlers/favHandler.js";
 import { searchHandler } from "./separate/mongoSearch.js";
 import { recentHandler } from "./userPreferences/recentRecipe.js";
+import { addStarHandler, removeStarHandler, addCommentHandler, addRatingHandler } from "./separate/recipeFunctions.js";
 
 connectDB();
 dotenv.config({ path: "backend/config.env" });
@@ -37,8 +38,12 @@ app.get("/api/logout", logout);
 
 app.post("/api/search", searchHandler);
 
-app.post("/api/recentRecipe", recentHandler);
+app.post("/api/recentRecipe", auth, recentHandler);
 
+app.post("/api/addStar", addStarHandler);
+app.post("/api/removeStar", removeStarHandler);
+app.post("/api/addComment", addCommentHandler);
+app.post("/api/addRating", addRatingHandler);
 
 app.get("*", (req, res, next) => {
   console.log("Request received");

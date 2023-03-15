@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 const model_name = "User";
 
 const passwordCheck = (password) => {
-  const errors = []
+  const errors = [];
   if (password === "") {
     errors.push("Please specify a password");
     return errors;
