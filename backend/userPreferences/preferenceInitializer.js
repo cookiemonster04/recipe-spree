@@ -1,5 +1,5 @@
 //const mongoose = require("mongoose");
-const User = require('../models/userModel.js');
+import { User} from '../models/userModel.js';
 import { catchWrap } from "../middleware/errorHandler.js";
 //const connectDB = require('../connectDb.js');
 
@@ -30,11 +30,11 @@ async function initializeUser(newUsername)
     );
 }
 
-const intializeHandler = catchWrap(async (req, res, next) => {
+const initializeHandler = catchWrap(async (req, res, next) => {
     const { newUsername } = req.body;
     await initializeUser(newUsername);
     res.status(200).send("User initialized successfully");
 });
 
 
-export { initializeUser, intializeHandler };
+export { initializeUser, initializeHandler };

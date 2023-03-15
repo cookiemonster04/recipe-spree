@@ -46,6 +46,13 @@ const Signup = ({ user, setUser }) => {
           setIsError(false);
           setUser(response.data.user);
           setSubmitted(true);
+          // try {
+          //   axios.post("/api/initializeUser", {
+          //     newUsername: username
+          //   });
+          // } catch (error) {
+          //   console.error(error);
+          // }
         },
         (error) => {
           if (error.response.message == "Network Error") {
