@@ -7,7 +7,7 @@ import { catchWrap } from "../middleware/errorHandler.js";
 
 async function surveyAdjuster(selectedUsername, love, like, dislike, blacklisted) 
 {
-    sets = [love, like, dislike, blacklisted];
+    const sets = [love, like, dislike, blacklisted];
     sets.forEach(set =>
         {
             set.forEach(element =>
@@ -44,7 +44,7 @@ async function surveyAdjuster(selectedUsername, love, like, dislike, blacklisted
 
 
 const surveyHandler = catchWrap(async (req, res, next) => {
-    const { selectedUsername, sets } = req.body;
+    const { selectedUsername, love, like, dislike, blacklisted } = req.body;
     await surveyAdjuster(selectedUsername, love, like, dislike, blacklisted);
     res.status(200).send("Received survey data");
 });

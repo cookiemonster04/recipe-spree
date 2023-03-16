@@ -19,8 +19,11 @@ const Profile = ({ userId, user }) => {
         // just to demonstrate it works
         const favInfo = await axios.get(`/api/fav`);
         setFavlist(favInfo.data.favorites);
-        //const rvInfo = await axios.get(`/api/`);
-        setRecentlyViewedList(['0003d5b120']); //replace
+        //setRecentlyViewedList(['0003d5b120']);
+        const userInfo = await axios.get(`/api/user`);
+        console.log("recentlyviewed: ");
+        console.log(userInfo.data.recentlyViewed);
+        setRecentlyViewedList(userInfo.data.recentlyViewed);
       } else {
         console.log("c");
         const userInfo = await axios.get(`/api/user/${userId}`);
@@ -30,7 +33,8 @@ const Profile = ({ userId, user }) => {
         const favInfo = await axios.get(`/api/fav/user/${userId}`);
         setFavlist(favInfo.data.favorites);
         //const rvInfo = await axios.get(`/api/`);
-        setRecentlyViewedList(['0003d5b120']); //replace
+        // setRecentlyViewedList(['0003d5b120']); //replace
+        setRecentlyViewedList(userInfo.data.recentlyViewed);
       }
     }
     getInfo();
