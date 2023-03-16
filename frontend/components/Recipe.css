@@ -85,7 +85,7 @@
     border: 1px solid var(--secondary-color);
   }
   
-  .comments button {
+  .root button {
     margin-top: 8px;
     background-color: #fde047;
     color: var(--text-color);
@@ -97,6 +97,10 @@
 
   .body2 {
     color: var(--primary-color)
+  }
+
+  .dark #user-rating {
+    color: #fff
   }
   
   /* Apply dark theme styles */
@@ -121,13 +125,13 @@
     border: 1px solid var(--secondary-color);
   }
   
-  .dark .comments button {
-    background-color: gainsboro;
+  .dark .root button {
+    background-color: lightgreen;
     color: #333;
   }
 
-  .dark .comments button:hover {
-    background-color: aquamarine;
+  .dark .root button:hover {
+    background-color: gainsboro;
   }
 
   .dark .subtitle {

@@ -20,6 +20,7 @@ import {
   MenuItem,
   Select
 } from "@mui/material";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 function Recipe({ user, recipeId, themeMode }) {
 
@@ -27,8 +28,14 @@ function Recipe({ user, recipeId, themeMode }) {
   const [star, setStar] = useState(null);
   const [commentText, setCommentText] = useState("");
   const [recipeRating, setRecipeRating] = useState(-1); //need to update with APi call
-  const [userRating, setUserRating] = useState(5);
+  const [userRating, setUserRating] = useState(10);
   const [numFav, setNumFav] = useState(0);
+
+  const theme = createTheme({
+    palette: {
+      mode: themeMode
+    }
+  })
 
   // load recipe json & push to recentlyViewed
   useEffect(() => {
@@ -106,7 +113,7 @@ function Recipe({ user, recipeId, themeMode }) {
       console.error(error)
     }
   }
-  const ratings = [1,2,3,4,5]
+  const ratings = [0,1,2,3,4,5,6,7,8,9,10]
   
   let rating;
   if (recipeRating < 0) {
@@ -142,6 +149,7 @@ function Recipe({ user, recipeId, themeMode }) {
 
   return (
     recipeInfo && (
+      <ThemeProvider theme={theme}>
       <Paper className={`root ${themeMode === 'light' ? '' : 'dark'}`} elevation={3}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
@@ -200,6 +208,36 @@ function Recipe({ user, recipeId, themeMode }) {
             <Box height={300} width={1} position="relative">
               <img className="image" src={recipeInfo.image} alt={recipeInfo.title}/>
             </Box>
+            <Box className="rating" marginBottom={2}>
+            {user && (
+                <form onSubmit={handleRatingSubmit}>
+                  <Box marginTop={2}>
+                    <Typography variant="subtitle1" color="textSecondary" className="subtitle" marginBottom={1}>
+                      Tried cooking this recipe? Leave a rating!
+                    </Typography>
+                    <TextField
+                    id="user-rating"
+                    select
+                    label="Select"
+                    defaultValue="10"
+                    helperText="10 highest, 0 lowest"
+                    onChange={handleRatingChange}
+                    >
+                    {ratings.map((rating) => (
+                      <MenuItem key={rating} value={rating}>
+                        {rating}
+                      </MenuItem>
+                    ))}
+                    </TextField>
+                  </Box>
+                  <Box marginTop={1}>
+                    <Button variant="contained" color="primary" type="submit">
+                      Submit Rating
+                    </Button>
+                  </Box>
+                </form>
+              )}
+            </Box>
             <Box className="comments">
               <Typography variant="subtitle1" color="textSecondary" className="subtitle">
                 Comments from users:
@@ -247,38 +285,11 @@ function Recipe({ user, recipeId, themeMode }) {
                   </Box>
                 </form>
               )}
-                {user && (
-                <form onSubmit={handleRatingSubmit}>
-                  <Box marginTop={2}>
-                    <Typography variant="subtitle1" color="textSecondary" className="subtitle" marginBottom={1}>
-                      Tried cooking this recipe? Leave a rating!
-                    </Typography>
-                    <TextField
-                    id="user-rating"
-                    select
-                    label="Select"
-                    defaultValue="5"
-                    helperText="5 highest, 1 lowest"
-                    onChange={handleRatingChange}
-                    >
-                    {ratings.map((rating) => (
-                      <MenuItem key={rating} value={rating}>
-                        {rating}
-                      </MenuItem>
-                    ))}
-                    </TextField>
-                  </Box>
-                  <Box marginTop={1}>
-                    <Button variant="contained" color="primary" type="submit">
-                      Submit Rating
-                    </Button>
-                  </Box>
-                </form>
-              )}
               </Box>
           </Grid>
         </Grid>
       </Paper>
+      </ThemeProvider>
     ))
 }        
 
