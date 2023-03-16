@@ -5,6 +5,11 @@ import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Home.css';
 import logo from '../../assets/logo.png'
+import slide1 from '../../assets/slide1.png'
+import slide2 from '../../assets/slide2.png'
+import slide3 from '../../assets/slide3.png'
+import slide4 from '../../assets/slide4.png'
+import slide5 from '../../assets/slide5.png'
 
 const theme = createTheme({
   palette: {
@@ -32,27 +37,27 @@ const slides = [
   {
     title: "About Us",
     text: "Welcome to RecipeSpree - your ultimate cooking companion! Our mission is to help you discover delectable recipes with ease. By learning about your culinary preferences, we can curate a personalized culinary experience just for you!",
-    backgroundImageUrl: logo,
+    backgroundImageUrl: slide1,
   },
   {
     title: "Search",
     text: "Craving a specific ingredient in your meal? With RecipeSpree, you can easily customize your recipe search with just a few clicks! Our search page lets you filter and find recipes that have every ingredient you desire.",
-    backgroundImageUrl: logo,
+    backgroundImageUrl: slide2,
   },
   {
     title: "Recommend", 
     text: "Looking for inspiration? RecipeSpree has got you covered! Our recommendation page provides you with a variety of handpicked recipes tailored to your specific tastes. Whether you're a foodie or a picky eater, we've got something for everyone.",
-    backgroundImageUrl: logo,
+    backgroundImageUrl: slide3,
   },
   {
     title: "Profile", 
     text: "Your very own culinary journey awaits you on RecipeSpree! Keep track of your recent activity and favorite recipes all in one place on your profile page. You can easily revisit your favorite recipes and discover new ones to try!",
-    backgroundImageUrl: logo,
+    backgroundImageUrl: slide4,
   },
   {
     title: "Interact",
     text: "Share your thoughts and opinions with the RecipeSpree community! Leave comments, ratings, and favorites on recipes to help others find the best results. By interacting with others, you can discover new recipes and learn more about different culinary preferences.",
-    backgroundImageUrl: logo,
+    backgroundImageUrl: slide5,
   }
 ];
 
@@ -81,20 +86,26 @@ const Homepage = () => {
               key={index}
               className="slide-bg" // Add the background and animation classes
               sx={{
-                height: '100vh',
+                margin: '0',
+                padding: '0',
+                height: '70vh',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url(${slide.backgroundImageUrl})`,
+                backgroundImage: `linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url(${slide.backgroundImageUrl})`,
               }}
             >
               <Paper
                 elevation={6}
                 sx={{
-                  maxWidth: '80%',
+                  position: 'absolute',
+                  top: '500px',
+                  left: '150px',
+                  maxWidth: '35%',
                   padding: 4,
                   backgroundColor: 'rgba(255, 255, 255, 0.9)',
                   borderRadius: 2,
+                  boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4), 0 10px 12px rgba(0, 0, 0, 0.6)'
                 }}
               >
                 <Typography variant="h4" component="h1" gutterBottom>
