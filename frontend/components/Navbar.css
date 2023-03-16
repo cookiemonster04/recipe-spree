@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "MemphisRiver";
+    src: url("../../assets/MemphisRiver.otf");
+}
+
 .nav {
     display: flex;
     justify-content: space-between;
@@ -21,9 +26,10 @@ li .active {
 }
 
 .site-title {
-    font-size: 2rem;
+    font-size: 3.5rem;
     display: flex;
     align-self: center;
+    font-family: "MemphisRiver", sans-serif;
 }
 
 .nav li {
@@ -48,4 +54,5 @@ li .active {
     align-items: center;
     padding: 0.50rem;
 }
+
 

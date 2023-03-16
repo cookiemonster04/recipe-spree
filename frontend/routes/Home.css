@@ -1,3 +1,5 @@
+@import url(https://allfont.net/allfont.css?fonts=agency-fb);
+
 .slide-bg {
     background-size: cover;
     background-position: center;
@@ -9,7 +11,7 @@
       filter: brightness(100%);
     }
     50% {
-      filter: brightness(115%);
+      filter: brightness(120%);
     }
     100% {
       filter: brightness(100%);

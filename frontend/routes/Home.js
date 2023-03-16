@@ -4,7 +4,6 @@ import { Carousel } from 'react-responsive-carousel';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Home.css';
-import logo from '../../assets/logo.png'
 import slide1 from '../../assets/slide1.png'
 import slide2 from '../../assets/slide2.png'
 import slide3 from '../../assets/slide3.png'
@@ -21,7 +20,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'Agency FB, sans-serif',
   },
 });
 
@@ -31,6 +30,8 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   '&:hover': {
     transform: 'scale(1.05)',
   },
+  width: "475px",
+  height: '300px'
 }));
 
 const slides = [
@@ -99,7 +100,7 @@ const Homepage = () => {
                 elevation={6}
                 sx={{
                   position: 'absolute',
-                  top: '500px',
+                  top: '450px',
                   left: '150px',
                   maxWidth: '35%',
                   padding: 4,
@@ -108,23 +109,27 @@ const Homepage = () => {
                   boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4), 0 10px 12px rgba(0, 0, 0, 0.6)'
                 }}
               >
-                <Typography variant="h4" component="h1" gutterBottom>
+                <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: '3.5rem', textShadow: '1.8px 1.8px 4px #888' }}>
                   {slide.title}
                 </Typography>
-                <Typography variant="body1">{slide.text}</Typography>
+                <Typography variant="body1" gutterBottom sx={{ fontSize: '1.7rem', textShadow: '0.5px 0.5px 0.5px #888' }}>
+                  {slide.text}
+                </Typography>
               </Paper>
             </Box>
           ))}
         </Carousel>
         <Container>
-          <Grid container spacing={4} sx={{ marginTop: 4 }}>
+          <Grid container spacing={50} sx={{ marginTop: '-375px', marginLeft: '-575px'}}>
             {steps.map((step, index) => (
-              <Grid item xs={12} md={4} key={index}>
-                <StyledPaper elevation={2}>
-                  <Typography variant="h6" component="h2" gutterBottom>
+              <Grid item xs={0} md={4} key={index}>
+                <StyledPaper elevation={3}>
+                  <Typography variant="h6" component="h2" gutterBottom sx={{ fontSize: '2rem', textShadow: '1.2px 1.2px 1.2px #888' }}>
                     {step.title}
                   </Typography>
-                  <Typography variant="body2">{step.text}</Typography>
+                  <Typography variant="body2" gutterBottom sx={{ fontSize: '1.4rem', textShadow: '0.5px 0.5px 0.5px #888' }}>
+                    {step.text}
+                  </Typography>
                 </StyledPaper>
               </Grid>
             ))}
