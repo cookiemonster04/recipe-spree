@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import ReactSwitch from "react-switch";
+import DarkModeToggle from "react-dark-mode-toggle";
 import SearchBar from "./SearchBar";
 import logo from '../../assets/logo.png'
 import "./Navbar.css";
@@ -21,7 +21,11 @@ export default function Navbar({
 
       <ul>
         <li>
-          <ReactSwitch onChange={handleTheme} checked={getTheme === "dark"} />
+        <DarkModeToggle
+          onChange={handleTheme}
+          checked={getTheme === "dark"}
+          size={80}
+        />
         </li>
         <li>
           <NavLink to="/search">Search</NavLink>
