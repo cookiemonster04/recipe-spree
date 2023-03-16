@@ -1,6 +1,7 @@
 //Functions where the user interacts with recipes
 //const mongoose = require("mongoose");
 const {Recipe, Recommended} = require('./recipeSchema.js');
+import User from '../models/userModel.js';
 import { catchWrap } from "../middleware/errorHandler.js";
 
 //Frontend should probably check if star is already clicked or not
@@ -39,7 +40,7 @@ const removeStarHandler = catchWrap(async (req, res, next) => {
     res.status(200).send("Star removed successfully");
   });
 
-async function addComment(itemID, comment) 
+async function addComment(itemID, selectedUsername, comment) 
 {
     Recipe.findOneAndUpdate(
         { id: itemID },
@@ -48,11 +49,18 @@ async function addComment(itemID, comment)
         function (err, count) 
         { if (err) throw err; }
     );
+    User.findOneAndUpdate(
+        { username: selectedUsername },
+        { $push: { comments: {text: comment} } },
+        { new: true }, 
+        function (err, count) 
+        { if (err) throw err; }
+    );
 }
 
 const addCommentHandler = catchWrap(async (req, res, next) => {
-    const { itemID, comment } = req.body;
-    await addComment(itemID, comment);
+    const { itemID, selectedUsername, comment } = req.body;
+    await addComment(itemID, selectedUsername, comment);
     res.status(200).send("Comment added successfully");
   });
 

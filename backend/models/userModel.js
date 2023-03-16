@@ -37,6 +37,14 @@ const messageGenerator = (errors) => {
   }
 };
 
+const subtextSchema = new mongoose.Schema({
+  text: 
+  {
+      type: String,
+      required: true
+  }
+});
+
 const ingredientSchema = new Schema({
   name: {
     type: String,
@@ -82,6 +90,7 @@ const userSchema = new Schema({
   postIds: [String],
   favorites: [String],
   recentlyViewed: [String],
+  comments: [subtextSchema],
   numRecipes: {
     type: Number,
     default: 0

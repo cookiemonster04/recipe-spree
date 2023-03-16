@@ -66,9 +66,13 @@ function Recipe({ user, recipeId, themeMode }) {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+    if (commentText === "") {
+      return;
+    }
     try {
       await axios.post(`/api/addComment`, {
         itemID: recipeId,
+        selectedUsername: user.username,
         comment: commentText,
       });
       setRecipeInfo({
@@ -76,6 +80,7 @@ function Recipe({ user, recipeId, themeMode }) {
         comments: [...recipeInfo.comments, {text: commentText}]
       })
       setCommentText("");
+      console.log(user.comments);
     } catch (error) {
       console.error(error);
     }
@@ -204,6 +209,7 @@ function Recipe({ user, recipeId, themeMode }) {
                     <textarea
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
+                      // onChange={(e) => e.target.value !== "" ? setCommentText(e.target.value) : null}
                     />
                     <Box marginTop={1}>
                       <Button type="submit" variant="contained" color="primary">
