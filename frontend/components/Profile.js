@@ -78,7 +78,10 @@ const Profile = ({ userId, user, themeMode }) => {
   return (
     username && (
       <ThemeProvider theme={theme}>
-        <h1>Welcome back, {username}.</h1>
+        <Typography variant="h3" marginBottom={2}> Welcome back, {username}. </Typography>
+        <Typography variant="h6" marginBottom={2}>Click 
+        <Link to={{ pathname: "/survey", state: { user: user }}}> here </Link>
+        to update your preference.</Typography>
         {favlist.length > 0 ? (
           <div>
             <Typography variant="h6">Your favorite recipes:</Typography>

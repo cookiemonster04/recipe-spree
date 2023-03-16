@@ -81,7 +81,7 @@ export default function KanbanBoard( { user }) {
 
     return (
         <>
-        <h2 className="survey-title">Initial Survey</h2>
+        <h2 className="survey-title">Survey</h2>
         <p className="survey-description">Welcome! Please move ingredients in the proper section based on your preference. Feel free to add ingredients, too!</p>
         <DndContext
           collisionDetection={rectIntersection}
