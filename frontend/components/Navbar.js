@@ -7,8 +7,6 @@ import "./Navbar.css";
 export default function Navbar({
   handleTheme,
   getTheme,
-  posts,
-  setSearchResults,
   user,
 }) {
   return (

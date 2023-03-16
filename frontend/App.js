@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { getPosts } from "./api/axios";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import Home from "./routes/Home";
@@ -16,19 +15,8 @@ import "./App.css";
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
-  const [searchResults, setSearchResults] = useState([]);
-  useEffect(() => {
-    getPosts()
-      .then((json) => {
-        setPosts(json);
-        return json;
-      })
-      .then((json) => {
-        setSearchResults(json);
-      });
-  }, []);
+
   const solveCookie = () => {
     axios.get("/api/user").then(
       (ret) => {
@@ -57,8 +45,6 @@ function App() {
       <Navbar
         getTheme={theme}
         handleTheme={toggleTheme}
-        posts={posts}
-        setSearchResults={setSearchResults}
         user={user}
       />
       <div className="container">
