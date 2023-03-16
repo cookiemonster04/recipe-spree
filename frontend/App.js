@@ -76,8 +76,8 @@ function App() {
             path="/signup"
             element={<Signup user={user} setUser={setUser} />}
           />
-          <Route path="/profile" element={<ProfileHome user={user} />} />
-          <Route path="/profile/:userId" element={<ProfilePage />} />
+          <Route path="/profile" element={<ProfileHome user={user} themeMode={theme} />} />
+          <Route path="/profile/:userId" element={<ProfilePage themeMode={theme} />} />
           <Route
             path="/login"
             element={<Login user={user} setUser={setUser} />}

@@ -2,13 +2,20 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography, Grid} from "@mui/material"
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-const Profile = ({ userId, user }) => {
+const Profile = ({ userId, user, themeMode }) => {
   const [username, setUsername] = useState("");
   const [favlist, setFavlist] = useState([]);
   const [recentlyViewedList, setRecentlyViewedList] = useState([]);
   const [favRecipes, setFavRecipes] = useState([]);
   const [recentRecipes, setRecentRecipes] = useState([]);
+
+  const theme = createTheme({
+    palette : {
+      mode: themeMode
+    }
+  })
 
   useEffect(() => {
     console.log("a");
@@ -70,7 +77,7 @@ const Profile = ({ userId, user }) => {
 
   return (
     username && (
-      <div>
+      <ThemeProvider theme={theme}>
         <h1>Welcome back, {username}.</h1>
         {favlist.length > 0 ? (
           <div>
@@ -134,7 +141,7 @@ const Profile = ({ userId, user }) => {
       ) : (
         <p>You haven't recently viewed any recipes.</p>
       )}
-      </div>
+      </ThemeProvider>
     )
   );
 };
