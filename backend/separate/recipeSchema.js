@@ -11,12 +11,12 @@ const ratingSchema = new mongoose.Schema({
     stars:
     {
         type: Number,
-        required: false
+        default: 0
     },
     numRatings:
     {
         type: Number,
-        required: false
+        default: 0
     }
 });
   

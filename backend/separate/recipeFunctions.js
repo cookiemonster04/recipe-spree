@@ -1,6 +1,7 @@
 //Functions where the user interacts with recipes
 //const mongoose = require("mongoose");
 const {Recipe, Recommended} = require('./recipeSchema.js');
+import User from '../models/userModel.js';
 import { catchWrap } from "../middleware/errorHandler.js";
 
 //Frontend should probably check if star is already clicked or not
@@ -56,9 +57,26 @@ const addCommentHandler = catchWrap(async (req, res, next) => {
     res.status(200).send("Comment added successfully");
   });
 
-async function addRating(itemID, newRating) 
+async function addRating(itemID, newRating, user) 
 {
     const recipe = await Recipe.findOne({ id: itemID });
+    console.log("g")
+    console.log(itemID)
+    console.log("h")
+    console.log(recipe)
+    console.log("i")
+    console.log(recipe.rating)
+    if (!recipe.rating) {
+        Recipe.findOneAndUpdate(
+            { id: itemID },
+            { $set: {rating: {stars: 0, numRatings: 0}} },
+            {new: true}, 
+            function (err, count) 
+            { if (err) throw err; }
+        );
+    }
+    console.log("j")
+    console.log(recipe)
     const updatedRating = (recipe.rating.stars * recipe.rating.numRatings + newRating) / (recipe.rating.numRatings + 1);
     Recipe.findOneAndUpdate(
         { id: itemID },
@@ -67,11 +85,29 @@ async function addRating(itemID, newRating)
         function (err, count) 
         { if (err) throw err; }
     );
+    let curUser = await User.findOne({ username: user });
+    console.log("x")
+    console.log(curUser)
+    console.log("w")
+    console.log(curUser.ratings)
+    let ratingDict;
+    if (!curUser.ratings) {
+        ratingDict = new Map();
+    }
+    else {
+        ratingDict = curUser.ratings;
+    }
+    ratingDict.set(itemID, newRating);
+    User.findOneAndUpdate(
+        { username: user },
+        { $set: { ratings: ratingDict }},
+        function (err, count)  { if (err) throw err; }
+    );
 }
 
 const addRatingHandler = catchWrap(async (req, res, next) => {
-    const { itemID, newRating } = req.body;
-    await addRating(itemID, newRating);
+    const { itemID, newRating, user } = req.body;
+    await addRating(itemID, newRating, user);
     res.status(200).send("Rating added successfully");
   });
 

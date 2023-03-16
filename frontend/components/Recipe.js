@@ -16,6 +16,7 @@ import {
   Grid,
   Paper,
   Button,
+  TextField,
 } from "@mui/material";
 
 function Recipe({ user, recipeId, themeMode }) {
@@ -83,6 +84,14 @@ function Recipe({ user, recipeId, themeMode }) {
       console.error(error);
     }
   };
+
+  const handleRatingSubmit = async (e) => {
+    console.log("z");
+    console.log(user);
+
+    await axios.post(`/api/addRating`, { itemID: recipeId, newRating: e, user: user.username });
+  }
+
   
   let rating;
   if (userRating < 0) {
@@ -215,6 +224,21 @@ function Recipe({ user, recipeId, themeMode }) {
                     </Box>
                   </Box>
                 </form>)}
+              {user && (
+              <form onSubmit={handleRatingSubmit}>
+                <Box marginTop={2}>
+                  <Typography variant="subtitle1" color="textSecondary" className="subtitle">
+                    Tried cooking this recipe? Leave a rating!
+                  </Typography>
+                  <TextField
+                    id="rating_box"
+                    defaultValue={userRating}
+                    label="1-10"
+                    variant="outlined"
+                    onChange={(e) => handleRatingSubmit(e.target.value)}
+                  />
+                </Box>
+              </form>)}
               </Box>
           </Grid>
         </Grid>
