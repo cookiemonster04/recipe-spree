@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as SStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as RStar } from "@fortawesome/free-regular-svg-icons";
 import "./Recipe.css";
-
 import {
   Box,
   Typography,
@@ -12,10 +11,14 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  Avatar,
   Grid,
   Paper,
   Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select
 } from "@mui/material";
 
 function Recipe({ user, recipeId, themeMode }) {
@@ -23,23 +26,9 @@ function Recipe({ user, recipeId, themeMode }) {
   const [recipeInfo, setRecipeInfo] = useState();
   const [star, setStar] = useState(null);
   const [commentText, setCommentText] = useState("");
-  const [userRating, setUserRating] = useState(-1); //need to update with APi call
-  const [numFav, setNumFav] = useState(0)
-
-  const handleStarClick = async () => {
-    try {
-      if (star === true) {
-        await axios.post(`/api/removeStar`, {itemID: recipeId});
-        setNumFav(numFav - 1);
-      } else {
-        await axios.post(`/api/addStar`, {itemID: recipeId});
-        setNumFav(numFav + 1);
-      }
-      setStar((prev) => !prev);
-    } catch (error) {
-      console.error(error)
-    }
-  };
+  const [recipeRating, setRecipeRating] = useState(-1); //need to update with APi call
+  const [userRating, setUserRating] = useState(5);
+  const [numFav, setNumFav] = useState(0);
 
   // load recipe json & push to recentlyViewed
   useEffect(() => {
@@ -55,8 +44,6 @@ function Recipe({ user, recipeId, themeMode }) {
     axios.get(`/api/fav/recipe/${recipeId}`).then((res) => {
       setStar(res.data.found);
     });
-    console.log("b");
-    console.log(user);
     axios.post(`/api/recentRecipe`, { userId: user.username, recipeId: recipeId });
   }, [user]);
   useEffect(() => {
@@ -66,6 +53,21 @@ function Recipe({ user, recipeId, themeMode }) {
       insert: star,
     });
   }, [star]);
+
+  const handleStarClick = async () => {
+    try {
+      if (star === true) {
+        await axios.post(`/api/removeStar`, {itemID: recipeId});
+        setNumFav(numFav - 1);
+      } else {
+        await axios.post(`/api/addStar`, {itemID: recipeId});
+        setNumFav(numFav + 1);
+      }
+      setStar((prev) => !prev);
+    } catch (error) {
+      console.error(error)
+    }
+  };
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -88,13 +90,30 @@ function Recipe({ user, recipeId, themeMode }) {
       console.error(error);
     }
   };
+
+  const handleRatingChange = (e) => {
+    setUserRating(e.target.value)
+  }
+
+  const handleRatingSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(`/api/addRating`, {
+      itemID: recipeId,
+      newRating: userRating, 
+      user: user.username });
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const ratings = [1,2,3,4,5]
   
   let rating;
-  if (userRating < 0) {
+  if (recipeRating < 0) {
     rating = 4.5; //change to API call for average rating
   }
   else {
-    rating = userRating;
+    rating = recipeRating;
   }
 
 
@@ -209,7 +228,13 @@ function Recipe({ user, recipeId, themeMode }) {
                     <Typography variant="subtitle1" color="textSecondary" className="subtitle">
                       Leave a comment:
                     </Typography>
-                    <textarea
+                    <TextField
+                      fullWidth
+                      id="comment-textfield"
+                      label="Comment"
+                      multiline
+                      rows={4}
+                      variant="outlined"
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
                       // onChange={(e) => e.target.value !== "" ? setCommentText(e.target.value) : null}
@@ -220,7 +245,36 @@ function Recipe({ user, recipeId, themeMode }) {
                       </Button>
                     </Box>
                   </Box>
-                </form>)}
+                </form>
+              )}
+                {user && (
+                <form onSubmit={handleRatingSubmit}>
+                  <Box marginTop={2}>
+                    <Typography variant="subtitle1" color="textSecondary" className="subtitle" marginBottom={1}>
+                      Tried cooking this recipe? Leave a rating!
+                    </Typography>
+                    <TextField
+                    id="user-rating"
+                    select
+                    label="Select"
+                    defaultValue="5"
+                    helperText="5 highest, 1 lowest"
+                    onChange={handleRatingChange}
+                    >
+                    {ratings.map((rating) => (
+                      <MenuItem key={rating} value={rating}>
+                        {rating}
+                      </MenuItem>
+                    ))}
+                    </TextField>
+                  </Box>
+                  <Box marginTop={1}>
+                    <Button variant="contained" color="primary" type="submit">
+                      Submit Rating
+                    </Button>
+                  </Box>
+                </form>
+              )}
               </Box>
           </Grid>
         </Grid>

@@ -56,6 +56,17 @@ const ingredientSchema = new Schema({
   }
 });
 
+const userRatingSchema = new Schema({
+  recipeId: {
+    type: Number,
+    required: true
+  },
+  rating: {
+    type: String,
+    required: true
+  }
+})
+
 const userSchema = new Schema({
   username: {
     type: String,
@@ -96,7 +107,11 @@ const userSchema = new Schema({
     default: 0
   },
   ingredients: [ingredientSchema],
-  blacklistedIngredients: [ingredientSchema]
+  blacklistedIngredients: [ingredientSchema],
+  ratings: {
+    type: Map,
+    of: String
+  },
 });
 
 userSchema.methods.generateJWT = function () {
