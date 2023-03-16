@@ -66,6 +66,9 @@ const addCommentHandler = catchWrap(async (req, res, next) => {
 
 async function addRating(itemID, newRating, user) 
 {
+    const getUser = await User.findOne({ username: user });
+    if (getUser.ratings.has(itemID)) 
+        return;
     const recipe = await Recipe.findOne({ id: itemID });
     console.log("g")
     console.log(itemID)

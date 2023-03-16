@@ -42,7 +42,8 @@ function Recipe({ user, recipeId, themeMode }) {
     async function getInfo() {
       const response = await axios.get(`/api/recipe/${recipeId}`);
       setRecipeInfo(response.data.recipe);
-      setNumFav(response.data.recipe.favorites)
+      setNumFav(response.data.recipe.favorites);
+      setRecipeRating(response.data.recipe.rating.stars / 2);
     }
     getInfo();
   }, []);
@@ -99,7 +100,7 @@ function Recipe({ user, recipeId, themeMode }) {
   };
 
   const handleRatingChange = (e) => {
-    setUserRating(e.target.value)
+    setUserRating(e.target.value);
   }
 
   const handleRatingSubmit = async (e) => {
@@ -109,6 +110,8 @@ function Recipe({ user, recipeId, themeMode }) {
       itemID: recipeId,
       newRating: userRating, 
       user: user.username });
+      const response = await axios.get(`/api/recipe/${recipeId}`);
+      setRecipeRating(response.data.recipe.rating.stars / 2);
     } catch (error) {
       console.error(error)
     }
@@ -128,21 +131,33 @@ function Recipe({ user, recipeId, themeMode }) {
   for (let i = 1; i <= 5; i++) {
     let id = i;
     let fill = "none";
-    if (i < rating) fill = "#737178";
+    if (i <= rating) {
+      fill = "#737178";
+    } else if (i - rating < 1) {
+      fill = `url(#star-gradient-${id})`;
+    }
     stars.push(
       <svg
         key={id}
         className="star"
         stroke="#737178"
         strokeWidth="12px"
-        fill={fill}
         viewBox="0 0 576 512"
         size="100"
         height="30"
         width="30"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
+        <defs>
+          <linearGradient id={`star-gradient-${id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset={`${(1 - (i - rating)) * 100}%`} stopColor="#737178" />
+            <stop offset={`${(1 - (i - rating)) * 100}%`} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+          fill={fill}
+        ></path>
       </svg>
     );
   }
