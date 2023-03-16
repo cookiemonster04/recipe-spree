@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import RecipeCard from "../components/RecipeCard"
+import axios from "axios";
 import './Search.css'
 
-const Search = () => {
+const Search = ({themeMode}) => {
   const [include, setInclude] = useState([]);
   const [exclude, setExclude] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
 
   const initialList = {
     brocolli: false,
@@ -34,6 +37,7 @@ const Search = () => {
 
   const [formData, setFormData] = useState(initialList);
   const [formData2, setFormData2 ] = useState(initialList);
+  const [recipeIds, setRecipeIds] = useState([]);
 
     function updateInclude(name, isChecked){
       const isFound = include.includes(name);
@@ -89,65 +93,72 @@ const Search = () => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(include);
-    console.log(exclude);
-
     try {
       const response = await axios.post('/api/search',
       {
-        include: include,
-        exclude: exclude,
+        desired: include,
+        undesired: exclude,
       });
-      console.log(response);
+      setRecipeIds(response.data);
+
+      setSubmitted(true);
     } catch (error) {
+      console.log("ERROR")
       console.log(error.response)
     }
-
-    //setRecipes(responseData.recipes);
-    //console.log(arrayOfIds);
   }
 
   return (
+    <>
+    { !submitted ? (
     <div className="ingredient-form-container">
-      <form onSubmit={ handleSubmit } className="ingredient-form">
-        <h1 className="title">Discover your next favorite recipe!</h1>
-        <div className="ingredient-grid">
-          <h2 className="include-exclude">Include:</h2>
-          <h2 className="include-exclude">Exclude:</h2>
-          <div className="ingredient-options">
+    <form onSubmit={ handleSubmit } className="ingredient-form">
+      <h1 className="title">Discover your next favorite recipe!</h1>
+      <div className="ingredient-grid">
+        <h2 className="include-exclude">Include:</h2>
+        <h2 className="include-exclude">Exclude:</h2>
+        <div className="ingredient-options">
 
-            {
-                  Object.entries(formData).map(([key, value]) => (
-                    <Checkbox
-                      label={key}
-                      value={value}
-                      onChange={ handleChange }
-                      key={key}
-                    />
-                ))
-              }
-          </div>
-
-          <div className="ingredient-options">
-            {
-                Object.entries(formData2).map(([key, value]) => (
+          {
+                Object.entries(formData).map(([key, value]) => (
                   <Checkbox
                     label={key}
                     value={value}
-                    onChange={ handleChange2 }
+                    onChange={ handleChange }
                     key={key}
                   />
               ))
             }
-          </div>
         </div>
-        <div className="submit-container">
-          <button className="checklist-submit">
-            Submit
-          </button>
+
+        <div className="ingredient-options">
+          {
+              Object.entries(formData2).map(([key, value]) => (
+                <Checkbox
+                  label={key}
+                  value={value}
+                  onChange={ handleChange2 }
+                  key={key}
+                />
+            ))
+          }
         </div>
-      </form>
-    </div>
+      </div>
+      <div className="submit-container">
+        <button className="checklist-submit">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+    ) :
+    (
+      <div>
+        {recipeIds.length > 0  && recipeIds.map(id => <RecipeCard key={id} recipeId={id} themeMode={ themeMode }/>)}
+      </div>
+    )
+  }
+    </>
   )
 }
 

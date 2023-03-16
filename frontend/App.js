@@ -66,7 +66,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home user={user}/>} />
           <Route path="/survey" element={<Survey user={user} />}/>
-          <Route path="/search" element={<Search />} />
+          <Route path="/search" element={<Search themeMode={theme}/>} />
           <Route path="/recommend" element={<Recommend />} />
           <Route
             path="/recipe/:recipeId"
