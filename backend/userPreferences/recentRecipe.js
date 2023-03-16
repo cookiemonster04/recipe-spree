@@ -7,11 +7,12 @@ import { catchWrap } from "../middleware/errorHandler.js";
 
 async function recentRecipe(selectedUsername, recipeId)
 {
+    console.log("adding " + recipeId + " for user " + selectedUsername);
     const user = await User.findOne({ username: selectedUsername });
-    const recentlyViewed = user.recentlyViewed;
+    let recentlyViewed = user.recentlyViewed;
     if (recentlyViewed.includes(recipeId)) {
         console.log("Recipe is already in list");
-        return;
+        recentlyViewed = recentlyViewed.filter(item => item !== recipeId);
     }
     recentlyViewed.reverse();
     recentlyViewed.push(recipeId);
@@ -25,9 +26,24 @@ async function recentRecipe(selectedUsername, recipeId)
     );
 }
 
+async function removeRecentRecipe(username, recipeId)
+{
+    const user = await user.findOne({ username: username });
+    const recentlyViewed = user.recentlyViewed;
+    if (!recentlyViewed.includes(recipeId)) {
+        console.log("Recipe not in list");
+        return;
+    }
+    recentlyViewed = recentlyViewed.filter(item => item !== recipeId);
+    await User.findOneAndUpdate(
+        { username: username },
+        { $set: { recentlyViewed: recentlyViewed } }
+    );
+}
+
 const recentHandler = catchWrap(async (req, res, next) => {
-    const { selectedUsername, recipeId } = req.body;
-    res.status(200).json(await recentRecipe(selectedUsername, recipeId));
+    // const { selectedUsername, recipeId } = { ,  };
+    res.status(200).json(await recentRecipe(req.body.userId, req.body.recipeId));
 });
 
-export { recentRecipe, recentHandler };
+export { recentRecipe, recentHandler, removeRecentRecipe };
