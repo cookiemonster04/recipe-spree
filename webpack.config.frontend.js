@@ -21,6 +21,18 @@ const config = {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192, // Use data URLs for images smaller than 8KB; otherwise, use file-loader
+              name: 'assets/[name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
 };

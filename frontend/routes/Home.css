@@ -1,3 +1,26 @@
-.home-title {
-    text-align: center;
-}
+.slide-bg {
+    background-size: cover;
+    background-position: center;
+    animation: slide-bg-animation 10s ease infinite;
+  }
+  
+  @keyframes slide-bg-animation {
+    0% {
+      filter: brightness(100%);
+    }
+    50% {
+      filter: brightness(115%);
+    }
+    100% {
+      filter: brightness(100%);
+    }
+  }
+  
+  .paper-grow {
+    transition: transform 0.3s;
+  }
+  
+  .paper-grow:hover {
+    transform: scale(1.05);
+  }
+  
