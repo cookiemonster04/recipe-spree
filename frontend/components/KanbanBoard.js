@@ -3,8 +3,11 @@ import { DndContext, rectIntersection } from "@dnd-kit/core";
 import KanbanLane from "./KanbanLane";
 import AddCard from "./AddCard";
 import './KanbanBoard.css'
+import axios from "axios";
+import { Navigate } from "react-router-dom";
 
-export default function KanbanBoard() {
+export default function KanbanBoard( { user }) {
+    const [submitted, setSubmitted] = useState(false)
     const [loveItems, setLoveItems] = useState([
         {title:"brocolli"},
         {title:"butter"},
@@ -59,6 +62,21 @@ export default function KanbanBoard() {
         console.log(likeIngredients)
         console.log(dislikeIngredients)
         console.log(allergicIngredients)
+        console.log(user)
+        axios.post("/api/surveyAdjuster", {
+          selectedUsername: user.username,
+          love: loveIngredients,
+          like: likeIngredients,
+          dislike: dislikeIngredients,
+          blacklisted: allergicIngredients,
+        })
+        .then((response) => {
+          setSubmitted(true)
+        })
+
+    }
+    if(submitted) {
+      return <Navigate to="/recommend" />
     }
 
     return (
