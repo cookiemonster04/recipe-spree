@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import DarkModeToggle from "react-dark-mode-toggle";
-import SearchBar from "./SearchBar";
 import logo from '../../assets/logo.png'
 import "./Navbar.css";
 
@@ -57,6 +56,3 @@ export default function Navbar({
     </nav>
   );
 }
-/*
-  <SearchBar posts={posts} setSearchResults={setSearchResults} />
-*/

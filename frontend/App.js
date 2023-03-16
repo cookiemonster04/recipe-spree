@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { getPosts } from "./api/axios";
 import axios from "axios";
-import ListPage from "./components/ListPage";
 import Navbar from "./components/Navbar";
 import Home from "./routes/Home";
 import Survey from "./routes/Survey"
@@ -90,4 +89,3 @@ function App() {
 }
 
 export default App;
-/*      <ListPage searchResults={searchResults} /> Re-add this into above div */
