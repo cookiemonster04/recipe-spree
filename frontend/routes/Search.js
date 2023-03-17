@@ -11,6 +11,7 @@ const Search = ({themeMode}) => {
   const [submitted, setSubmitted] = useState(false);
   const [includeVal, setIncludeVal] = useState('');
   const [excludeVal, setExcludeVal] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const initialList = {
     brocolli: false,
@@ -147,7 +148,7 @@ const Search = ({themeMode}) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const response = await axios.post('/api/search',
       {
@@ -156,6 +157,7 @@ const Search = ({themeMode}) => {
       });
       setRecipeIds(response.data);
       setSubmitted(true);
+      setLoading(false);
 
       navigate('.', {
         state: {
@@ -232,6 +234,7 @@ const Search = ({themeMode}) => {
               <Button type="submit" variant="contained" color={darkMode ? "secondary" : "primary"}>
                 Submit
               </Button>
+              {loading && <Typography variant='h6'>loading...</Typography>}
             </Box>
           </form>
         </Paper>
