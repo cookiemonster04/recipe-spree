@@ -77,9 +77,7 @@ function App() {
           </Routes>
         </div>
       ) : (
-        <div className="container">
-          Loading tastiness, please stand by...
-        </div>
+        <div className="container">Loading tastiness, please stand by...</div>
       )}
     </div>
   );
