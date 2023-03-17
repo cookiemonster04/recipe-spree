@@ -23,8 +23,11 @@
     color: #333;
 }
 
-li .active {
-    background-color: #555;
+.navlight li .active {
+    background-color: lightseagreen;
+}
+.navdark li .active {
+    background-color: lightgrey;
 }
 
 .site-title {
