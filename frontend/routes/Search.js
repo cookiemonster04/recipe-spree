@@ -9,6 +9,8 @@ const Search = ({themeMode}) => {
   const [include, setInclude] = useState([]);
   const [exclude, setExclude] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [includeVal, setIncludeVal] = useState('');
+  const [excludeVal, setExcludeVal] = useState('');
 
   const initialList = {
     brocolli: false,
@@ -21,19 +23,12 @@ const Search = ({themeMode}) => {
     beef: false,
     cheese: false,
     garlic: false,
-    turkey: false,
     tomato: false,
     potato: false,
-    milk: false,
     pasta: false,
     onion: false,
-    corn: false,
     olive: false,
-    tuna: false,
-    chile: false,
-    broth: false,
     bacon: false,
-    mushroom: false,
     peanut: false,
   }
 
@@ -92,6 +87,44 @@ const Search = ({themeMode}) => {
     updateExclude(name, isChecked);
   }
 
+  const add1Change = (event) => {
+    setIncludeVal(event.target.value);
+  }
+
+  const add2Change = (event) => {
+    setExcludeVal(event.target.value);
+  }
+
+  const handleIncludeAdd = (event) => {
+    event.preventDefault();
+    if(includeVal === ""){
+      return;
+    }
+    setFormData (prevData => {
+      return {
+        ...prevData,
+        [includeVal]: true
+      }
+    })
+    updateInclude(includeVal, true);
+    setIncludeVal("");
+  }
+
+  const handleExcludeAdd = (event) => {
+    event.preventDefault();
+    if(excludeVal === ""){
+      return;
+    }
+    setFormData2 (prevData => {
+      return {
+        ...prevData,
+        [excludeVal]: true
+      }
+    })
+    updateInclude(excludeVal, true);
+    setExcludeVal("");
+  }
+
   function handleSearchAgain() {
     console.log("clicked");
     setSubmitted(false);
@@ -122,7 +155,6 @@ const Search = ({themeMode}) => {
         undesired: exclude,
       });
       setRecipeIds(response.data);
-
       setSubmitted(true);
 
       navigate('.', {
@@ -142,9 +174,19 @@ const Search = ({themeMode}) => {
   return (
     <>
     { !submitted ? (
-      <Box className="container">
+      <Box className="search-container">
         <Paper className="form" elevation={3}>
         <Typography variant="h4" my={1} className="title">Discover your next favorite recipe!</Typography>
+        <div className="inputs-container">
+          <div className="include-input-container">
+            <input type="text" onChange={add1Change} value={includeVal} />
+            <button onClick={handleIncludeAdd}>Add</button>
+          </div>
+          <div className="exclude-input-container">
+            <input type="text" onChange={add2Change} value={excludeVal} />
+            <button onClick={handleExcludeAdd}>Add</button>
+          </div>
+        </div>
           <form onSubmit={handleSubmit}>
             <Box className="ingredient-grid">
               <FormGroup>
