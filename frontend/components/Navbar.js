@@ -33,6 +33,9 @@ export default function Navbar({
               <NavLink to="/recommend">Recommend</NavLink>
             </li>
             <li>
+              <NavLink to="/survey">Update Preference</NavLink>
+            </li>
+            <li>
               <NavLink to="/profile">Profile</NavLink>
             </li>
             <li>

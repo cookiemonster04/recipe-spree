@@ -101,16 +101,6 @@ const Profile = ({ userId, user, themeMode }) => {
       <ThemeProvider theme={theme}>
         <div className={"profile-container"}>
           <Typography variant="h3" marginBottom={2} className="section-header"> Welcome back, {username}. </Typography>
-          <Typography variant="h6" marginBottom={2}>
-            Click 
-            <Link className="link" to={{ pathname: "/survey", state: { user: user }}}>{" here "}</Link>
-            to update your preferences.
-          </Typography>
-          <Typography variant="h6" marginBottom={2}>
-            Click 
-            <Link className="link" to={{ pathname: "/recommend", state: { user: user }}}>{" here "}</Link>
-            view recommend recipes.
-          </Typography>
           {favList.length > 0 ? (
             <div className="card-container">
               <Typography variant="h6" className="section-header">
