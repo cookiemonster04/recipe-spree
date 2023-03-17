@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardMedia, Typography, Grid} from "@mui/material";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Grid,
+  Box,
+} from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./Profile.css";
 
 const RecipeCard = ({ recipe, idx }) => {
-  return(
+  return (
     <Grid key={`recipe ${recipe.id}`} item xs={12} sm={6} md={4} lg={3}>
-      <Card className="card" sx={{ maxWidth: 400, my: 2}}>
+      <Card className="card" sx={{ maxWidth: 400, my: 2 }}>
         <CardMedia
           component="img"
           height="200"
@@ -16,23 +23,26 @@ const RecipeCard = ({ recipe, idx }) => {
           alt={recipe.title}
         />
         <CardContent>
-          <Typography 
+          <Typography
             gutterBottom
             variant="h5"
-            component="div" 
-            sx={{ 
+            component="div"
+            sx={{
               maxWidth: 400,
               overflow: "hidden",
               textOverflow: "ellipsis",
-              whiteSpace: "nowrap"
-            }}>
+              whiteSpace: "nowrap",
+            }}
+          >
             {recipe.title}
           </Typography>
-          <Link className="link" to={`/recipe/${recipe.id}`}>View Recipe</Link>
+          <Link className="link" to={`/recipe/${recipe.id}`}>
+            View Recipe
+          </Link>
         </CardContent>
       </Card>
     </Grid>
-  )
+  );
 };
 
 const Profile = ({ userId, user, themeMode }) => {
@@ -40,13 +50,13 @@ const Profile = ({ userId, user, themeMode }) => {
   const [favList, setFavList] = useState([]);
   const [recentlyViewedList, setRecentlyViewedList] = useState([]);
   const [favRecipes, setFavRecipes] = useState([]);
-  const [recentRecipes, setRecentRecipes] = useState([]); 
+  const [recentRecipes, setRecentRecipes] = useState([]);
 
   const theme = createTheme({
-    palette : {
-      mode: themeMode
-    }
-  })
+    palette: {
+      mode: themeMode,
+    },
+  });
   //get user info
   useEffect(() => {
     async function getInfo() {
@@ -95,30 +105,43 @@ const Profile = ({ userId, user, themeMode }) => {
     if (recentlyViewedList.length > 0) {
       getRecentRecipes();
     }
-  }, [recentlyViewedList]); 
+  }, [recentlyViewedList]);
   return (
     username && (
       <ThemeProvider theme={theme}>
         <div className={"profile-container"}>
-          <Typography variant="h3" marginBottom={2} className="section-header"> Welcome back, {username}. </Typography>
-          <Typography variant="h6" marginBottom={2}>
-            Click 
-            <Link className="link" to={{ pathname: "/survey", state: { user: user }}}>{" here "}</Link>
-            to update your preferences.
-          </Typography>
-          <Typography variant="h6" marginBottom={2}>
-            Click 
-            <Link className="link" to={{ pathname: "/recommend", state: { user: user }}}>{" here "}</Link>
-            view recommend recipes.
-          </Typography>
+          <Box alignItems="center" justifyContent="space-between">
+            <Typography
+              variant="h3"
+              marginBottom={2}
+              className="section-header"
+              align="center"
+            >
+              {" "}
+              Welcome back, {username}
+            </Typography>
+          </Box>
+
           {favList.length > 0 ? (
             <div className="card-container">
-              <Typography variant="h6" className="section-header">
+              <Typography
+                variant="h6"
+                component="h2"
+                gutterBottom
+                sx={{
+                  fontSize: "2rem",
+                  textShadow: "1.2px 1.2px 1.2px #888",
+                }}
+              >
                 Your favorite recipes:
               </Typography>
               <Grid container spacing={2}>
                 {favRecipes.map((recipe, idx) => (
-                  <RecipeCard recipe={recipe} idx={idx} />
+                  <RecipeCard
+                    recipe={recipe}
+                    idx={idx}
+                    key={`favorite_${idx}`}
+                  />
                 ))}
               </Grid>
             </div>
@@ -127,18 +150,26 @@ const Profile = ({ userId, user, themeMode }) => {
           )}
           {recentlyViewedList.length > 0 ? (
             <div className="card-container">
-            <Typography variant="h6" className="section-header">
-              Your recently viewed recipes:
-            </Typography>
-            <Grid container spacing={2}>
-              {recentRecipes.map((recipe, idx) => (
-                <RecipeCard recipe={recipe} idx={idx} />
-              ))}
-            </Grid>
-          </div>
+              <Typography
+                variant="h6"
+                component="h2"
+                gutterBottom
+                sx={{
+                  fontSize: "2rem",
+                  textShadow: "1.2px 1.2px 1.2px #888",
+                }}
+              >
+                Your recently viewed recipes:
+              </Typography>
+              <Grid container spacing={2}>
+                {recentRecipes.map((recipe, idx) => (
+                  <RecipeCard recipe={recipe} idx={idx} key={`recent_${idx}`} />
+                ))}
+              </Grid>
+            </div>
           ) : (
             <p>You haven't recently viewed any recipes.</p>
-          )} 
+          )}
         </div>
       </ThemeProvider>
     )
