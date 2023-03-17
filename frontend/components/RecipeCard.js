@@ -17,36 +17,34 @@ function RecipeCard({ recipeId, themeMode }){
 
     return (
         recipeInfo && (
-            <Grid container spacing={2}>
-                <Grid key={recipeId} item xs={12} sm={6} md={4} lg={3}>
-                    <Card sx={{ maxWidth: 400, my: 2 }}>
-                        <CardMedia
-                        component="img"
-                        height="200"
-                        image={recipeInfo.image}
-                        alt={recipeInfo.title}
-                        />
-                        <CardContent>
-                        <Typography gutterBottom variant="h5" component="div" sx={{ maxWidth: 400,
-                        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                            {recipeInfo.title}
-                        </Typography>
-                        <Link to={`/recipe/${recipeId}`}>View Recipe</Link>
-                        </CardContent>
-                    </Card>
-                </Grid>
+            <Grid key={recipeId} item xs={12} sm={6} md={4} lg={3}>
+                <Card sx={{ maxWidth: 400, my: 2 }}>
+                    <CardMedia
+                    component="img"
+                    height="200"
+                    image={recipeInfo.image}
+                    alt={recipeInfo.title}
+                    />
+                    <CardContent>
+                    <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    sx={{ 
+                        maxWidth: 400,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap' 
+                    }}>
+                    {recipeInfo.title}
+                    </Typography>
+                    <Link className="link" to={`/recipe/${recipeId}`}>View Recipe</Link>
+                    </CardContent>
+                </Card>
             </Grid>
         )
     )
 
 }
-
-
-
-
-
-
-
-
 
 export default RecipeCard;
