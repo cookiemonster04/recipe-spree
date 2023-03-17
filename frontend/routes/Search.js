@@ -181,36 +181,18 @@ const Search = ({themeMode}) => {
         <Typography variant="h3" my={1} className="title">Discover your next favorite recipe!</Typography>
           <form onSubmit={handleSubmit}>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Box className="ingredient-grid">
-                <FormGroup>
-                  <Typography variant="h5" className="include-exclude">Include:</Typography>
-                  {
-                    Object.entries(formData).map(([key, value]) => (
-                      <FormControlLabel
-                        key={key}
-                        control={
-                          <Checkbox
-                            checked={value}
-                            onChange={handleChange}
-                            name={key}
-                            color={darkMode ? "secondary" : "primary"}
-                          />
-                        }
-                        label={key}
-                      />
-                    ))
-                  }
-                </FormGroup>
-                <FormGroup>
-                  <Typography variant="h5" className="include-exclude">Exclude:</Typography>
+              <Grid container spacing={2} className="ingredient-grid" marginBottom={2} justifyContent="space-evenly">
+                <Grid item xs="auto">
+                  <FormGroup >
+                    <Typography variant="h5" className="include-exclude">Include:</Typography>
                     {
-                      Object.entries(formData2).map(([key, value]) => (
+                      Object.entries(formData).map(([key, value]) => (
                         <FormControlLabel
                           key={key}
                           control={
                             <Checkbox
                               checked={value}
-                              onChange={handleChange2}
+                              onChange={handleChange}
                               name={key}
                               color={darkMode ? "secondary" : "primary"}
                             />
@@ -219,18 +201,38 @@ const Search = ({themeMode}) => {
                         />
                       ))
                     }
-                </FormGroup>
-              </Box>
-            </div>
-            <div className="inputs-container">
-              <div className="include-input-container">
-                <input type="text" onChange={add1Change} value={includeVal} />
-                <button onClick={handleIncludeAdd}>Add</button>
-              </div>
-              <div className="exclude-input-container">
-                <input type="text" onChange={add2Change} value={excludeVal} />
-                <button onClick={handleExcludeAdd}>Add</button>
-              </div>
+                  </FormGroup>
+                  <div className="include-input-container">
+                    <input type="text" onChange={add1Change} value={includeVal} />
+                    <button onClick={handleIncludeAdd}>Add</button>
+                  </div>
+                </Grid>
+                <Grid item xs="auto">
+                  <FormGroup>
+                    <Typography variant="h5" className="include-exclude">Exclude:</Typography>
+                      {
+                        Object.entries(formData2).map(([key, value]) => (
+                          <FormControlLabel
+                            key={key}
+                            control={
+                              <Checkbox
+                                checked={value}
+                                onChange={handleChange2}
+                                name={key}
+                                color={darkMode ? "secondary" : "primary"}
+                              />
+                            }
+                            label={key}
+                          />
+                        ))
+                      }
+                  </FormGroup>
+                  <div className="exclude-input-container">
+                    <input type="text" onChange={add2Change} value={excludeVal} />
+                    <button onClick={handleExcludeAdd}>Add</button>
+                  </div>
+                </Grid>
+              </Grid>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '-35px' }}>
               <Box className="submit-container">
