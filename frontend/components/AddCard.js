@@ -29,18 +29,3 @@ export default function AddCard({addCard}){
         </div>
     )
 }
-
-/*
-            <Button
-                flex="1"
-                marginX="3"
-                bgColor="green.400"
-                color="white"
-                onClick={() => {
-                    setTitle("")
-                    addCard(title)
-                }}
-            >
-                Add
-            </Button>
-*/
