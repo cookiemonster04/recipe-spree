@@ -24,7 +24,11 @@ function RecommendPage ({ user }) {
     }, [user])
     // console.log(`Recipe list length ${recipeList.length}`)
     if (loading) {
-        return <Typography marginTop={2} variant="h6">Loading...</Typography>;
+        return (
+                <Typography marginTop={2} variant="h6" style={{ textAlign: 'center' }}>
+                    Loading...
+                </Typography>
+        )
     }
     return (
         <div className="card-container">

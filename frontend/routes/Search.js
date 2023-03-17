@@ -11,6 +11,7 @@ const Search = ({themeMode}) => {
   const [submitted, setSubmitted] = useState(false);
   const [includeVal, setIncludeVal] = useState('');
   const [excludeVal, setExcludeVal] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const initialList = {
     brocolli: false,
@@ -147,7 +148,7 @@ const Search = ({themeMode}) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const response = await axios.post('/api/search',
       {
@@ -156,6 +157,7 @@ const Search = ({themeMode}) => {
       });
       setRecipeIds(response.data);
       setSubmitted(true);
+      setLoading(false);
 
       navigate('.', {
         state: {
@@ -176,7 +178,7 @@ const Search = ({themeMode}) => {
     { !submitted ? (
       <Box className="search-container">
         <Paper className="form" elevation={3}>
-        <Typography variant="h4" my={1} className="title">Discover your next favorite recipe!</Typography>
+        <Typography variant="h3" my={1} className="title">Discover your next favorite recipe!</Typography>
         <div className="inputs-container">
           <div className="include-input-container">
             <input type="text" onChange={add1Change} value={includeVal} />
@@ -190,7 +192,7 @@ const Search = ({themeMode}) => {
           <form onSubmit={handleSubmit}>
             <Box className="ingredient-grid">
               <FormGroup>
-                <Typography variant="h6" className="include-exclude">Include:</Typography>
+                <Typography variant="h5" className="include-exclude">Include:</Typography>
                 {
                   Object.entries(formData).map(([key, value]) => (
                     <FormControlLabel
@@ -209,7 +211,7 @@ const Search = ({themeMode}) => {
                 }
               </FormGroup>
               <FormGroup>
-                <Typography variant="h6" className="include-exclude">Exclude:</Typography>
+                <Typography variant="h5" className="include-exclude">Exclude:</Typography>
                 {
                   Object.entries(formData2).map(([key, value]) => (
                     <FormControlLabel
@@ -232,6 +234,7 @@ const Search = ({themeMode}) => {
               <Button type="submit" variant="contained" color={darkMode ? "secondary" : "primary"}>
                 Submit
               </Button>
+              {loading && <Typography variant='h6'>loading...</Typography>}
             </Box>
           </form>
         </Paper>

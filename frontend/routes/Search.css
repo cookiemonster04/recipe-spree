@@ -1,3 +1,5 @@
+@import url(https://allfont.net/allfont.css?fonts=agency-fb);
+
 .search-container {
     margin: 0 auto;
     padding: 2rem;
@@ -19,6 +21,7 @@
   .container .title {
     margin-top: 2rem;
     margin-bottom: 2rem;
+    font-family: "Agency FB", sans-serif;
   }
 
   .ingredient-grid {
@@ -95,3 +98,4 @@
 .css-3su884-MuiPaper-root {
   min-width: 700px;
 }
+
