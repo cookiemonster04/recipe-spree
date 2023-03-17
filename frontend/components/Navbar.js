@@ -13,7 +13,7 @@ export default function Navbar({
     <nav className={getTheme === "light" ? "nav navlight" : "nav navdark"}>
       <NavLink to="/" className="site-title">
         RecipeSpree
-        <img src={logo} style={{ marginLeft: "10px", width: "80px", height: "80px"}}/>
+        <img src={logo} style={{ marginLeft: "10px", width: "60px", height: "60px"}}/>
       </NavLink>
 
       <ul>
