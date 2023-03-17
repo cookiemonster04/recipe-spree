@@ -130,7 +130,7 @@ function Recipe({ user, recipeId, themeMode }) {
         score: userRating
       })
       const newNumRatings = response.data.recipe.rating.numRatings + 1;
-      const newTotalStars = response.data.recipe.rating.stars + userRating;
+      const newTotalStars = response.data.recipe.rating.stars * response.data.recipe.rating.numRatings + userRating;
       const newAverageRating = newTotalStars / newNumRatings;
       console.log(newNumRatings);
       console.log(newTotalStars);
