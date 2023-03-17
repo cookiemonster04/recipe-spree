@@ -246,7 +246,7 @@ const Search = ({themeMode}) => {
           </Grid>
           ) : (
             <Typography marginTop={2} variant="h6">
-              No results. Please try to search something else.
+              No results. Please try to search something else. Please make sure you include ingredients.
             </Typography>
           )}
         </div>

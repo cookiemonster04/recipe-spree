@@ -5,6 +5,7 @@ import AddCard from "./AddCard";
 import './KanbanBoard.css'
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+import { Box } from "@mui/material";
 
 export default function KanbanBoard( { user }) {
     const [submitted, setSubmitted] = useState(false)
@@ -80,7 +81,7 @@ export default function KanbanBoard( { user }) {
     }
 
     return (
-        <>
+        <Box>
         <h2 className="survey-title">Survey</h2>
         <p className="survey-description">Welcome! Please move ingredients in the proper section based on your preference. Feel free to add ingredients, too!</p>
         <DndContext
@@ -134,6 +135,6 @@ export default function KanbanBoard( { user }) {
           </div>
         </DndContext>
         <button className="survey-submit" onClick={ submitArrays }>Submit</button>
-        </>
+        </Box>
       );
 }
