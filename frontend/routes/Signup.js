@@ -3,6 +3,7 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import "./Signup.css";
 
 const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
@@ -25,7 +26,12 @@ const Item = ({ name, type, formValue, setFormValue, placeholder }) => {
   );
 };
 
-const Signup = ({ user, setUser }) => {
+const Signup = ({ user, setUser, themeMode }) => {
+  const theme = createTheme({
+    palette : {
+      mode: themeMode
+    }
+  })
   if (user) {
     return <Navigate to="/survey" />;
   }
@@ -74,44 +80,46 @@ const Signup = ({ user, setUser }) => {
   return (
     <>
       {submitted && <Navigate to="/profile" />}
-      <div className="signupFrm">
-        <form className="form" onSubmit={handleSubmit}>
-          <div className="title-container">
-            <h1 className="title">Sign up</h1>
-            <FontAwesomeIcon icon={faUserPlus} size="lg" />
+        <ThemeProvider theme={theme}>
+          <div className="signupFrm">
+            <form className="form" onSubmit={handleSubmit}>
+              <div className="title-container">
+                <h1 className="title" style={{ color: "#333" }}>Sign up</h1>
+                <FontAwesomeIcon icon={faUserPlus} size="lg" style={{ color: "#333" }}/>
+              </div>
+              <Item
+                name="username"
+                type="text"
+                formValue={username}
+                setFormValue={setUsername}
+                placeholder="a"
+              />
+              <Item
+                name="password"
+                type="password"
+                formValue={password}
+                setFormValue={setPassword}
+                placeholder="a"
+              />
+              <label
+                htmlFor="signup_submit"
+                className={isError ? "no-msg" : "yes-msg"}
+              >
+                {messages.split("\n").map((msg, idx) => {
+                  return <div key={`signup_msg_${idx}`}>{msg}</div>;
+                })}
+              </label>
+              <input
+                id="signup_submit"
+                type="submit"
+                className="submitBtn"
+                value="Sign up"
+              ></input>
+            </form>
           </div>
-          <Item
-            name="username"
-            type="text"
-            formValue={username}
-            setFormValue={setUsername}
-            placeholder="a"
-          />
-          <Item
-            name="password"
-            type="password"
-            formValue={password}
-            setFormValue={setPassword}
-            placeholder="a"
-          />
-          <label
-            htmlFor="signup_submit"
-            className={isError ? "no-msg" : "yes-msg"}
-          >
-            {messages.split("\n").map((msg, idx) => {
-              return <div key={`signup_msg_${idx}`}>{msg}</div>;
-            })}
-          </label>
-          <input
-            id="signup_submit"
-            type="submit"
-            className="submitBtn"
-            value="Sign up"
-          ></input>
-        </form>
-      </div>
+        </ThemeProvider>
     </>
   );
-};
+}
 
 export default Signup;

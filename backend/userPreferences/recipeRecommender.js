@@ -1,12 +1,17 @@
+//Meant to be called after a user is finished with a recipe and leaves a review
+//const mongoose = require("mongoose");
 import User from '../models/userModel.js';
 const {Recipe, Recommended} = require('../separate/recipeSchema.js');
+//const connectDB = require('../connectDb.js');
 import { catchWrap } from "../middleware/errorHandler.js";
 
-async function recipeRecommender(selectedUsername, callback) {
+
+async function recipeRecommender(selectedUsername)
+{
     await Recommended.deleteMany({})
         .then(() => console.log('Existing recipes cleared'))
         .catch(error => console.error(error));
-    await Recipe.aggregate([{ $sample: { size: 100 } }], (function(err, docs) {
+    await Recipe.aggregate([{ $sample: { size: 25 } }, { $limit: 50 }], (function(err, docs) {
         if (err) throw err;
         for (let i = 0; i < docs.length; i++) {
             const newRecipe = {
@@ -26,40 +31,41 @@ async function recipeRecommender(selectedUsername, callback) {
             });
         }
     }));
+    const countf = await Recommended.countDocuments({});
+    console.log(countf);
 
-    User.find({username: selectedUsername}, async function (err, count) {
-        if (err) throw err;
-        for (let i = 0; i < count[0].ingredients.length; i++) {
-            await addScore(count[0].ingredients[i])
-        }
-        await Recommended.deleteMany({ score: { $lt: 0 } });
-        const sortedRecipes = await Recommended.find().sort({ score: -1 }).exec();
-        for (let i = 0; i < sortedRecipes.length; i++) {
-            console.log(sortedRecipes[i].title);
-            console.log(sortedRecipes[i].score);
-        }
-        callback(sortedRecipes);
-    });
+    const count = await User.findOne({username: selectedUsername}).exec();
+    if (!count) {
+        throw new Error("User not found");
+    }
+    for (let i = 0; i < count.ingredients.length; i++) {
+        await addScore(count.ingredients[i])
+    }
+    await Recommended.deleteMany({ score: { $lt: 0 } });
+    const sortedRecipes = await Recommended.find().sort({ score: -1 }).exec();
+    console.log(sortedRecipes.length);
+    return sortedRecipes;
 }
 
-async function addScore(ingredient) {
+async function addScore(ingredient)
+{
     const regex = new RegExp(ingredient.name, 'i');
     const matches = await Recommended.find({"ingredients.text": regex}).exec();
-    matches.forEach(match => {
+    matches.forEach(match =>
+    {
         Recommended.findOneAndUpdate(
             { id: match.id },
             { $inc: { score: ingredient.rating } },
             { new: true }, 
-            function (err, count) { if (err) throw err; }
+            function (err, count) 
+            { if (err) throw err; }
         );
     });
 }
 
 const recommendHandler = catchWrap(async (req, res, next) => {
     const { selectedUsername } = req.body;
-    recipeRecommender(selectedUsername, sortedRecipes => {
-        res.status(200).json(sortedRecipes);
-    });
+    res.status(200).json(await recipeRecommender(selectedUsername));
 });
 
 export { recipeRecommender, recommendHandler };

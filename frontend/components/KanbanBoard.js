@@ -82,8 +82,9 @@ export default function KanbanBoard( { user }) {
 
     return (
         <Box>
-        <h2 className="survey-title">Survey</h2>
-        <p className="survey-description">Welcome! Please move ingredients in the proper section based on your preference. Feel free to add ingredients, too!</p>
+        <h2 className="survey-title" style={{ fontFamily: 'Agency FB, sans-serif', fontSize: '50px' }} >Survey</h2>
+        <p className="survey-description"style={{ fontFamily: 'Agency FB, sans-serif', fontSize: '32px' }} >Welcome! Please move ingredients in the proper
+        section based on your preference. Feel free to add ingredients, too! Neutral to an ingredient? Feel free to click it to remove it!</p>
         <DndContext
           collisionDetection={rectIntersection}
           onDragEnd={(e) => {
@@ -125,7 +126,7 @@ export default function KanbanBoard( { user }) {
           }}
         >
           <div className="full-board-container">
-            <AddCard addCard={addNewCard} />
+            <AddCard addCard={addNewCard}/>
             <div className="four-col-container">
               <KanbanLane title="Love" items={loveItems} ind={0}/>
               <KanbanLane title="Like" items={likeItems} ind={1}/>

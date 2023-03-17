@@ -179,63 +179,67 @@ const Search = ({themeMode}) => {
       <Box className="search-container">
         <Paper className="form" elevation={3}>
         <Typography variant="h3" my={1} className="title">Discover your next favorite recipe!</Typography>
-        <div className="inputs-container">
-          <div className="include-input-container">
-            <input type="text" onChange={add1Change} value={includeVal} />
-            <button onClick={handleIncludeAdd}>Add</button>
-          </div>
-          <div className="exclude-input-container">
-            <input type="text" onChange={add2Change} value={excludeVal} />
-            <button onClick={handleExcludeAdd}>Add</button>
-          </div>
-        </div>
           <form onSubmit={handleSubmit}>
-            <Box className="ingredient-grid">
-              <FormGroup>
-                <Typography variant="h5" className="include-exclude">Include:</Typography>
-                {
-                  Object.entries(formData).map(([key, value]) => (
-                    <FormControlLabel
-                      key={key}
-                      control={
-                        <Checkbox
-                          checked={value}
-                          onChange={handleChange}
-                          name={key}
-                          color={darkMode ? "secondary" : "primary"}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Box className="ingredient-grid">
+                <FormGroup>
+                  <Typography variant="h5" className="include-exclude">Include:</Typography>
+                  {
+                    Object.entries(formData).map(([key, value]) => (
+                      <FormControlLabel
+                        key={key}
+                        control={
+                          <Checkbox
+                            checked={value}
+                            onChange={handleChange}
+                            name={key}
+                            color={darkMode ? "secondary" : "primary"}
+                          />
+                        }
+                        label={key}
+                      />
+                    ))
+                  }
+                </FormGroup>
+                <FormGroup>
+                  <Typography variant="h5" className="include-exclude">Exclude:</Typography>
+                    {
+                      Object.entries(formData2).map(([key, value]) => (
+                        <FormControlLabel
+                          key={key}
+                          control={
+                            <Checkbox
+                              checked={value}
+                              onChange={handleChange2}
+                              name={key}
+                              color={darkMode ? "secondary" : "primary"}
+                            />
+                          }
+                          label={key}
                         />
-                      }
-                      label={key}
-                    />
-                  ))
-                }
-              </FormGroup>
-              <FormGroup>
-                <Typography variant="h5" className="include-exclude">Exclude:</Typography>
-                {
-                  Object.entries(formData2).map(([key, value]) => (
-                    <FormControlLabel
-                      key={key}
-                      control={
-                        <Checkbox
-                          checked={value}
-                          onChange={handleChange2}
-                          name={key}
-                          color={darkMode ? "secondary" : "primary"}
-                        />
-                      }
-                      label={key}
-                    />
-                  ))
-                }
-              </FormGroup>
-            </Box>
-            <Box className="submit-container">
-              <Button type="submit" variant="contained" color={darkMode ? "secondary" : "primary"}>
-                Submit
-              </Button>
-              {loading && <Typography variant='h6'>loading...</Typography>}
-            </Box>
+                      ))
+                    }
+                </FormGroup>
+              </Box>
+            </div>
+            <div className="inputs-container">
+              <div className="include-input-container">
+                <input type="text" onChange={add1Change} value={includeVal} />
+                <button onClick={handleIncludeAdd}>Add</button>
+              </div>
+              <div className="exclude-input-container">
+                <input type="text" onChange={add2Change} value={excludeVal} />
+                <button onClick={handleExcludeAdd}>Add</button>
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '-35px' }}>
+              <Box className="submit-container">
+                <Button type="submit" variant="contained" color={darkMode ? "secondary" : "primary"}>
+                  Submit
+                </Button>
+                {loading && <Typography variant='h6'>loading...</Typography>}
+              </Box>
+            </div>
           </form>
         </Paper>
       </Box>

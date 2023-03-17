@@ -40,8 +40,13 @@ const messageGenerator = (errors) => {
 const subtextSchema = new mongoose.Schema({
   text: 
   {
-      type: String,
-      required: true
+    type: String,
+    required: true
+  },
+  recipeTitle:
+  {
+    type: String,
+    required: true
   }
 });
 
@@ -110,7 +115,8 @@ const userSchema = new Schema({
   blacklistedIngredients: [ingredientSchema],
   ratings: {
     type: Map,
-    of: String
+    of: String,
+    default: new Map()
   },
 });
 

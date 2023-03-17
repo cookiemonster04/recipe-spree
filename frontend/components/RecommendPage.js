@@ -13,11 +13,12 @@ function RecommendPage ({ user }) {
                 const response = await axios.post("/api/recipeRecommender", {
                     selectedUsername: user.username,
                 })
+                console.log(response.data);
                 setRecipeList(response.data);
                 setLoading(false);
             } catch (error) {
                 console.error(error);
-                setLoading(false);
+                //setLoading(false);
             }
         }
         getRecommend();
@@ -34,7 +35,7 @@ function RecommendPage ({ user }) {
         <div className="card-container">
           {recipeList.length > 0 ? (
             <>
-                <Typography marginTop={2} variant="h6">Recommend recipes for you!</Typography>
+                <Typography marginTop={2} variant="h6">Recommended recipes for you!</Typography>
                 <Grid container my={2} spacing={2}>
                 {recipeList.slice(0,50).map((recipe, idx) => <RecipeCard recipeId={recipe.id} idx={idx} />)}
                 </Grid>

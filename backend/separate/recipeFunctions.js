@@ -49,9 +49,10 @@ async function addComment(itemID, selectedUsername, comment)
         function (err, count) 
         { if (err) throw err; }
     );
+    const getRecipe = await Recipe.findOne({ id: itemID });
     User.findOneAndUpdate(
         { username: selectedUsername },
-        { $push: { comments: {text: comment} } },
+        { $push: { comments: { text: comment, recipeTitle: getRecipe.title } } },
         { new: true }, 
         function (err, count) 
         { if (err) throw err; }
@@ -70,12 +71,6 @@ async function addRating(itemID, newRating, user)
     if (getUser.ratings.has(itemID)) 
         return;
     const recipe = await Recipe.findOne({ id: itemID });
-    console.log("g")
-    console.log(itemID)
-    console.log("h")
-    console.log(recipe)
-    console.log("i")
-    console.log(recipe.rating)
     if (!recipe.rating) {
         Recipe.findOneAndUpdate(
             { id: itemID },
@@ -85,8 +80,6 @@ async function addRating(itemID, newRating, user)
             { if (err) throw err; }
         );
     }
-    console.log("j")
-    console.log(recipe)
     const updatedRating = (recipe.rating.stars * recipe.rating.numRatings + newRating) / (recipe.rating.numRatings + 1);
     Recipe.findOneAndUpdate(
         { id: itemID },
@@ -96,10 +89,6 @@ async function addRating(itemID, newRating, user)
         { if (err) throw err; }
     );
     let curUser = await User.findOne({ username: user });
-    console.log("x")
-    console.log(curUser)
-    console.log("w")
-    console.log(curUser.ratings)
     let ratingDict;
     if (!curUser.ratings) {
         ratingDict = new Map();

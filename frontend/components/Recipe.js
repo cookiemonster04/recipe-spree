@@ -105,13 +105,22 @@ function Recipe({ user, recipeId, themeMode }) {
 
   const handleRatingSubmit = async (e) => {
     e.preventDefault();
+    console.log(user);
+    const response = await axios.get(`/api/recipe/${recipeId}`);
+    console.log(response.data);
     try {
       await axios.post(`/api/addRating`, {
-      itemID: recipeId,
-      newRating: userRating, 
-      user: user.username });
-      const response = await axios.get(`/api/recipe/${recipeId}`);
+        itemID: recipeId,
+        newRating: userRating, 
+        user: user.username 
+      });
+      await axios.post(`/api/recipeAdjuster`, {
+        selectedUsername: user.username,
+        recipeId: recipeId,
+        score: userRating
+      })
       setRecipeRating(response.data.recipe.rating.stars / 2);
+      e.preventDefault();
     } catch (error) {
       console.error(error)
     }

@@ -65,8 +65,8 @@ const Login = ({ user, setUser }) => {
       <div className="loginFrm">
         <form className="form" onSubmit={handleSubmit}>
           <div className="title-container">
-            <h1 className="title">Log in</h1>
-            <FontAwesomeIcon icon={faUserPlus} size="lg" />
+            <h1 className="title" style={{ color: "#333" }}>Log in</h1>
+            <FontAwesomeIcon icon={faUserPlus} size="lg" style={{ color: "#333" }}/>
           </div>
           <Item
             name="username"

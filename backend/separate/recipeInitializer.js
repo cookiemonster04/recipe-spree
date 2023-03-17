@@ -22,7 +22,7 @@ async function addRecipes(content)
         .then(() => console.log('Existing recipes cleared'))
         .catch(error => console.error(error));
     const recipe = JSON.parse(content);
-    for (let i = 0; i < 200; i++)
+    for (let i = 0; i < 1000; i++)
     {
         const itemID = recipe[i].id;
         recipe[i].favorites = 0;

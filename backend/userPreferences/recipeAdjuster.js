@@ -46,6 +46,7 @@ async function recipeAdjuster(selectedUsername, recipeId, score)
           console.log(user);
         }
     });
+    //return user;
 }
 
 async function updateOrCreate(selectedUsername, ingredient, score)
@@ -97,6 +98,7 @@ async function lerp(oldRating, newRating, selectedUsername)
     //current recipe
     //Reasoning is that as the user cooks more, the algo should already know enough about them and
     //does not need to overcorrect itself
+    let count = 0;
     await User.findOne({username: selectedUsername}, {numRecipes: 1})
         .then(result => {
             count = result.numRecipes;
@@ -114,9 +116,10 @@ async function lerp(oldRating, newRating, selectedUsername)
 
 
 const adjusterHandler = catchWrap(async (req, res, next) => {
-    const { selectedUsername, ingredientsList, score } = req.body;
-    await recipeAdjuster(selectedUsername, ingredientsList, score);
+    const { selectedUsername, recipeId, score } = req.body;
+    await recipeAdjuster(selectedUsername, recipeId, score);
     res.status(200).send("Ratings adjusted successfully");
+    //res.status(200).json(await recipeAdjuster(selectedUsername, ingredientsList, score));
 });
 
 export { recipeAdjuster, adjusterHandler };
