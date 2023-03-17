@@ -18,7 +18,7 @@ function RecipeCard({ recipeId, themeMode }){
     return (
         recipeInfo && (
             <Grid key={recipeId} item xs={12} sm={6} md={4} lg={3}>
-                <Card sx={{ maxWidth: 400, my: 2 }}>
+                <Card className="card" sx={{ maxWidth: 400, my: 2 }}>
                     <CardMedia
                     component="img"
                     height="200"

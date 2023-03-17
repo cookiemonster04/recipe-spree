@@ -2,3 +2,18 @@
     text-decoration: none;
     color: rgb(62, 107, 196);
   }
+
+  .card {
+    animation: scaleUp 0.3s ease;
+  }
+  
+  @keyframes scaleUp {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
