@@ -3,7 +3,7 @@
 .slide-bg {
     background-size: cover;
     background-position: center;
-    animation: slide-bg-animation 10s ease infinite;
+    animation: slide-bg-animation 6s ease infinite;
   }
   
   @keyframes slide-bg-animation {

@@ -31,7 +31,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
     transform: 'scale(1.05)',
   },
   width: "475px",
-  height: '300px'
+  // height: '300px'
 }));
 
 const slides = [
@@ -81,7 +81,7 @@ const Homepage = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box>
-        <Carousel showArrows autoPlay infiniteLoop interval={5000}>
+        <Carousel showArrows autoPlay infiniteLoop interval={5000} showThumbs={false}>
           {slides.map((slide, index) => (
             <Box
               key={index}
@@ -107,7 +107,7 @@ const Homepage = () => {
                   boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4), 0 10px 12px rgba(0, 0, 0, 0.6)',
                 }}
               >
-                <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: '3.5rem', textShadow: '1.8px 1.8px 4px #888' }}>
+                <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: '3.0rem', textShadow: '1.8px 1.8px 4px #888' }}>
                   {slide.title}
                 </Typography>
                 <Typography variant="body1" gutterBottom sx={{ fontSize: '1.7rem', textShadow: '0.5px 0.5px 0.5px #888' }}>
@@ -118,9 +118,9 @@ const Homepage = () => {
           ))}
         </Carousel>
         <Container>
-          <Grid container spacing={50} sx={{ marginTop: '-375px', marginLeft: '-575px'}}>
+          <Grid container spacing={5} sx={{ marginTop: '2px', marginLeft: '2px'}}>
             {steps.map((step, index) => (
-              <Grid item xs={0} md={4} key={index}>
+              <Grid item xs={12} sm={6} md={4} key={index} marginLeft={10} marginRight={10}>
                 <StyledPaper elevation={3}>
                   <Typography variant="h6" component="h2" gutterBottom sx={{ fontSize: '2rem', textShadow: '1.2px 1.2px 1.2px #888' }}>
                     {step.title}
