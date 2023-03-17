@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import Home from "./routes/Home";
-import Survey from "./routes/Survey"
+import Survey from "./routes/Survey";
 import Search from "./routes/Search";
 import Recommend from "./routes/Recommend";
 import RecipePage from "./routes/RecipePage";
@@ -16,14 +16,18 @@ import "./App.css";
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [user, setUser] = useState(null);
+  const [cookieRetrieved, setCookieRetrieved] = useState(false);
 
   const solveCookie = () => {
-    axios.get("/api/user").then(
-      (ret) => {
-        setUser(ret.data);
-      },
-      (err) => console.log(err)
-    );
+    axios
+      .get("/api/user")
+      .then(
+        (ret) => {
+          setUser(ret.data);
+        },
+        (err) => console.log(err)
+      )
+      .finally(() => setCookieRetrieved(true));
   };
   useEffect(() => {
     solveCookie();
@@ -39,37 +43,44 @@ function App() {
     localStorage.setItem("theme", theme);
     document.body.className = theme;
   }, [theme]);
-
   return (
     <div className={`App ${theme}`}>
-      <Navbar
-        getTheme={theme}
-        handleTheme={toggleTheme}
-        user={user}
-      />
-      <div className="container">
-        <Routes>
-          <Route path="/" element={<Home user={user}/>} />
-          <Route path="/survey" element={<Survey user={user} />}/>
-          <Route path="/search" element={<Search themeMode={theme}/>} />
-          <Route path="/recommend" element={<Recommend user={user}/>} />
-          <Route
-            path="/recipe/:recipeId"
-            element={<RecipePage user={user} themeMode={theme} />}
-          />
-          <Route
-            path="/signup"
-            element={<Signup user={user} setUser={setUser} />}
-          />
-          <Route path="/profile" element={<ProfileHome user={user} themeMode={theme} />} />
-          <Route path="/profile/:userId" element={<ProfilePage themeMode={theme} />} />
-          <Route
-            path="/login"
-            element={<Login user={user} setUser={setUser} />}
-          />
-          <Route path="/logout" element={<Logout setUser={setUser} />} />
-        </Routes>
-      </div>
+      <Navbar getTheme={theme} handleTheme={toggleTheme} user={user} />
+      {cookieRetrieved ? (
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Home user={user} />} />
+            <Route path="/survey" element={<Survey user={user} />} />
+            <Route path="/search" element={<Search themeMode={theme} />} />
+            <Route path="/recommend" element={<Recommend user={user} />} />
+            <Route
+              path="/recipe/:recipeId"
+              element={<RecipePage user={user} themeMode={theme} />}
+            />
+            <Route
+              path="/signup"
+              element={<Signup user={user} setUser={setUser} />}
+            />
+            <Route
+              path="/profile"
+              element={<ProfileHome user={user} themeMode={theme} />}
+            />
+            <Route
+              path="/profile/:userId"
+              element={<ProfilePage themeMode={theme} />}
+            />
+            <Route
+              path="/login"
+              element={<Login user={user} setUser={setUser} />}
+            />
+            <Route path="/logout" element={<Logout setUser={setUser} />} />
+          </Routes>
+        </div>
+      ) : (
+        <div className="container">
+          Loading tastiness, please stand by...
+        </div>
+      )}
     </div>
   );
 }
