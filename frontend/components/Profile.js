@@ -106,6 +106,11 @@ const Profile = ({ userId, user, themeMode }) => {
             <Link className="link" to={{ pathname: "/survey", state: { user: user }}}>{" here "}</Link>
             to update your preference.
           </Typography>
+          <Typography variant="h6" marginBottom={2}>
+            Click 
+            <Link className="link" to={{ pathname: "/recommend", state: { user: user }}}>{" here "}</Link>
+            view recommend recipe.
+          </Typography>
           {favList.length > 0 ? (
             <div className="card-container">
               <Typography variant="h6" className="section-header">

@@ -1,0 +1,9 @@
+.card-container {
+    margin: 0 auto;
+    padding: 2rem;
+    max-width: 1200px;
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }

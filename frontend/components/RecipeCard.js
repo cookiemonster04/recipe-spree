@@ -10,7 +10,7 @@ function RecipeCard({ recipeId, themeMode }){
         async function getInfo() {
           const response = await axios.get(`/api/recipe/${recipeId}`);
           setRecipeInfo(response.data.recipe);
-          console.log(response.data.recipe);
+        //   console.log(response.data.recipe);
         }
         getInfo();
       }, []);

@@ -1,14 +1,8 @@
-//Meant to be called after a user is finished with a recipe and leaves a review
-//const mongoose = require("mongoose");
 import User from '../models/userModel.js';
 const {Recipe, Recommended} = require('../separate/recipeSchema.js');
-//const connectDB = require('../connectDb.js');
 import { catchWrap } from "../middleware/errorHandler.js";
 
-
-async function recipeRecommender(selectedUsername)
-{
-    await connectDB();
+async function recipeRecommender(selectedUsername, callback) {
     await Recommended.deleteMany({})
         .then(() => console.log('Existing recipes cleared'))
         .catch(error => console.error(error));
@@ -33,8 +27,7 @@ async function recipeRecommender(selectedUsername)
         }
     }));
 
-    User.find({username: selectedUsername}, async function (err, count) 
-    {
+    User.find({username: selectedUsername}, async function (err, count) {
         if (err) throw err;
         for (let i = 0; i < count[0].ingredients.length; i++) {
             await addScore(count[0].ingredients[i])
@@ -45,29 +38,28 @@ async function recipeRecommender(selectedUsername)
             console.log(sortedRecipes[i].title);
             console.log(sortedRecipes[i].score);
         }
-        return sortedRecipes;
+        callback(sortedRecipes);
     });
 }
 
-async function addScore(ingredient)
-{
+async function addScore(ingredient) {
     const regex = new RegExp(ingredient.name, 'i');
     const matches = await Recommended.find({"ingredients.text": regex}).exec();
-    matches.forEach(match =>
-    {
+    matches.forEach(match => {
         Recommended.findOneAndUpdate(
             { id: match.id },
             { $inc: { score: ingredient.rating } },
             { new: true }, 
-            function (err, count) 
-            { if (err) throw err; }
+            function (err, count) { if (err) throw err; }
         );
     });
 }
 
 const recommendHandler = catchWrap(async (req, res, next) => {
     const { selectedUsername } = req.body;
-    res.status(200).json(await recipeRecommender(selectedUsername));
+    recipeRecommender(selectedUsername, sortedRecipes => {
+        res.status(200).json(sortedRecipes);
+    });
 });
 
 export { recipeRecommender, recommendHandler };

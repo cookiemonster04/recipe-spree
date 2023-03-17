@@ -242,7 +242,7 @@ const Search = ({themeMode}) => {
           <Button onClick={handleSearchAgain} variant="outlined" color={darkMode ? "secondary" : "primary"}>Search Again</Button>
           {recipeIds.length > 0 ? (
             <Grid container my={2} spacing={2}>
-            {recipeIds.map((id, idx) => <RecipeCard recipeId={id} recipe={null} idx={idx} />)}
+            {recipeIds.map((id, idx) => <RecipeCard recipeId={id} idx={idx} />)}
           </Grid>
           ) : (
             <Typography marginTop={2} variant="h6">
