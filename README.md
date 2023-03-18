@@ -7,7 +7,8 @@ RecipeSpree is an all-in-one cooking companion. From maintaining a recipe collec
 3. Motivation:  
 We like good food, and while we can find recipes on YouTube or by googling and keep track of them using bookmarks, it’s cumbersome and we want to simplify this process for our users. 
 ## Run the application
-1. Go to a directory and run this code   
+1. Make sure you have MongoDB installed or install it here. https://www.mongodb.com/ Note: connecting to MongoDB may not work if you are using UCLA_WEB. If this is the case, try using eduroam.
+2. Go to a directory and run this code   
 `git clone https://github.com/cookiemonster04/recipe-spree.git`  
 in your command line.
 2. Go to `recipe-spree` directory.
